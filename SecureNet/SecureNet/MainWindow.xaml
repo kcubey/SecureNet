@@ -5,6 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SecureNet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid/>
+        Title="SecureNet" Height="700" Width="1050" 
+        WindowStartupLocation="CenterScreen"
+        >
+
+    <Grid>
+        <DockPanel Name="pnlMaster" >
+            <Frame Name="frmHeader" DockPanel.Dock="Top"
+                Source="/Master/Header.xaml" Height="100">
+            </Frame>
+
+            <Frame Name="frmFooter" DockPanel.Dock="Bottom"
+                Source="/Master/Footer.xaml" Height="50">
+            </Frame>
+
+            <StackPanel Name="spnlNavigator" DockPanel.Dock="Left"
+                Width="150" Background="Orange">
+
+                <Label>navigationpage</Label>
+                <Button Name="bntContentPage1" Margin="10,10,10,10"
+                    Content="Content Page 1" Click="OnClick"
+                    CommandParameter="Page1.xaml" />
+
+                <Button Name="bntContentPage2" Margin="10,10,10,10"
+                    Content="Content Page 2" Click="OnClick"
+                    CommandParameter="Page2.xaml" />
+
+            </StackPanel>
+
+            <Frame Name="frmMain" Source="/Pages/Page1.xaml" NavigationUIVisibility="Hidden"></Frame>
+        
+        </DockPanel>
+    </Grid>
 </Window>
