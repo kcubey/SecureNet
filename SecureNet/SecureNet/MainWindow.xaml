@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SecureNet"
         mc:Ignorable="d"
         Title="SecureNet" Height="700" Width="1050" 
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
         >
 
     <Grid>
@@ -19,6 +19,7 @@
                 Source="/Master/Footer.xaml" Height="50">
             </Frame>
 
+            <!--
             <StackPanel Name="spnlNavigator" DockPanel.Dock="Left"
                 Width="150" Background="Orange">
 
@@ -32,8 +33,8 @@
                     CommandParameter="Page2.xaml" />
 
             </StackPanel>
-
-            <Frame Name="frmMain" Source="/Pages/Page1.xaml" NavigationUIVisibility="Hidden"></Frame>
+            -->
+            <Frame Name="frmMain" Source="/Pages/Home.xaml" NavigationUIVisibility="Hidden"></Frame>
         
         </DockPanel>
     </Grid>

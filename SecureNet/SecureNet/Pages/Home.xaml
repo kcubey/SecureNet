@@ -1,0 +1,33 @@
+﻿<Page x:Class="SecureNet.Pages.Home"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      Background="LightBlue" ShowsNavigationUI="False"
+      Title="Home">
+
+    <Grid>
+        <StackPanel>
+            <Label FontWeight="Bold" FontSize="20">
+                Welcome to SecureNet!
+            </Label>
+            <Label>
+                Click on the below buttons for the various functions.
+            </Label>
+            <DockPanel HorizontalAlignment="Center">
+                <Button Width="150" Height="150" Margin="20" Content="Browser Logs"/>
+                <Button Width="150" Height="150" Margin="20" Content="Password Manager"/>
+                <Button Width="150" Height="150" Margin="20" Content="Contact"/>
+                <Button Width="150" Height="150" Margin="20" Content="Settings"/>
+            </DockPanel>
+
+            <Label x:Name="h1">
+                h1 type
+            </Label>
+        </StackPanel>
+        
+    </Grid>
+</Page>

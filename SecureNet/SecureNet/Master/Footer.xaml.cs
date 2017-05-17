@@ -23,6 +23,8 @@ namespace SecureNet.Master
         public Footer()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Page));
+
         }
     }
 }

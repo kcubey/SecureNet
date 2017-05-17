@@ -15,5 +15,6 @@
         <TextBlock Margin="30,60,0,0" >
             <Hyperlink NavigateUri="Page2.xaml">Go to ContentPage 2</Hyperlink>
         </TextBlock>
+        <Button Margin="203,222,0,0" Background="Red">i am a button</Button>
     </Grid>
 </Page>

@@ -23,6 +23,8 @@ namespace SecureNet.Master
         public Header()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Page));
+
         }
     }
 }
