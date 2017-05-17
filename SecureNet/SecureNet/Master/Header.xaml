@@ -6,10 +6,22 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Header"
-      ShowsNavigationUI="False" Background="OrangeRed"
+      ShowsNavigationUI="False"
+      Background="Yellow" 
       >
 
     <Grid>
-        <Label Name="label1">HeaderPage</Label>
+        <DockPanel>
+            <Image Source="/Media/SecureNetLogo.png" Width="50" Height="50" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Margin="20"/>
+            <Label FontSize="50" Foreground="Black"
+                   Margin="0"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">SecureNet</Label>
+        </DockPanel>
+        
     </Grid>
 </Page>

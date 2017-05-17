@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SecureNet.Pages
 {
     /// <summary>
-    /// Interaction logic for Page2.xaml
+    /// Interaction logic for test.xaml
     /// </summary>
-    public partial class Page2 : Page
+    public partial class test : Page
     {
-        public Page2()
+        public test()
         {
             InitializeComponent();
         }

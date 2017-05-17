@@ -7,9 +7,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Footer"
+      Background="Yellow" ShowsNavigationUI="False"
       >
 
     <Grid>
-        <Label Name="label1">FooterPage</Label>
+        <Label Foreground="Black" FontSize="12"
+               VerticalAlignment="Center">Copyright © 2017 SecureNet Technologies. 
+            All rights reserved.</Label>
     </Grid>
 </Page>

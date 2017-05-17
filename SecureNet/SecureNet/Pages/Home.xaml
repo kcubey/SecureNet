@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:SecureNet.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="1050"
-      Background="LightBlue" ShowsNavigationUI="False"
+      ShowsNavigationUI="False"
       Title="Home">
 
     <Grid>
@@ -17,16 +17,24 @@
             <Label>
                 Click on the below buttons for the various functions.
             </Label>
+            <TextBlock Text="&#xD;"/>
             <DockPanel HorizontalAlignment="Center">
-                <Button Width="150" Height="150" Margin="20" Content="Browser Logs"/>
-                <Button Width="150" Height="150" Margin="20" Content="Password Manager"/>
-                <Button Width="150" Height="150" Margin="20" Content="Contact"/>
-                <Button Width="150" Height="150" Margin="20" Content="Settings"/>
+                <Button Style="{DynamicResource menuBtn}">
+                    Browser Logs
+                </Button>
+                <Button Style="{DynamicResource menuBtn}"
+                        Click="OnClick"
+                        CommandParameter="/Manager/PassHome.xaml" >
+                    Password Manager
+                </Button>
+                <Button Style="{DynamicResource menuBtn}"
+                        Click="OnClick">
+                    Contact
+                </Button>
+                <Button Style="{DynamicResource menuBtn}">
+                    Settings
+                </Button>
             </DockPanel>
-
-            <Label x:Name="h1">
-                h1 type
-            </Label>
         </StackPanel>
         
     </Grid>

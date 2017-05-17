@@ -13,17 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SecureNet.Pages
+namespace SecureNet.Pages.Manager
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for PassHome.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class PassHome : Page
     {
-        public Page1()
+        public PassHome()
         {
+            Console.WriteLine("navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+
         }
     }
 }

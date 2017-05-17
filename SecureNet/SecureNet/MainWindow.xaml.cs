@@ -35,11 +35,20 @@ namespace SecureNet
         {
             _mainFrame.Navigate(new Page1());
         }
-        */
 
+            private void OnClick(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate("" + new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative));
+            Console.WriteLine("navigating...");
+        }
+        
+*/
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            frmMain.Source = new Uri("/Pages/" + ((Button)sender).CommandParameter.ToString(), UriKind.Relative);
+            //MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
+            this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
         }
+
+        
     }
 }
