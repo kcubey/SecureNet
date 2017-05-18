@@ -20,6 +20,7 @@ namespace SecureNet.Pages.Manager
     /// </summary>
     public partial class PassHome : Page
     {
+        //StartUp
         public PassHome()
         {
             Console.WriteLine("navigate success");
@@ -28,11 +29,34 @@ namespace SecureNet.Pages.Manager
 
         }
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        //Navigate to Login Credentials
+        private void ButtonCreden_Click(object sender, RoutedEventArgs e)
         {
-            string redirectAdd = ((Button)sender).CommandParameter.ToString();
-            this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("redirecting now");
+            navigation("/Pages/Manager/LoginCredentials.xaml");
+        }
+
+        //Navigate to Password Generator
+        private void ButtonGen_Click(object sender, RoutedEventArgs e)
+        {
+            navigation("/Pages/Manager/PassGen.xaml");
+        }
+
+        //Navigate to Activity Log
+        private void ButtonAlog_Click(object sender, RoutedEventArgs e)
+        {
+            navigation("/Pages/Manager/ActivityLog.xaml");
+        }
+
+        //Navigate to How to Use
+        private void ButtonHow_Click(object sender, RoutedEventArgs e)
+        {
+            navigation("/Pages/Manager/Howtouse.xaml");
+        }
+
+        //Navigation Method
+        private void navigation(string url)
+        {
+            this.NavigationService.Navigate(new Uri(url, UriKind.Relative));
         }
     }
 }

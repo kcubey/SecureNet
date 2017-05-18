@@ -8,6 +8,77 @@
       Title="PassHome">
 
     <Grid>
-       
+        <StackPanel>
+            
+            <!--Header-->
+            <Label FontSize="20" Foreground="Orange"  FontWeight="Bold">
+                Password Manager
+            </Label>
+            
+            <!--Separator 1-->
+            <Separator Background="Gray" />
+
+            <!--Nav to Login Credentials-->
+            <WrapPanel>
+                <Button  Click="ButtonCreden_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/creden.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Login Credentials</TextBlock>
+            </WrapPanel>
+
+            <!--Separator 2-->
+            <Separator Background="Gray" />
+
+            <!--Nav to Password Generator-->
+            <WrapPanel>
+                <Button  Click="ButtonGen_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/gen.png"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Password Generator</TextBlock>
+            </WrapPanel>
+
+            <!--Seperator 3-->
+            <Separator Background="Gray" />
+
+            <!--Nav to ActivityLog-->
+            <WrapPanel>
+                <Button  Click="ButtonAlog_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/alog.png"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Activity Log</TextBlock>
+            </WrapPanel>
+
+            <!--Separator 4-->
+            <Separator Background="Gray" />
+
+
+            <!--Nav to How to Use-->
+            <WrapPanel>
+                <Button  Click="ButtonHow_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/how.png"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">How to Use</TextBlock>
+            </WrapPanel>
+
+
+
+        </StackPanel>
+
     </Grid>
 </Page>
