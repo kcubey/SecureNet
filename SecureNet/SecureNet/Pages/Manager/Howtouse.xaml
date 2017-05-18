@@ -6,15 +6,34 @@
       xmlns:local="clr-namespace:SecureNet.Pages.Manager"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="1050"
-      Title="Howtouse">
+      Title="How To Use">
 
     <Grid>
         <StackPanel>
-            <Label FontSize="20" Foreground="Orange"  FontWeight="Bold">
-                Password Manager
-            </Label>
+
+
+            <!--Back Button & Header-->
+            <WrapPanel>
+                <Button  Click="ButtonBack_Click" Width="20" Height="20"  Margin="10,5,5,5">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label FontSize="20" Foreground="Orange"  FontWeight="Bold"  >
+                    How to Use
+                </Label>
+            </WrapPanel>
+
+            <!--Separator-->
             <Separator Background="Gray" />
-            
+
+
+
+
+
+
         </StackPanel>
     </Grid>
 </Page>

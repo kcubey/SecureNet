@@ -181,5 +181,8 @@
     <Resource Include="Media\PasswordManager\gen.png" />
     <Resource Include="Media\PasswordManager\how.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\PasswordManager\back.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

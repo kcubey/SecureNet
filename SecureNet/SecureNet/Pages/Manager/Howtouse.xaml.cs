@@ -20,9 +20,17 @@ namespace SecureNet.Pages.Manager
     /// </summary>
     public partial class Howtouse : Page
     {
+
+        //StartUp
         public Howtouse()
         {
             InitializeComponent();
+        }
+
+        //Navigation : Back Button
+        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Pages/Manager/PassHome.xaml", UriKind.Relative));
         }
     }
 }
