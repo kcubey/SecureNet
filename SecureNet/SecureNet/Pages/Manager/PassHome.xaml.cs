@@ -27,5 +27,12 @@ namespace SecureNet.Pages.Manager
             Style = (Style)FindResource(typeof(Page));
 
         }
+
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            string redirectAdd = ((Button)sender).CommandParameter.ToString();
+            this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
+            Console.WriteLine("redirecting now");
+        }
     }
 }

@@ -20,19 +20,44 @@
             <TextBlock Text="&#xD;"/>
             <DockPanel HorizontalAlignment="Center">
                 <Button Style="{DynamicResource menuBtn}">
-                    Browser Logs
+                    <StackPanel>
+                        <Image Source="/Media/browser.png"
+                               Style="{DynamicResource icon}"/>
+                        <TextBlock TextAlignment="Center">
+                            <LineBreak/>Browser Logs
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
                 <Button Style="{DynamicResource menuBtn}"
                         Click="OnClick"
-                        CommandParameter="/Manager/PassHome.xaml" >
-                    Password Manager
+                        CommandParameter="/Pages/Manager/PassHome.xaml" 
+                        >
+                    <StackPanel>
+                        <Image Source="/Media/key.png"
+                               Style="{DynamicResource icon}"/>
+                        <TextBlock TextAlignment="Center">
+                            <LineBreak/>Password Manager
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
                 <Button Style="{DynamicResource menuBtn}"
                         Click="OnClick">
-                    Contact
+                    <StackPanel>
+                        <Image Source="/Media/contact.png"
+                               Style="{DynamicResource icon}"/>
+                        <TextBlock TextAlignment="Center">
+                            <LineBreak/>Contact
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
                 <Button Style="{DynamicResource menuBtn}">
-                    Settings
+                    <StackPanel>
+                        <Image Source="/Media/settings.png"
+                               Style="{DynamicResource icon}"/>
+                        <TextBlock TextAlignment="Center">
+                            <LineBreak/>Settings
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
             </DockPanel>
         </StackPanel>

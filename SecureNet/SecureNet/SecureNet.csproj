@@ -85,10 +85,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\test.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Master\Footer.xaml.cs">
@@ -102,9 +98,6 @@
     </Compile>
     <Compile Include="Pages\Manager\PassHome.xaml.cs">
       <DependentUpon>PassHome.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -136,9 +129,21 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+    <Folder Include="Pages\Browser\" />
+    <Folder Include="Pages\Contact\" />
+    <Folder Include="Pages\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\SecureNetLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\browser.png" />
+    <Resource Include="Media\contact.png" />
+    <Resource Include="Media\key.png" />
+    <Resource Include="Media\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

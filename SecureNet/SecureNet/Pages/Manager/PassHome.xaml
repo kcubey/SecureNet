@@ -9,5 +9,10 @@
 
     <Grid>
         <Label Foreground="White">this is the pass home</Label>
+        <Button Style="{DynamicResource selectBtn}"
+                CommandParameter="/Pages/Home.xaml" 
+                Click="OnClick">
+            Back
+        </Button>
     </Grid>
 </Page>
