@@ -81,6 +81,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Manager\ActivityLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Manager\Howtouse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Manager\LoginCredentials.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Manager\PassGen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\Manager\PassHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +111,18 @@
     </Compile>
     <Compile Include="Pages\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\ActivityLog.xaml.cs">
+      <DependentUpon>ActivityLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\Howtouse.xaml.cs">
+      <DependentUpon>Howtouse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\LoginCredentials.xaml.cs">
+      <DependentUpon>LoginCredentials.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Manager\PassGen.xaml.cs">
+      <DependentUpon>PassGen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Manager\PassHome.xaml.cs">
       <DependentUpon>PassHome.xaml</DependentUpon>
