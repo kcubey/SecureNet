@@ -17,7 +17,7 @@
             <Label>
                 Click on the below buttons for the various functions.
             </Label>
-            <TextBlock Text="&#xD;"/>
+            <TextBlock><LineBreak/></TextBlock>
             <DockPanel HorizontalAlignment="Center">
                 <Button Style="{DynamicResource menuBtn}">
                     <StackPanel>
