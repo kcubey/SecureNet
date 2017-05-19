@@ -12,10 +12,12 @@
     <Grid>
         <DockPanel Name="pnlMaster" >
             <Frame Name="frmHeader" DockPanel.Dock="Top"
+                   NavigationUIVisibility="Hidden"
                 Source="/Master/Header.xaml" Height="100">
             </Frame>
 
             <Frame Name="frmFooter" DockPanel.Dock="Bottom"
+                   NavigationUIVisibility="Hidden"
                 Source="/Master/Footer.xaml" Height="50">
             </Frame>
 
@@ -34,7 +36,8 @@
 
             </StackPanel>
             -->
-            <Frame x:Name="MainFrame" Source="/Pages/Home.xaml" NavigationUIVisibility="Hidden"></Frame>
+            <Frame x:Name="MainFrame" Source="/Pages/Home.xaml" 
+                   NavigationUIVisibility="Hidden"></Frame>
         
         </DockPanel>
     </Grid>

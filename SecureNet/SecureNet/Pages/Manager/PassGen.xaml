@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:SecureNet.Pages.Manager"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
       Title="Password Generator">
 
     <Grid>

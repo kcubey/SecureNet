@@ -19,6 +19,10 @@
         </Style>
 
 <!-- Button Styles-->
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
         <Style TargetType="Button" x:Key="menuBtn">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="2"/>
