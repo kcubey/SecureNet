@@ -85,10 +85,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Manager\Howtouse.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\Manager\LoginCredentials.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,9 +110,6 @@
     </Compile>
     <Compile Include="Pages\Manager\ActivityLog.xaml.cs">
       <DependentUpon>ActivityLog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Manager\Howtouse.xaml.cs">
-      <DependentUpon>Howtouse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Manager\LoginCredentials.xaml.cs">
       <DependentUpon>LoginCredentials.xaml</DependentUpon>
@@ -179,7 +172,6 @@
   <ItemGroup>
     <Resource Include="Media\PasswordManager\creden.png" />
     <Resource Include="Media\PasswordManager\gen.png" />
-    <Resource Include="Media\PasswordManager\how.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\PasswordManager\back.png" />

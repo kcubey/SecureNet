@@ -20,14 +20,19 @@
 
             <!--Nav to Login Credentials-->
             <WrapPanel>
-                <Button  Click="ButtonCreden_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                <Button  Click="ButtonCreden_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/creden.png" />
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Login Credentials</TextBlock>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Login Credentials</Label>
+                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Store your login information for different websites. You can update, delete and view the information you stored.</Label>
+                </StackPanel>
+               
             </WrapPanel>
 
             <!--Separator 2-->
@@ -35,14 +40,18 @@
 
             <!--Nav to Password Generator-->
             <WrapPanel>
-                <Button  Click="ButtonGen_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                <Button  Click="ButtonGen_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/gen.png"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Password Generator</TextBlock>
+                
+                <StackPanel VerticalAlignment="Center">
+                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Password Generator</Label>
+                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Customize and generate secure passwords for your accounts.</Label>
+                </StackPanel>
             </WrapPanel>
 
             <!--Seperator 3-->
@@ -50,32 +59,22 @@
 
             <!--Nav to ActivityLog-->
             <WrapPanel>
-                <Button  Click="ButtonAlog_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
+                <Button  Click="ButtonAlog_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/alog.png"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">Activity Log</TextBlock>
+                
+                <StackPanel VerticalAlignment="Center">
+                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Activity Log</Label>
+                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Track the actions performed on your account. If you see any suspicious activities, inform the support team.</Label>
+                </StackPanel>
+                
             </WrapPanel>
 
-            <!--Separator 4-->
-            <Separator Background="Gray" />
-
-
-            <!--Nav to How to Use-->
-            <WrapPanel>
-                <Button  Click="ButtonHow_Click" Width="80" Height="80" HorizontalAlignment="Left" Margin="30,15,15,15">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="/Media/PasswordManager/how.png"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <TextBlock VerticalAlignment="Center" Foreground="Beige" FontSize="25" Margin="30">How to Use</TextBlock>
-            </WrapPanel>
-
+          
 
 
         </StackPanel>

@@ -47,12 +47,6 @@ namespace SecureNet.Pages.Manager
             navigation("/Pages/Manager/ActivityLog.xaml");
         }
 
-        //Navigate to How to Use
-        private void ButtonHow_Click(object sender, RoutedEventArgs e)
-        {
-            navigation("/Pages/Manager/Howtouse.xaml");
-        }
-
         //Navigation Method
         private void navigation(string url)
         {
