@@ -210,7 +210,6 @@ namespace SecureNet.Pages.Manager
                 string finalchars = CheckBoxTest();
                 int length = Convert.ToInt32(requiredLength.Value);
                 int noOfResults = Convert.ToInt32(number.Value);
-                string check = "";
                 if (finalchars == null)
                 {
                     resultPassword.Text = "Error! Please select at least one special character \n from Advance Options";
