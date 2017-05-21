@@ -53,7 +53,7 @@
 
             <Label Style="{DynamicResource PassGenInstruction}">3. Choose Password Characters</Label>
             <Label Style="{DynamicResource PassGenDesc}">
-            A strong password consists alphanumerics, different casing of alphabets and special characters .
+            A strong password consists alphanumerics, different casing of alphabets and different special characters .
             You may customize your password from the options below to suit different websites' password policy.
             Click Advance Options to specify special characters needed.</Label>
 
