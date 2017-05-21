@@ -25,13 +25,17 @@ namespace SecureNet.Pages.Manager
         private static string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
         private static string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
         private static string PASSWORD_CHARS_NUMERIC = "23456789";
-        private static string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
+
+
 
         //StartUp
         public PassGen()
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+            MainVisible();
+            PopulateCheckbox();
+
         }
 
         //Navigation : Back Button
@@ -42,13 +46,13 @@ namespace SecureNet.Pages.Manager
 
 
         //Generate Password
-        public string Generate(int length)
+        private string Generate(int length, string finalchars)
         {
 
             char[] lcase = PASSWORD_CHARS_LCASE.ToCharArray();
             char[] ucase = PASSWORD_CHARS_UCASE.ToCharArray();
             char[] numeric = PASSWORD_CHARS_NUMERIC.ToCharArray();
-            char[] special = PASSWORD_CHARS_SPECIAL.ToCharArray();
+            char[] special = finalchars.ToCharArray();
 
             List<char[]> arrayList = new List<char[]>();
 
@@ -198,33 +202,118 @@ namespace SecureNet.Pages.Manager
                 chkboxNum.IsChecked == false && chkboxSC.IsChecked == false)
             {
 
-                resultPassword.Text = "Error! Please select at least one password requirement.";
+                resultPassword.Text = "Error! Please select at least one password requirement";
             }
 
             else
             {
+                string finalchars = CheckBoxTest();
                 int length = Convert.ToInt32(requiredLength.Value);
                 int noOfResults = Convert.ToInt32(number.Value);
-
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < noOfResults; i++)
+                string check = "";
+                if (finalchars == null)
                 {
-                    string password = Generate(length);
-                    builder.Append(password);
-                    builder.Append(Environment.NewLine);
+                    resultPassword.Text = "Error! Please select at least one special character \n from Advance Options";
+                }
+                else
+                {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < noOfResults; i++)
+                    {
+                        string password = Generate(length, finalchars);
+                        builder.Append(password);
+                        builder.Append(Environment.NewLine);
 
 
+                    }
+                    resultPassword.Text += builder.ToString();
                 }
 
-                resultPassword.Text += builder.ToString();
+
 
             }
         }
 
+        private void PopulateCheckbox()
+        {
+
+            string[] specialchars = {"\u0021", "\u0022", "\u0023", "\u0024", "\u0025",
+                                      "\u0026", "\u0027", "\u0028", "\u0029", "\u002A",
+                                      "\u002B", "\u002C", "\u002D", "\u002E", "\u002F",
+                                      "\u003A", "\u003B", "\u003C", "\u003D", "\u003E",
+                                      "\u0040", "\u005B", "\u005C", "\u005D", "\u005E",
+                                      "\u005F", "\u0060", "\u007B", "\u007C", "\u007D",
+                                      "\u007E", "\u003F"
+                                    };
 
 
 
+
+
+            for (int i = 0; i < specialchars.Length; i++)
+            {
+                CheckBox c = new CheckBox();
+                c.IsChecked = true;
+                c.FontSize = 18;
+                c.Margin = new Thickness(30, 10, 10, 10);
+                c.Foreground = Brushes.DarkOrange;
+                c.Content = specialchars[i];
+                stackChars.Children.Add(c);
+
+            }
+
+        }
+
+        private string CheckBoxTest()
+        {
+            string finalchars = null;
+            foreach (CheckBox child in stackChars.Children)
+            {
+                if (child.IsChecked == true)
+                {
+                    finalchars += child.Content;
+                }
+            }
+            return finalchars;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            stackChars.Visibility = Visibility.Visible;
+            stackMain.Visibility = Visibility.Hidden;
+            CharBack.Visibility = Visibility.Visible;
+            CharInstruct.Visibility = Visibility.Visible;
+            selectOption.Visibility = Visibility.Visible;
+        }
+
+        private void MainVisible()
+        {
+            stackMain.Visibility = Visibility.Visible;
+            stackChars.Visibility = Visibility.Hidden;
+            CharBack.Visibility = Visibility.Hidden;
+            CharInstruct.Visibility = Visibility.Hidden;
+            selectOption.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            MainVisible();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            foreach (CheckBox child in stackChars.Children)
+            {
+                child.IsChecked = true;
+            }
+        }
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            foreach (CheckBox child in stackChars.Children)
+            {
+                child.IsChecked = false;
+            }
+        }
     }
 
 

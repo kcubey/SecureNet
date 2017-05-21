@@ -10,7 +10,7 @@
       Title="Password Generator">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Name="stackMain" >
 
 
             <!--Back Button & Header-->
@@ -47,25 +47,29 @@
                 <Slider Width="300" Minimum="1" Maximum="10" Name="number" Value="1" Style="{DynamicResource PassGenSlide}"/>
                 <TextBox Text="{Binding ElementName=number, Path=Value, UpdateSourceTrigger=PropertyChanged}"  Style="{DynamicResource PassGenSTB}" />
             </WrapPanel>
-            
-            
+
+
             <!--Password Requirements-->
 
             <Label Style="{DynamicResource PassGenInstruction}">3. Choose Password Requirements</Label>
-            <Label Style="{DynamicResource PassGenDesc}">A strong password consists all of the following requirements.</Label>
-            <Label Style="{DynamicResource PassGenDesc}">Some websites only permit some of the requirements below and you may uncheck accordingly before generating the password.</Label>
+            <Label Style="{DynamicResource PassGenDesc}">A strong password consists all of the following requirements.
+            Some websites only permit some of the requirements below and you may uncheck accordingly before generating the password.</Label>
+            <Label Style="{DynamicResource PassGenDesc}">Some websites also only permit certain special characters. Click Advance Options to uncheck accordingly.</Label>
 
             <CheckBox Style="{DynamicResource PassGenCB}"  Name="chkboxLC" Content="Lower Case Alphabets"/>
             <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxUC" Content="Upper Case Alphabets" />
             <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxNum" Content="Numericals" />
-            <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxSC" Content="Special Characters"/>
+            <WrapPanel>
+                <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxSC" Content="Special Characters"/>
+                <Button Width="150" Height="20" Content="Advance Options" FontSize="13" Margin="5,0,0,0" Click="Button_Click_1"  />
+            </WrapPanel>
 
 
             <!--Generate Button-->
 
-            <Button  Width="80" Height="20" Margin="30,5,5,5" Content="Generate" Click="Button_Click"  HorizontalAlignment="Left"/>
+            <Button  Width="80" Height="30" Margin="30,5,5,5" FontSize="18" Content="Generate" Click="Button_Click"  HorizontalAlignment="Left"/>
 
-
+           
             <!--Output-->
             <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -74,7 +78,20 @@
                      Name="resultPassword" IsReadOnly="True"/>
 
 
-
         </StackPanel>
+
+        <StackPanel>
+            <Button Name="CharBack" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="20" Content="Back to Password Generator" Margin="30,30,0,0" Click="Button_Click_2"/>
+            <Label Name="CharInstruct" Style="{DynamicResource PassGenInstruction}">Choose Special Characters</Label>
+            <WrapPanel Name="selectOption" Margin="30,5,0,0">
+                <Button  Style="{DynamicResource PassGenSelect}" Content="Select All" Click="Button_Click_3"  />
+                <Button   Style="{DynamicResource PassGenSelect}" Content="Unselect All" Margin="5,0,0,0" Click="Button_Click_4"/>
+            </WrapPanel>
+            <WrapPanel  Name="stackChars" HorizontalAlignment="Left"  MaxWidth="500"/>
+        </StackPanel>
+
+
+
+
     </Grid>
 </Page>
