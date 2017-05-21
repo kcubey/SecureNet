@@ -15,14 +15,14 @@
 
             <!--Back Button & Header-->
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Width="20" Height="20"  Margin="10,5,5,5" >
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Label FontSize="20" Foreground="Orange"  FontWeight="Bold"  >
+                <Label Style="{DynamicResource PassTitleLabel}" >
                     Password Generator
                 </Label>
             </WrapPanel>
@@ -30,29 +30,35 @@
             <!--Separator-->
             <Separator Background="Gray" />
 
+
+
             <!--Password Length Selection-->
-            <Label Margin="30,5,0,0" Foreground="Beige" FontSize="15">1. Select Password Length</Label>
-            <Label Margin="30,0,0,0" Foreground="White" FontSize="12">You can choose between  4 to 32 characters. Min. 15 characters is recommended for strong passwords.</Label>
-            <WrapPanel HorizontalAlignment="Left" Margin="30,0,10,10">
-                <Slider Width="300"  Minimum="4" Maximum="32" TickPlacement="BottomRight" Name="requiredLength"  IsSnapToTickEnabled="True" TickFrequency="1" Value="15"/>
-                <TextBox Text="{Binding ElementName=requiredLength, Path=Value, UpdateSourceTrigger=PropertyChanged}" Width="50" Height="20" IsReadOnly="True" Margin="5,0,0,0" />
+            <Label Style="{DynamicResource PassGenInstruction}" >1. Select Password Length</Label>
+            <Label Style="{DynamicResource PassGenDesc}">You can choose between  4 to 32 characters. Min. 15 characters is recommended for strong passwords.</Label>
+            <WrapPanel Style="{DynamicResource PassGenWrap}">
+                <Slider  Minimum="4" Maximum="32"  Name="requiredLength" Value="15" Style="{DynamicResource PassGenSlide}"/>
+                <TextBox Text="{Binding ElementName=requiredLength, Path=Value, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource PassGenSTB}" />
             </WrapPanel>
 
             <!-- No of Passwords-->
-            <Label Margin="30,5,0,0" Foreground="Beige" FontSize="15">2. Choose Num. of Passwords</Label>
-            <Label Margin="30,0,0,0" Foreground="White" FontSize="12">You can choose to generate up to 10 Passwords per submission.</Label>
-            <WrapPanel HorizontalAlignment="Left" Margin="30,0,10,10">
-                <Slider Width="300" Minimum="1" Maximum="10" TickPlacement="BottomRight" Name="number"  IsSnapToTickEnabled="True" TickFrequency="1" Value="1"/>
-                <TextBox Text="{Binding ElementName=number, Path=Value, UpdateSourceTrigger=PropertyChanged}" Width="50" Height="20" IsReadOnly="True"  Margin="5,0,0,0"/>
+            <Label Style="{DynamicResource PassGenInstruction}">2. Choose Num. of Passwords</Label>
+            <Label Style="{DynamicResource PassGenDesc}">You can choose to generate up to 10 Passwords per submission.</Label>
+            <WrapPanel Style="{DynamicResource PassGenWrap}">
+                <Slider Width="300" Minimum="1" Maximum="10" Name="number" Value="1" Style="{DynamicResource PassGenSlide}"/>
+                <TextBox Text="{Binding ElementName=number, Path=Value, UpdateSourceTrigger=PropertyChanged}"  Style="{DynamicResource PassGenSTB}" />
             </WrapPanel>
+            
+            
+            <!--Password Requirements-->
 
-            <Label Margin="30,5,0,0" Foreground="Beige" FontSize="15">3. Choose Password Requirements</Label>
-            <Label Margin="30,0,0,0" Foreground="White" FontSize="12">A strong password consists all of the following requirements. </Label>
-            <Label Margin="30,0,0,0" Foreground="White" FontSize="12">Some websites only permit some of the requirements below and you may uncheck accordingly before generating the password.</Label>
-            <CheckBox Margin="30,0,0,0" FontSize="13" Foreground="DarkOrange" Name="chkboxLC" Content="Lower Case Alphabets" IsChecked="True"/>
-            <CheckBox Margin="30,0,0,0" FontSize="13" Foreground="DarkOrange" Name="chkboxUC" Content="Upper Case Alphabets" IsChecked="True" />
-            <CheckBox Margin="30,0,0,0" FontSize="13" Foreground="DarkOrange" Name="chkboxNum" Content="Numericals" IsChecked="True"/>
-            <CheckBox Margin="30,0,0,0" FontSize="13" Foreground="DarkOrange" Name="chkboxSC" Content="Special Characters" IsChecked="True"/>
+            <Label Style="{DynamicResource PassGenInstruction}">3. Choose Password Requirements</Label>
+            <Label Style="{DynamicResource PassGenDesc}">A strong password consists all of the following requirements.</Label>
+            <Label Style="{DynamicResource PassGenDesc}">Some websites only permit some of the requirements below and you may uncheck accordingly before generating the password.</Label>
+
+            <CheckBox Style="{DynamicResource PassGenCB}"  Name="chkboxLC" Content="Lower Case Alphabets"/>
+            <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxUC" Content="Upper Case Alphabets" />
+            <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxNum" Content="Numericals" />
+            <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxSC" Content="Special Characters"/>
 
 
             <!--Generate Button-->

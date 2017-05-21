@@ -9,6 +9,7 @@
       Title="PassHome">
 
     <Grid>
+       
         <StackPanel>
             
             <!--Header-->
@@ -21,7 +22,7 @@
 
             <!--Nav to Login Credentials-->
             <WrapPanel>
-                <Button  Click="ButtonCreden_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
+                <Button  Click="ButtonCreden_Click"  Style="{DynamicResource PassHomeButton}">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/creden.png" />
@@ -30,8 +31,8 @@
                 </Button>
 
                 <StackPanel VerticalAlignment="Center">
-                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Login Credentials</Label>
-                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Store your login information for different websites. You can update, delete and view the information you stored.</Label>
+                    <Label FontSize="25" Style="{DynamicResource PassHomeLabels}">Login Credentials</Label>
+                    <Label FontSize="15" Style="{DynamicResource PassHomeLabels}">Store your login information for different websites. You can update, delete and view the information you stored.</Label>
                 </StackPanel>
                
             </WrapPanel>
@@ -41,7 +42,7 @@
 
             <!--Nav to Password Generator-->
             <WrapPanel>
-                <Button  Click="ButtonGen_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
+                <Button  Click="ButtonGen_Click"  Style="{DynamicResource PassHomeButton}">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/gen.png"/>
@@ -50,8 +51,8 @@
                 </Button>
                 
                 <StackPanel VerticalAlignment="Center">
-                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Password Generator</Label>
-                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Customize and generate secure passwords for your accounts.</Label>
+                    <Label FontSize="25" Style="{DynamicResource PassHomeLabels}">Password Generator</Label>
+                    <Label FontSize="15" Style="{DynamicResource PassHomeLabels}">Customize and generate secure passwords for your accounts.</Label>
                 </StackPanel>
             </WrapPanel>
 
@@ -60,23 +61,20 @@
 
             <!--Nav to ActivityLog-->
             <WrapPanel>
-                <Button  Click="ButtonAlog_Click" Width="100" Height="100" HorizontalAlignment="Left" Margin="30,20,20,20">
+                <Button  Click="ButtonAlog_Click"  Style="{DynamicResource PassHomeButton}">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/alog.png"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                
+
                 <StackPanel VerticalAlignment="Center">
-                    <Label  Foreground="Beige" FontSize="25" Margin="30,0,0,0">Activity Log</Label>
-                    <Label  Foreground="Beige" FontSize="15" Margin="30,0,0,0">Track the actions performed on your account. If you see any suspicious activities, inform the support team.</Label>
+                    <Label FontSize="25" Style="{DynamicResource PassHomeLabels}">Activity Log</Label>
+                    <Label FontSize="15" Style="{DynamicResource PassHomeLabels}">Track the actions performed on your account. If you see any suspicious activities, inform the support team.</Label>
                 </StackPanel>
-                
+
             </WrapPanel>
-
-          
-
 
         </StackPanel>
 

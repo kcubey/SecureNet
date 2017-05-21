@@ -42,7 +42,7 @@ namespace SecureNet.Pages.Manager
 
 
         //Generate Password
-        public string Generate(int minLength, int maxLength)
+        public string Generate(int length)
         {
 
             char[] lcase = PASSWORD_CHARS_LCASE.ToCharArray();
@@ -99,12 +99,7 @@ namespace SecureNet.Pages.Manager
 
 
             // This array will hold password characters.
-            char[] password = null;
-            // Allocate appropriate memory for the password.
-            if (minLength < maxLength)
-                password = new char[random.Next(minLength, maxLength + 1)];
-            else
-                password = new char[minLength];
+            char[] password = new char[length];
 
 
             // Index of the next character to be added to password.
@@ -193,10 +188,6 @@ namespace SecureNet.Pages.Manager
             // Convert password characters into a string and return the result.
             return new string(password);
 
-
-
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -219,7 +210,7 @@ namespace SecureNet.Pages.Manager
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < noOfResults; i++)
                 {
-                    string password = Generate(length, length);
+                    string password = Generate(length);
                     builder.Append(password);
                     builder.Append(Environment.NewLine);
 

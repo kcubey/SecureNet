@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-<!-- Window/Page Styles-->
+        <!-- Window/Page Styles-->
         <Style TargetType="Window">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontFamily" Value="San-Serif"/>
@@ -18,11 +18,11 @@
             <Setter Property="Background" Value="Black"/>
         </Style>
 
-<!-- Button Styles-->
+        <!-- Button Styles-->
         <Style TargetType="Button">
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
-        
+
         <Style TargetType="Button" x:Key="menuBtn">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -139,28 +139,99 @@
             </Style.Triggers>
         </Style>
 
-<!-- Image Styles-->
+        <!-- Image Styles-->
         <Style TargetType="Image" x:Key="icon">
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="70"/>
         </Style>
 
-<!-- Control Styles-->
+        <!-- Control Styles-->
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
-        
+
         <Style TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
-        
+
         <!-- alternate way to define
         <Style x:Key="commonStyle" TargetType="{x:Type FrameworkElement}">
             Shared Setters
         </Style>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource commonStyle}" />
         -->
+
+
+
+        <!--Password Manager Home Page & Common Layout for Pages-->
+
+        <Style TargetType="Button" x:Key="PassHomeButton">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Margin" Value="30,20,20,20"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="PassHomeLabels">
+            <Setter Property="Foreground" Value="Beige"/>
+            <Setter Property="Margin" Value="30,0,0,0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="PassBackButton">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="10,5,5,5"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="PassTitleLabel">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="Orange" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        
+        <!--Password Generator Common Layout-->
+
+        <Style TargetType="Label" x:Key="PassGenInstruction">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="Beige" />
+            <Setter Property="Margin" Value="30,5,0,0" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="PassGenDesc">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="30,0,0,0" />
+        </Style>
+
+        <Style TargetType="WrapPanel" x:Key="PassGenWrap">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="30,0,10,10" />
+        </Style>
+
+        <Style TargetType="Slider" x:Key="PassGenSlide">
+            <Setter Property="Width" Value="300" />
+            <Setter Property="TickPlacement" Value="BottomRight" />
+            <Setter Property="IsSnapToTickEnabled" Value="True" />
+            <Setter Property="TickFrequency" Value="1" />
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="PassGenSTB">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="PassGenCB">
+            <Setter Property="IsChecked" Value="True" />
+            <Setter Property="Margin" Value="30,0,0,0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="DarkOrange" />
+        </Style>
+
+
     </Application.Resources>
 
 </Application>
