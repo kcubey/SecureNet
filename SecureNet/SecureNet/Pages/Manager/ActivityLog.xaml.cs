@@ -25,6 +25,7 @@ namespace SecureNet.Pages.Manager
         public ActivityLog()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Page));
         }
 
 

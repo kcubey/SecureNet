@@ -24,6 +24,7 @@ namespace SecureNet.Pages.Manager
         public LoginCredentials()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Page));
         }
 
         //Navigation : Back Button
