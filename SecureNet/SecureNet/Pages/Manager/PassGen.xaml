@@ -51,10 +51,11 @@
 
             <!--Password Requirements-->
 
-            <Label Style="{DynamicResource PassGenInstruction}">3. Choose Password Requirements</Label>
-            <Label Style="{DynamicResource PassGenDesc}">A strong password consists all of the following requirements.
-            Some websites only permit some of the requirements below and you may uncheck accordingly before generating the password.
-            For special characters, click Advance Options to uncheck accordingly.</Label>
+            <Label Style="{DynamicResource PassGenInstruction}">3. Choose Password Characters</Label>
+            <Label Style="{DynamicResource PassGenDesc}">
+            A strong password consists alphanumerics, different casing of alphabets and special characters .
+            You may customize your password from the options below to suit different websites' password policy.
+            Click Advance Options to specify special characters needed.</Label>
 
             <CheckBox Style="{DynamicResource PassGenCB}"  Name="chkboxLC" Content="Lower Case Alphabets"/>
             <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxUC" Content="Upper Case Alphabets" />

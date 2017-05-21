@@ -52,7 +52,6 @@ namespace SecureNet.Pages.Manager
             char[] lcase = PASSWORD_CHARS_LCASE.ToCharArray();
             char[] ucase = PASSWORD_CHARS_UCASE.ToCharArray();
             char[] numeric = PASSWORD_CHARS_NUMERIC.ToCharArray();
-            char[] special = finalchars.ToCharArray();
 
             List<char[]> arrayList = new List<char[]>();
 
@@ -65,9 +64,13 @@ namespace SecureNet.Pages.Manager
             if (chkboxNum.IsChecked == true)
                 arrayList.Add(numeric);
 
-            if (chkboxSC.IsChecked == true)
-                arrayList.Add(special);
+            if (finalchars != null)
+            {
+                char[] special = finalchars.ToCharArray();
 
+                if (chkboxSC.IsChecked == true)
+                    arrayList.Add(special);
+            }
 
             // Track the number of unused characters in each character group
             int[] charsLeftInGroup = new int[arrayList.Count];
@@ -192,6 +195,9 @@ namespace SecureNet.Pages.Manager
             // Convert password characters into a string and return the result.
             return new string(password);
 
+
+
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -204,29 +210,31 @@ namespace SecureNet.Pages.Manager
 
                 resultPassword.Text = "Error! Please select at least one password requirement";
             }
-
             else
             {
                 string finalchars = CheckBoxTest();
                 int length = Convert.ToInt32(requiredLength.Value);
                 int noOfResults = Convert.ToInt32(number.Value);
-                if (finalchars == null)
+
+                if (finalchars == null && chkboxSC.IsChecked == true)
                 {
                     resultPassword.Text = "Error! Please select at least one special character \n from Advance Options";
                 }
-                else
+                else { 
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < noOfResults; i++)
                 {
-                    StringBuilder builder = new StringBuilder();
-                    for (int i = 0; i < noOfResults; i++)
-                    {
-                        string password = Generate(length, finalchars);
-                        builder.Append(password);
-                        builder.Append(Environment.NewLine);
+                    string password = Generate(length, finalchars);
+                    builder.Append(password);
+                    builder.Append(Environment.NewLine);
 
 
-                    }
-                    resultPassword.Text += builder.ToString();
                 }
+                resultPassword.Text += builder.ToString();
+
+                }
+
+
 
 
 
