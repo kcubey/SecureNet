@@ -55,14 +55,14 @@
             <Label Style="{DynamicResource PassGenDesc}">
             A strong password consists alphanumerics, different casing of alphabets and different special characters .
             You may customize your password from the options below to suit different websites' password policy.
-            Click Advance Options to specify special characters needed.</Label>
+            Click Advanced Options to specify special characters needed.</Label>
 
             <CheckBox Style="{DynamicResource PassGenCB}"  Name="chkboxLC" Content="Lower Case Alphabets"/>
             <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxUC" Content="Upper Case Alphabets" />
             <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxNum" Content="Numericals" />
             <WrapPanel>
                 <CheckBox Style="{DynamicResource PassGenCB}" Name="chkboxSC" Content="Special Characters"/>
-                <Button Width="150" Height="20" Content="Advance Options" FontSize="13" Margin="5,0,0,0" Click="Button_Click_1"  />
+                <Button Width="150" Height="20" Content="Advanced Options" FontSize="13" Margin="5,0,0,0" Click="Button_Click_1"  />
             </WrapPanel>
 
 
