@@ -32,7 +32,7 @@ namespace SecureNet.Pages.Manager
         //Navigate to Login Credentials
         private void ButtonCreden_Click(object sender, RoutedEventArgs e)
         {
-            navigation("/Pages/Manager/LoginCredentials.xaml");
+            navigation("/Pages/Manager/AddService.xaml");
         }
 
         //Navigate to Password Generator

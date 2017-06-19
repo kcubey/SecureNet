@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,9 +86,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Manager\LoginCredentials.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\Manager\AddService.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Manager\PassGen.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -111,8 +112,8 @@
     <Compile Include="Pages\Manager\ActivityLog.xaml.cs">
       <DependentUpon>ActivityLog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Manager\LoginCredentials.xaml.cs">
-      <DependentUpon>LoginCredentials.xaml</DependentUpon>
+    <Compile Include="Pages\Manager\AddService.xaml.cs">
+      <DependentUpon>AddService.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Manager\PassGen.xaml.cs">
       <DependentUpon>PassGen.xaml</DependentUpon>
