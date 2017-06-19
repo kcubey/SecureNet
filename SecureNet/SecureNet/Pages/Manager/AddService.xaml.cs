@@ -37,8 +37,8 @@ namespace SecureNet.Pages.Manager
 
         private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SecureNetCon"].ConnectionString);
-            using (connection)
+           
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SecureNetCon"].ConnectionString))
             {
 
                 SqlCommand cmd = new SqlCommand();
