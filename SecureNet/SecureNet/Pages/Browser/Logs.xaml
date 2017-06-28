@@ -1,0 +1,25 @@
+﻿<Page x:Class="SecureNet.Pages.Browser.Logs"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages.Browser"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
+      Title="Logs">
+
+    <Grid>
+
+        <StackPanel>
+            <DataGrid AlternatingRowBackground="#FFC4B0B0" Height="400" Width="350" AutoGenerateColumns="False" Name="gridLogs">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding FirstName}" Width="100" Header="First Name"/>
+                    <DataGridTextColumn Binding="{Binding LastName}" Width="100" Header="Last Name"/>
+                    <DataGridTextColumn Binding="{Binding Salary}" Width="100" Header="Salary"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        
+    </Grid>
+</Page>
