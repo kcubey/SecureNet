@@ -13,9 +13,21 @@
         <StackPanel>
             
             <!--Header-->
-            <Label FontSize="20" Foreground="Orange"  FontWeight="Bold">
-                Password Manager
-            </Label>
+            <WrapPanel>
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label FontSize="20" Foreground="Orange"  FontWeight="Bold">
+                    Password Manager
+                </Label>
+            </WrapPanel>
+            
+            
+            
             
             <!--Separator 1-->
             <Separator Background="Gray" />

@@ -47,6 +47,11 @@ namespace SecureNet.Pages.Manager
             navigation("/Pages/Manager/ActivityLog.xaml");
         }
 
+        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        {
+            navigation("/Pages/Home.xaml");
+        }
+
         //Navigation Method
         private void navigation(string url)
         {
