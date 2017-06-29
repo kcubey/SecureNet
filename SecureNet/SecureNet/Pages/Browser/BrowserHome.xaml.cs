@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VirusTotalNET;
 
 namespace SecureNet.Pages.Browser
 {
@@ -32,6 +34,12 @@ namespace SecureNet.Pages.Browser
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
             Console.WriteLine("redirecting now");
+        }
+
+        private void startVT(object sender, RoutedEventArgs e)
+        {
+            VirusTotal virusTotal = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+
         }
     }
 }

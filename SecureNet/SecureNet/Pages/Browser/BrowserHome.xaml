@@ -28,7 +28,22 @@
             </WrapPanel>
             <Separator Background="Gray"/>
 
-            <Button >upload file</Button>
+            <TextBlock/>
+
+            <WrapPanel>
+                <Label>Enter URL to scan: </Label>
+                <TextBox VerticalContentAlignment="Center" 
+                         Padding="10" TextWrapping="Wrap" 
+                         MaxWidth="500" MinWidth="200" 
+                         AcceptsReturn="True" MinHeight="40"
+                         Margin="0">random text</TextBox>
+            </WrapPanel>
+
+            <WrapPanel>
+                <Label>Upload file: </Label>
+                <Button Click="startVT" Style="{DynamicResource selectBtn}">upload file</Button>
+            </WrapPanel>
+
         </StackPanel>
 
 
