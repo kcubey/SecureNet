@@ -28,7 +28,7 @@
             </WrapPanel>
             <Separator Background="Gray"/>
 
-            <Button>upload file</Button>
+            <Button >upload file</Button>
         </StackPanel>
 
 
