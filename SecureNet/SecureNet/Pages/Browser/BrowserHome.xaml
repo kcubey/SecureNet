@@ -13,6 +13,7 @@
 
 
         <StackPanel>
+            <Label Foreground="Red">to have 2 tabs maybe?</Label>
             <WrapPanel>
                 <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
                      CommandParameter="/Pages/Home.xaml">
@@ -41,9 +42,10 @@
 
             <WrapPanel>
                 <Label>Upload file: </Label>
-                <Button Click="startVT" Style="{DynamicResource selectBtn}">upload file</Button>
+                <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
             </WrapPanel>
 
+            <Button Click="VT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
         </StackPanel>
 
 
