@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -45,10 +46,30 @@ namespace SecureNet.Pages.Browser
             MessageBox.Show("WIP");
         }
 
+        private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string filename in openFileDialog.FileNames)
+                {
+                    lbFiles.Items.Add(System.IO.Path.GetFileName(filename));
+                    FileInfo fileinfo = new FileInfo(System.IO.Path.GetFileName(filename));
+                    lbFiles.Items.Add(fileinfo);
+                    //File.WriteAllBytes(fileinfo.FullName, fileinfo.GetObjectData());
+                }
+
+            }
+        }
 
         private void startVT(object sender, RoutedEventArgs e)
         {
-            VirusTotal virusTotal = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+            vt.UseTLS = true;
+
+            //vt.ScanFile();
 
         }
 
