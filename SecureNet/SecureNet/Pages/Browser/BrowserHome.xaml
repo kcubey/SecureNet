@@ -1,0 +1,77 @@
+﻿<Page x:Class="SecureNet.Pages.Browser.BrowserHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages.Browser"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
+      Title="BrowserHome">
+
+    <Grid>
+
+
+        <StackPanel>
+            <Label Foreground="Red">to have 2 tabs maybe?</Label>
+            <WrapPanel>
+                <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+                     CommandParameter="/Pages/Home.xaml">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label Style="{DynamicResource backLbl}" >
+                    BrpwserLogs Home
+                </Label>
+            </WrapPanel>
+            <Separator Background="Gray"/>
+
+            <TextBlock/>
+
+            <WrapPanel>
+                <Label>Enter URL to scan: </Label>
+                <TextBox VerticalContentAlignment="Center" 
+                         Padding="10" TextWrapping="Wrap" 
+                         MaxWidth="500" MinWidth="200" 
+                         AcceptsReturn="True" MinHeight="40"
+                         Margin="0">random text</TextBox>
+            </WrapPanel>
+
+            <WrapPanel>
+                <Label>Upload file: </Label>
+                <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
+            </WrapPanel>
+            <Button Click="VT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
+
+            <Separator Background="Red"/>
+
+            <DockPanel Margin="10">
+                <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                    <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
+                </WrapPanel>
+                <ListBox Name="lbFiles" />
+            </DockPanel>
+
+        </StackPanel>
+
+
+
+<!--
+        <Button Style="{DynamicResource menuBtn}"
+                        Click="OnClick"
+                        CommandParameter="/Pages/Browser/BrowserHome.xaml">
+            <StackPanel>
+                <Image Source="/Media/browser.png"
+                               Style="{DynamicResource icon}"/>
+                <TextBlock TextAlignment="Center">
+                            <LineBreak/>Browser Logs
+                </TextBlock>
+            </StackPanel>
+        </Button>
+-->
+
+    </Grid>
+</Page>
