@@ -32,15 +32,46 @@
 
             <Label Style="{DynamicResource PassGenInstruction}" >Add Service</Label>
 
-            <WrapPanel Style="{DynamicResource PassGenWrap}">
+            <Label Style="{DynamicResource PassGenDesc}" >Requirements</Label>
 
-                <Label Style="{DynamicResource PassGenDesc}">Name</Label>
-                <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" />
+            <Label Style="{DynamicResource AddServiceRequirement}" >1. Username: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website.</Label>
+
+            <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid. Max 150 characters allowed. </Label>
+
+            <WrapPanel >
+                <StackPanel>
+                    <Label Style="{DynamicResource AddServiceTag}">Service Name</Label>
+                    <Label Style="{DynamicResource AddServiceTag}">URL</Label>
+                    <Label Style="{DynamicResource AddServiceTag}">Username</Label>
+                    <Label Style="{DynamicResource AddServiceTag}">Password</Label>
+                    <Label Style="{DynamicResource AddServiceTag}">Other Login Notes</Label>
+
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" />
+                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUrl" />
+                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUsername" />
+                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxPassword" />
+                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxNotes" />
+                </StackPanel>
+
+   
+
             </WrapPanel>
+
+
+
+
+
+
+
+
 
             <Button  Width="80" Height="30" Margin="30,5,5,5" FontSize="18" Content="Submit" Click="ButtonSubmit_Click"  HorizontalAlignment="Left"/>
 
-
+            <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>
+            
 
         </StackPanel>
     </Grid>
