@@ -1,0 +1,10 @@
+﻿1. Add/Update Service:
+	-Duplicate Records
+	-Regex
+	-Progress Bar
+	- Update Service
+	-UserId
+2. View/Delete Service
+3.OTP/Fingerprint
+4. Activity Log
+5. All: Back Buttons

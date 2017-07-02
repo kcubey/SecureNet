@@ -176,8 +176,6 @@
     <Resource Include="Media\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
-    <Folder Include="Pages\Browser\" />
     <Folder Include="Pages\Contact\" />
     <Folder Include="Pages\Settings\" />
   </ItemGroup>
@@ -202,6 +200,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\PasswordManager\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pages\Manager\Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
