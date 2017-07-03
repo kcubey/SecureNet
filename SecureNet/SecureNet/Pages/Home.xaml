@@ -43,7 +43,8 @@
                     </StackPanel>
                 </Button>
                 <Button Style="{DynamicResource menuBtn}"
-                        Click="OnClick">
+                        Click="OnClick"
+                        CommandParameter="/Pages/Contact/Contact.xaml">
                     <StackPanel>
                         <Image Source="/Media/contact.png"
                                Style="{DynamicResource icon}"/>
@@ -52,7 +53,9 @@
                         </TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Style="{DynamicResource menuBtn}">
+                <Button Style="{DynamicResource menuBtn}"
+                        Click="OnClick"
+                        CommandParameter="/Pages/Settings/Settings.xaml">
                     <StackPanel>
                         <Image Source="/Media/settings.png"
                                Style="{DynamicResource icon}"/>
