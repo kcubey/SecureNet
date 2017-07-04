@@ -55,6 +55,13 @@
                 <ListBox Name="lbFiles" />
             </DockPanel>
 
+            <Button Click="istruebool">check if file exists</Button>
+
+            <WrapPanel>
+                <Label>Has select file</Label>
+                <Label Name="istrue"></Label>
+            </WrapPanel>
+
         </StackPanel>
 
 

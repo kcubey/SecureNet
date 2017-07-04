@@ -64,6 +64,19 @@ namespace SecureNet.Pages.Browser
             }
         }
 
+        private void istruebool(object sender, RoutedEventArgs e)
+        {
+            if (lbFiles.HasItems == true)
+            {
+                istrue.Content = "True";
+            }
+            else if (lbFiles.HasItems == false)
+            {
+                istrue.Content = "False";
+            }
+
+        }
+
         private void startVT(object sender, RoutedEventArgs e)
         {
             VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
