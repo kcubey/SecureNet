@@ -158,14 +158,19 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
-        
+
+        <Style TargetType="ScrollViewer">
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+
         <!-- Label Style-->
         <Style TargetType="Label" x:Key="backLbl">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Foreground" Value="Orange" />
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
-
+        
         <Style TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>

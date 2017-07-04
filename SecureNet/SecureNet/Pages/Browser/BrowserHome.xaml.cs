@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,19 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine("navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+
+            var list = new ObservableCollection<DataObject>();
+            list.Add(new DataObject() { A = 6, B = 7, C = 5 });
+            list.Add(new DataObject() { A = 5, B = 8, C = 4 });
+            list.Add(new DataObject() { A = 4, B = 3, C = 0 });
+            this.dataGrid1.ItemsSource = list;
+        }
+
+        public class DataObject
+        {
+            public int A { get; set; }
+            public int B { get; set; }
+            public int C { get; set; }
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
@@ -43,7 +57,7 @@ namespace SecureNet.Pages.Browser
 
         private void tempVT(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("WIP");
+            MessageBox.Show("WIP","SecureNet");
         }
 
         private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
