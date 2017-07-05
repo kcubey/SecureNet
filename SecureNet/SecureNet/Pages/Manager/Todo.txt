@@ -1,10 +1,12 @@
-﻿1. Add/Update Service:
-	-Duplicate Records
+﻿1.Service.cs:
+
+2. AddService.xaml
 	-Regex
-	-Progress Bar
-	- Update Service
 	-UserId
-2. View/Delete Service
-3.OTP/Fingerprint
-4. Activity Log
-5. All: Back Buttons
+	-Autofill/Copy
+	-See Password in text
+	-OTP/Fingerprint
+	-Log action into activity Log
+
+3. Activity Log
+4. All: Back Buttons

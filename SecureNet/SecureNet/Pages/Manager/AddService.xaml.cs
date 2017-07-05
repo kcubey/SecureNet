@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.IO;
 using SecureNet.Classes;
+using System.Data;
+using System.Data.SqlClient;
 
 
 namespace SecureNet.Pages.Manager
@@ -25,45 +27,225 @@ namespace SecureNet.Pages.Manager
     public partial class AddService : Page
     {
 
-
         public AddService()
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+            startUp();
 
         }
 
-        //Navigation : Back Button
+        //Navigataion
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Pages/Manager/PassHome.xaml", UriKind.Relative));
         }
 
+        //Retrieve Session userID
         private int getUserId()
         {
-            return 1; 
+            return 1;
         }
-        private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
+
+
+        //StartUp Load
+        private void startUp()
         {
 
+            pgHeader.Content = "Login Credentials";
 
+            populateSelection();
+
+            saButt.Content = "Add";
+
+            errorMsg.Content = null;
+
+        }
+
+
+        //Combobox change
+        private void selection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (selection.SelectedIndex != -1)
+            {
+                string selectedService = selection.SelectedItem.ToString();
+
+                List<Service> userServices = Service.retrieveRecords(getUserId());
+
+                foreach (Service j in userServices)
+                {
+                    if (j.name == selectedService)
+                    {
+                        TextBoxId.Text = j.serviceId.ToString();
+                        TextBoxName.Text = j.name;
+                        TextBoxUrl.Text = j.url;
+                        TextBoxUsername.Text = j.username;
+                        TextBoxPassword.Password = j.password;
+                        if (j.notes == null)
+                        {
+                            TextBoxNotes.Text = null;
+                        }
+                        else
+                        {
+                            TextBoxNotes.Text = j.notes;
+                        }
+                    }
+                }
+
+                uneditable();
+                svcForm.Visibility = Visibility.Visible;
+
+                suButt.Visibility = Visibility.Visible;
+                suButt.Content = "Update";
+
+                dcButt.Visibility = Visibility.Visible;
+                dcButt.Content = "Delete";
+
+                errorMsg.Content = null;
+            }
+
+        }
+
+        //Add/Submit
+        private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            string command = saButt.Content.ToString();
+
+            if (command == "Submit")
+            {
+                Add(1);
+
+
+            }
+            else
+            {
+                pgHeader.Content = "Add Service";
+
+                selection.Visibility = Visibility.Collapsed;
+
+                Req.Visibility = Visibility.Visible;
+
+                editable();
+                resetfields();
+                svcForm.Visibility = Visibility.Visible;
+
+                saButt.Content = "Submit";
+
+                dcButt.Visibility = Visibility.Visible;
+                dcButt.Content = "Cancel";
+
+                suButt.Visibility = Visibility.Collapsed;
+
+                errorMsg.Content = null;
+
+            }
+
+        }
+
+        //Delete/Cancel
+        private void dcButt_Click(object sender, RoutedEventArgs e)
+        {
+            string command = dcButt.Content.ToString();
+            if (command == "Cancel")
+            {
+                pgHeader.Content = "Login Credentials";
+
+                selection.Visibility = Visibility.Visible;
+                selection.SelectedIndex = -1;
+
+                Req.Visibility = Visibility.Collapsed;
+
+                svcForm.Visibility = Visibility.Collapsed;
+                resetfields();
+
+                saButt.Content = "Add";
+                saButt.Visibility = Visibility.Visible;
+
+                suButt.Visibility = Visibility.Collapsed;
+
+                dcButt.Content = "Delete";
+                dcButt.Visibility = Visibility.Collapsed;
+
+                errorMsg.Content = null;
+
+
+            }
+            else
+            {
+                int serviceId = Convert.ToInt32(TextBoxId.Text);
+
+                Service.deleteService(serviceId);
+
+                selection.SelectedIndex = -1;
+                populateSelection();
+
+                svcForm.Visibility = Visibility.Collapsed;
+                resetfields();
+
+                suButt.Visibility = Visibility.Collapsed;
+
+                dcButt.Visibility = Visibility.Collapsed;
+
+                errorMsg.Content = "Successfully deleted record";
+
+
+            }
+        }
+
+        //Update/Submit
+        private void uButt_Click(object sender, RoutedEventArgs e)
+        {
+            string command = suButt.Content.ToString();
+
+            if (command == "Update")
+            {
+                pgHeader.Content = "Update Service";
+
+                selection.Visibility = Visibility.Collapsed;
+
+                Req.Visibility = Visibility.Visible;
+
+                editable();
+
+                saButt.Visibility = Visibility.Collapsed;
+
+                suButt.Content = "Submit";
+
+                dcButt.Content = "Cancel";
+
+                Req.Visibility = Visibility.Visible;
+
+
+            }
+            else
+            {
+
+                Add(0);
+            }
+
+        }
+
+
+        //Add/Update Service
+        private void Add(int command)
+        {
             string name = TextBoxName.Text;
             string url = TextBoxUrl.Text;
-            string password = TextBoxPassword.Text;
+            string password = TextBoxPassword.Password.ToString();
             string username = TextBoxUsername.Text;
             string notes = TextBoxNotes.Text;
 
 
-            if (!testEmpty(name) && !testEmpty(url) && !testEmpty(password) && !testEmpty(username))
+            if (!Service.testEmpty(name) && !Service.testEmpty(url) &&
+                !Service.testEmpty(password) && !Service.testEmpty(username))
             {
 
                 //regex for password
                 //regex for username
                 //regex for notes
                 //Check for duplicates
-                //progressBar
 
-                if (testName(name) && testUrl(url))
+                if (Service.testName(name) && Service.testUrl(url))
                 {
 
 
@@ -75,7 +257,7 @@ namespace SecureNet.Pages.Manager
                     service.username = username;
                     service.password = password;
 
-                    if (!testEmpty(notes))
+                    if (!Service.testEmpty(notes))
                     {
                         service.notes = notes;
                     }
@@ -85,12 +267,33 @@ namespace SecureNet.Pages.Manager
                     }
                     try
                     {
-                    Service.genKeyIv(service, getUserId());
-                    errorMsg.Content = "Successfully added!";
+
+
+                        if (command == 1)
+                        {
+                            if (!sameName(name))
+                            {
+                                Service.genKeyIv(service, getUserId(), -1);
+                                resetfields();
+                                errorMsg.Content = "Successfully added!";
+                            }
+                            else
+                            {
+                                errorMsg.Content = "Error with Inputs. Please relook at the requirements";
+                            }
+                        }
+                        else
+                        {
+                            int serviceId = Convert.ToInt32(TextBoxId.Text);
+                            Service.genKeyIv(service, getUserId(), serviceId);
+                            errorMsg.Content = "Successfully updated!";
+
+                        }
+                        populateSelection();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                         errorMsg.Content = "Operation Error.Contact Tech Support.";
+                        errorMsg.Content = "Operation Error.Contact Tech Support.";
                     }
                 }
 
@@ -106,81 +309,75 @@ namespace SecureNet.Pages.Manager
             }
         }
 
-        //Test Empty Fields
-        protected bool testEmpty(string testText)
-        {
-            return String.IsNullOrEmpty(testText) || String.IsNullOrWhiteSpace(testText);
-        }
-
-        //Text Max Chars
-        protected bool testMax(string text, int max)
-        {
-            return text.Length > max;
-
-        }
-
-        protected bool validUrl(string uriName)
-        {
-            Uri uriResult;
-            bool result = Uri.TryCreate(uriName, UriKind.Absolute, out uriResult)
-           && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-            return result;
-        }
-
-        protected bool testName(string name)
+        //Populate ComboBox
+        private void populateSelection()
         {
 
-            Regex rgxName = new Regex("^[a-zA-Z0-9\x20]*$");
+            List<Service> userServices = Service.retrieveRecords(getUserId());
 
-            bool result = rgxName.IsMatch(name);
-            if (testMax(name, 50))
+            if (userServices != null)
             {
-
-                return false;
-
-            }
-            else if (!rgxName.IsMatch(name))
-            {
-
-
-                return false;
-            }
-            else
-            {
-
-                return true;
+                selection.Items.Clear();
+                foreach (Service e in userServices)
+                {
+                    selection.Items.Add(e.name);
+                }
             }
         }
 
-        protected bool testUrl(string url)
+        //Reset TextBoxes to null
+        private void resetfields()
         {
-
-            bool test = validUrl(url);
-
-
-            if (testMax(url, 150))
-            {
-
-                return false;
-
-            }
-            else if (!validUrl(url))
-            {
-
-
-                return false;
-
-            }
-            else
-            {
-
-                return true;
-            }
+            TextBoxName.Text = null;
+            TextBoxUrl.Text = null;
+            TextBoxNotes.Text = null;
+            TextBoxPassword.Password = null;
+            TextBoxUsername.Text = null;
         }
 
+        //TextBox Uneditable
+        private void uneditable()
+        {
+            TextBoxName.IsReadOnly = true;
+            TextBoxUrl.IsReadOnly = true;
+            TextBoxNotes.IsReadOnly = true;
+            TextBoxPassword.IsEnabled = false;
+            TextBoxUsername.IsReadOnly = true;
+        }
 
+        //TextBox editable
+        private void editable()
+        {
+            TextBoxName.IsReadOnly = false;
+            TextBoxUrl.IsReadOnly = false;
+            TextBoxNotes.IsReadOnly = false;
+            TextBoxPassword.IsEnabled = true;
+            TextBoxUsername.IsReadOnly = false;
+        }
 
+        //Name Validation
+        private bool sameName(string name)
+        {
+            List<Service> userServices = Service.retrieveRecords(getUserId());
 
+            if (userServices != null)
+            {
+                foreach (Service e in userServices)
+                {
+                    string test = e.name;
+                    string testwo = name;
+                    bool result = string.Equals(name, e.name, StringComparison.OrdinalIgnoreCase);
+
+                    if (result == true)
+                    {
+                        return true;
+
+                    }
+
+                }
+            }
+            return false;
+        }
 
     }
 }

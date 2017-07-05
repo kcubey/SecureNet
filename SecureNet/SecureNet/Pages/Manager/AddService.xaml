@@ -30,48 +30,56 @@
             <!--Separator-->
             <Separator Background="Gray" />
 
-            <Label Style="{DynamicResource PassGenInstruction}" >Add Service</Label>
+            <Label Name="pgHeader" Visibility="Visible" Style="{DynamicResource PassGenInstruction}"/>
 
-            <Label Style="{DynamicResource PassGenDesc}" >Requirements</Label>
+            <!--DropDownlist selection-->
+            <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />
 
-            <Label Style="{DynamicResource AddServiceRequirement}" >1. Username: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website.</Label>
+            
 
-            <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid. Max 150 characters allowed. </Label>
+                <!--Requirements-->
+            <StackPanel Name="Req" Visibility="Collapsed">
+                <Label Style="{DynamicResource PassGenDesc}" >Requirements</Label>
 
-            <WrapPanel >
+                <Label Style="{DynamicResource AddServiceRequirement}" >1. Name: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website. No duplicate records allowed.</Label>
+
+                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid. Max 150 characters allowed.</Label>
+            </StackPanel>
+
+            <!--Form-->
+            <WrapPanel Name="svcForm" Visibility="Collapsed">
                 <StackPanel>
+                    <Label Style="{DynamicResource AddServiceTag}" Visibility="Collapsed">Service Id</Label>
                     <Label Style="{DynamicResource AddServiceTag}">Service Name</Label>
                     <Label Style="{DynamicResource AddServiceTag}">URL</Label>
                     <Label Style="{DynamicResource AddServiceTag}">Username</Label>
-                    <Label Style="{DynamicResource AddServiceTag}">Password</Label>
+                    <Label Style="{DynamicResource AddServiceTag}" >Password</Label>
                     <Label Style="{DynamicResource AddServiceTag}">Other Login Notes</Label>
 
                 </StackPanel>
 
                 <StackPanel>
+                    <TextBox  Style="{DynamicResource AddServiceSTB}" Name="TextBoxId" Visibility="Collapsed" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUrl" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUsername" />
-                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxPassword" />
+                    <PasswordBox Style="{DynamicResource AddServiceSPB}" Name="TextBoxPassword" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxNotes" />
                 </StackPanel>
 
-   
-
             </WrapPanel>
 
+            <Popup></Popup>
 
 
+            <!--Submit/Update Button-->
+            <Button Visibility="Visible" Name="saButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  Click="ButtonSubmit_Click"  HorizontalAlignment="Left"/>
+            <Button Visibility="Collapsed" Name="suButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="uButt_Click" />
+            <Button Visibility="Collapsed" Name="dcButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="dcButt_Click"/>
 
-
-
-
-
-
-            <Button  Width="80" Height="30" Margin="30,5,5,5" FontSize="18" Content="Submit" Click="ButtonSubmit_Click"  HorizontalAlignment="Left"/>
 
             <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>
-            
+
 
         </StackPanel>
     </Grid>

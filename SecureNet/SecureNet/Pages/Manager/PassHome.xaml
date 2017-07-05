@@ -34,7 +34,7 @@
 
             <!--Nav to Login Credentials-->
             <WrapPanel>
-                <Button  Click="ButtonCreden_Click"  Style="{DynamicResource PassHomeButton}">
+                <Button  Click="ButtonCreden_Click"  Style="{DynamicResource PassHomeButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/creden.png" />
@@ -54,7 +54,7 @@
 
             <!--Nav to Password Generator-->
             <WrapPanel>
-                <Button  Click="ButtonGen_Click"  Style="{DynamicResource PassHomeButton}">
+                <Button  Click="ButtonGen_Click"  Style="{DynamicResource PassHomeButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/gen.png"/>
@@ -73,7 +73,7 @@
 
             <!--Nav to ActivityLog-->
             <WrapPanel>
-                <Button  Click="ButtonAlog_Click"  Style="{DynamicResource PassHomeButton}">
+                <Button  Click="ButtonAlog_Click"  Style="{DynamicResource PassHomeButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/Media/PasswordManager/alog.png"/>
