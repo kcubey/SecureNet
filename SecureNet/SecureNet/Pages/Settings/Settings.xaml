@@ -1,0 +1,33 @@
+﻿<Page x:Class="SecureNet.Pages.Settings.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages.Settings"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
+      Title="Settings">
+
+    <Grid>
+        <StackPanel>
+            <WrapPanel>
+                <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+                     CommandParameter="/Pages/Home.xaml">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label Style="{DynamicResource backLbl}" >
+                    Settings
+                </Label>
+            </WrapPanel>
+            <Separator Background="Gray"/>
+
+            <TextBlock/>
+        </StackPanel>
+
+    </Grid>
+</Page>

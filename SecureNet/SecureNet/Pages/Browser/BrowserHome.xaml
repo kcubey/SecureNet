@@ -11,55 +11,75 @@
 
     <Grid>
 
-
-        <StackPanel>
-            <Label Foreground="Red">to have 2 tabs maybe?</Label>
-            <WrapPanel>
-                <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+        <ScrollViewer>
+            <StackPanel>
+                <Label Foreground="Red">to have 2 tabs maybe?</Label>
+                <WrapPanel>
+                    <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
                      CommandParameter="/Pages/Home.xaml">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Label Style="{DynamicResource backLbl}" >
-                    BrpwserLogs Home
-                </Label>
-            </WrapPanel>
-            <Separator Background="Gray"/>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Style="{DynamicResource backLbl}" >
+                        BrowserLogs Home
+                    </Label>
+                </WrapPanel>
+                <Separator Background="Gray"/>
 
-            <TextBlock/>
+                <Separator Height="20" Background="Transparent"/>
 
-            <WrapPanel>
-                <Label>Enter URL to scan: </Label>
-                <TextBox VerticalContentAlignment="Center" 
+                <WrapPanel>
+                    <Label>Enter URL to scan:</Label>
+                    <TextBox VerticalContentAlignment="Center" 
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
                          Margin="0">random text</TextBox>
-            </WrapPanel>
-
-            <WrapPanel>
-                <Label>Upload file: </Label>
-                <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
-            </WrapPanel>
-            <Button Click="VT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
-
-            <Separator Background="Red"/>
-
-            <DockPanel Margin="10">
-                <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
-                    <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
                 </WrapPanel>
-                <ListBox Name="lbFiles" />
-            </DockPanel>
 
-        </StackPanel>
+                <WrapPanel>
+                    <Label>Upload file:</Label>
+                    <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
+                </WrapPanel>
+                <Button Click="tempVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
+
+                <Separator Background="Red"/>
+
+                <DockPanel Margin="10">
+                    <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                        <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
+                    </WrapPanel>
+                    <ListBox Name="lbFiles" />
+                </DockPanel>
+
+                <Button Click="istruebool">check if file exists</Button>
+
+                <WrapPanel>
+                    <Label>Has select file</Label>
+                    <Label Name="istrue"></Label>
+                </WrapPanel>
+
+                <DataGrid AutoGenerateColumns="False" 
+          Height="200" 
+          HorizontalAlignment="Left" 
+          Name="dataGrid1" 
+          VerticalAlignment="Top" 
+          Width="200">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" />
+                        <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" />
+                        <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
 
 
 
-<!--
+            <!--
         <Button Style="{DynamicResource menuBtn}"
                         Click="OnClick"
                         CommandParameter="/Pages/Browser/BrowserHome.xaml">
@@ -72,6 +92,9 @@
             </StackPanel>
         </Button>
 -->
+        </ScrollViewer>
+
+        
 
     </Grid>
 </Page>
