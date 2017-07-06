@@ -37,14 +37,9 @@ namespace SecureNet.Classes
             cmd.CommandText = "Procedure";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@userId", userId);
-            cmd.Connection = Service.GetConnection(1);
-            IAsyncResult result = cmd.BeginExecuteReader();
-
-            while (!result.IsCompleted)
-            {
-                Mouse.OverrideCursor = Cursors.Wait;
-            }
-            using (SqlDataReader saReader = cmd.EndExecuteReader(result))
+            cmd.Connection = Service.GetConnection();
+         
+            using (SqlDataReader saReader = cmd.ExecuteReader())
             {
 
                 while (saReader.Read())
@@ -81,9 +76,6 @@ namespace SecureNet.Classes
                 }
             }
             cmd.Connection.Close();
-
-            Mouse.OverrideCursor = null;
-
             return columnData;
 
 
@@ -209,7 +201,7 @@ namespace SecureNet.Classes
         private static int insertService(string nameFinal, string urlFinal, byte[] usernameBytes, byte[] passwdBytes, byte[] notesBytes, int userId)
         {
             SqlCommand cmd = new SqlCommand();
-            int serviceId = 0;
+           
             cmd.CommandText = "Insert Into Service(serviceName, serviceUrl, serviceUsername, " +
                 "servicePassword, serviceNotes, userId)" +
                 "Values(cast(@serviceName as nvarchar(50)), " +
@@ -230,11 +222,9 @@ namespace SecureNet.Classes
             {
                 cmd.Parameters.AddWithValue("@serviceNotes", SqlBinary.Null);
             }
-            cmd.Connection = GetConnection(0);
-
-            Object obj = cmd.ExecuteScalarAsync().Result;
-
-            serviceId = Convert.ToInt32(obj);
+            cmd.Connection = GetConnection();
+      
+            int serviceId = Convert.ToInt32(cmd.ExecuteScalar());
 
             cmd.Connection.Close();
 
@@ -264,7 +254,7 @@ namespace SecureNet.Classes
             {
                 cmd.Parameters.AddWithValue("@serviceNotes", SqlBinary.Null);
             }
-            cmd.Connection = GetConnection(1);
+            cmd.Connection = GetConnection();
 
             cmd.ExecuteNonQuery();
 
@@ -280,7 +270,7 @@ namespace SecureNet.Classes
             cmd.CommandText = "Delete From Service Where serviceId = @serviceId;" +
                 "Delete From AesKey Where serviceId = @serviceId;";
             cmd.Parameters.AddWithValue("@serviceId", serviceId);
-            cmd.Connection = GetConnection(1);
+            cmd.Connection = GetConnection();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
         }
@@ -296,7 +286,7 @@ namespace SecureNet.Classes
                 " @serviceId);";
             cmd.Parameters.AddWithValue("@aesKey", aesKeyString);
             cmd.Parameters.AddWithValue("@serviceId", serviceId);
-            cmd.Connection = GetConnection(1);
+            cmd.Connection = GetConnection();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
 
@@ -311,21 +301,17 @@ namespace SecureNet.Classes
             cmd.CommandText = "Update AesKey Set aesKey = @aesKey Where serviceId = @serviceId;";
             cmd.Parameters.AddWithValue("@aesKey", aesKeyString);
             cmd.Parameters.AddWithValue("@serviceId", serviceId);
-            cmd.Connection = GetConnection(1);
+            cmd.Connection = GetConnection();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
 
         }
 
         //Connection
-        public static SqlConnection GetConnection(int command)
+        public static SqlConnection GetConnection()
         {
             SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SecureNetCon"].ConnectionString);
             connection.Open();
-            if(command == 0)
-            {
-                connection.OpenAsync();
-            }
             return connection;
         }
 

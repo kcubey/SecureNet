@@ -1,5 +1,4 @@
 ﻿1.Service.cs:
-	- Async/Wait, display
 
 2. AddService.xaml
 	
