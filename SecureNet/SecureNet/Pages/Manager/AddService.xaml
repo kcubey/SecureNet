@@ -15,7 +15,7 @@
 
             <!--Back Button & Header-->
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
@@ -73,9 +73,9 @@
 
 
             <!--Submit/Update Button-->
-            <Button Visibility="Visible" Name="saButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  Click="ButtonSubmit_Click"  HorizontalAlignment="Left"/>
-            <Button Visibility="Collapsed" Name="suButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="uButt_Click" />
-            <Button Visibility="Collapsed" Name="dcButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="dcButt_Click"/>
+            <Button Visibility="Visible" Name="saButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  Click="ButtonSubmit_Click"  HorizontalAlignment="Left" Cursor="Hand"/>
+            <Button Visibility="Collapsed" Name="suButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="uButt_Click" Cursor="Hand" />
+            <Button Visibility="Collapsed" Name="dcButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="dcButt_Click" Cursor="Hand"/>
 
 
             <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>

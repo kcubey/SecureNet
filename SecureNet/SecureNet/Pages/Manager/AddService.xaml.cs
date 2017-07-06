@@ -17,7 +17,7 @@ using System.IO;
 using SecureNet.Classes;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Timers;
 
 namespace SecureNet.Pages.Manager
 {
@@ -52,13 +52,16 @@ namespace SecureNet.Pages.Manager
         private void startUp()
         {
 
-            pgHeader.Content = "Login Credentials";
-
             populateSelection();
+
+            pgHeader.Content = "Login Credentials";
 
             saButt.Content = "Add";
 
             errorMsg.Content = null;
+
+
+
 
         }
 
@@ -113,6 +116,7 @@ namespace SecureNet.Pages.Manager
 
             if (command == "Submit")
             {
+
                 Add(1);
 
 
