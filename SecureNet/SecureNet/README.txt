@@ -2,7 +2,7 @@
 	refer to this file to see the styles I've done, x:key=_____ is like Css class
 	You call it like:
 		<Button Style="{DynamicResource menuBtn}"></Button>
-		menuBtn is the class
+		menuBtn is the class page
 	refer to Home.xaml for examples if needed
 
 MainWindow.xaml = Master page, main layout (header, content, footer) is done here

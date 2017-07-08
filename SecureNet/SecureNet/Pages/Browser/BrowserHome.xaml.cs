@@ -63,10 +63,32 @@ namespace SecureNet.Pages.Browser
         private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
-                txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
+            {
+                foreach (string filename in openFileDialog.FileNames)
+                {
+                    lbFiles.Items.Add(System.IO.Path.GetFileName(filename));
+                    FileInfo fileinfo = new FileInfo(System.IO.Path.GetFileName(filename));
+                    lbFiles.Items.Add(fileinfo);
+                    //File.WriteAllBytes(fileinfo.FullName, fileinfo.GetObjectData());
+                }
 
-        
+            }
+        }
+
+        private void istruebool(object sender, RoutedEventArgs e)
+        {
+            if (lbFiles.HasItems == true)
+            {
+                istrue.Content = "True";
+            }
+            else if (lbFiles.HasItems == false)
+            {
+                istrue.Content = "False";
+            }
+
         }
 
         private void startVT(object sender, RoutedEventArgs e)
@@ -180,21 +202,6 @@ namespace SecureNet.Pages.Browser
             }
 
             Console.WriteLine();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void dataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void txtEditor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 #endregion

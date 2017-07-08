@@ -13,6 +13,7 @@
 
         <ScrollViewer>
             <StackPanel>
+                <Label Foreground="Red">to have 2 tabs maybe?</Label>
                 <WrapPanel>
                     <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
                      CommandParameter="/Pages/Home.xaml">
@@ -29,29 +30,21 @@
                 <Separator Background="Gray"/>
 
                 <Separator Height="20" Background="Transparent"/>
-                
-                
-                <!--Scan URL-->
+
                 <WrapPanel>
                     <Label>Enter URL to scan:</Label>
                     <TextBox VerticalContentAlignment="Center" 
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
-                         Margin="0"  TextChanged="TextBox_TextChanged">www.google.com</TextBox>
+                         Margin="0">random text</TextBox>
                 </WrapPanel>
 
-                
-                <!--Upload File-->
                 <WrapPanel>
-                    <Label Padding="50">Upload file:</Label>
-                    <Button Name="btnOpenFile" Margin="0 50 0 50" Click="btnOpenFiles_Click">Open File</Button>
-
+                    <Label>Upload file:</Label>
+                    <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
                 </WrapPanel>
-                <TextBox Margin="100 0 100 0"   Name="txtEditor" TextChanged="txtEditor_TextChanged" />
-                             
-                
-                <!--<Button Click="tempVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
+                <Button Click="tempVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
 
                 <Separator Background="Red"/>
 
@@ -60,27 +53,28 @@
                         <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
                     </WrapPanel>
                     <ListBox Name="lbFiles" />
-                </DockPanel>-->
+                </DockPanel>
 
-              
+                <Button Click="istruebool">check if file exists</Button>
 
-    
+                <WrapPanel>
+                    <Label>Has select file</Label>
+                    <Label Name="istrue"></Label>
+                </WrapPanel>
 
-                
-                   
-              <DataGrid AutoGenerateColumns="False" 
+                <DataGrid AutoGenerateColumns="False" 
           Height="200" 
           HorizontalAlignment="Left" 
           Name="dataGrid1" 
           VerticalAlignment="Top" 
-          Width="200" SelectionChanged="dataGrid1_SelectionChanged">
+          Width="200">
                     <DataGrid.Columns >
                         <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" />
                         <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" />
                         <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" />
                     </DataGrid.Columns>
                 </DataGrid>
-             
+
             </StackPanel>
 
 
@@ -100,6 +94,7 @@
 -->
         </ScrollViewer>
 
+        
 
     </Grid>
 </Page>
