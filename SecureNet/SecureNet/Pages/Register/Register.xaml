@@ -9,6 +9,7 @@
       Title="Page1">
 
     <Grid>
-       
+        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" Text="Register" VerticalAlignment="Top" Foreground="White" FontFamily="Tahoma" FontSize="22"/>
+
     </Grid>
 </Page>
