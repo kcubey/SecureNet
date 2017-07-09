@@ -4,7 +4,7 @@
 	
 	-Regex
 	-UserId
-	-Autofill/Copy
+	-Autofill/Copy/Phone
 	-See Password in text, Black Dots increase
 	-OTP/Fingerprint
 	-Log action into activity Log
