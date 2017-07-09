@@ -10,4 +10,3 @@
 	-Log action into activity Log
 
 3. Activity Log
-4. All: Back Buttons
