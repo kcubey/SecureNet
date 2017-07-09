@@ -108,8 +108,7 @@ namespace SecureNet.Pages.Manager
 
                 dcButt.Visibility = Visibility.Visible;
                 dcButt.Content = "Delete";
-
-                autofill.Visibility = Visibility.Visible;
+                
 
                 errorMsg.Content = null;
                 Mouse.OverrideCursor = null;
@@ -148,8 +147,7 @@ namespace SecureNet.Pages.Manager
 
                 suButt.Visibility = Visibility.Collapsed;
 
-                autofill.Visibility = Visibility.Collapsed;
-
+         
                 errorMsg.Content = null;
 
 
@@ -179,7 +177,7 @@ namespace SecureNet.Pages.Manager
 
                 suButt.Visibility = Visibility.Collapsed;
 
-                autofill.Visibility = Visibility.Collapsed;
+       
 
                 dcButt.Content = "Delete";
                 dcButt.Visibility = Visibility.Collapsed;
@@ -204,7 +202,6 @@ namespace SecureNet.Pages.Manager
 
                 dcButt.Visibility = Visibility.Collapsed;
 
-                autofill.Visibility = Visibility.Collapsed;
                 errorMsg.Content = "Successfully deleted record";
 
 
@@ -231,8 +228,6 @@ namespace SecureNet.Pages.Manager
                 suButt.Content = "Submit";
 
                 dcButt.Content = "Cancel";
-
-                autofill.Visibility = Visibility.Visible;
 
                 Req.Visibility = Visibility.Visible;
 
@@ -411,12 +406,6 @@ namespace SecureNet.Pages.Manager
             MessageBox.Show(TextBoxPassword.Password);
         }
 
-        private void autofill_Click(object sender, RoutedEventArgs e)
-        {
-          
-
-            
-
-        }
+      
     }
 }
