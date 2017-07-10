@@ -22,6 +22,7 @@
                 <Button Style="{DynamicResource menuBtn}"
                         Click="OnClick"
                         CommandParameter="/Pages/Browser/BrowserHome.xaml">
+                        
                     <StackPanel>
                         <Image Source="/Media/browser.png"
                                Style="{DynamicResource icon}"/>

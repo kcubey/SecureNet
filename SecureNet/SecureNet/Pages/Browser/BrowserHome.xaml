@@ -33,18 +33,18 @@
 
                 <WrapPanel>
                     <Label>Enter URL to scan:</Label>
-                    <TextBox VerticalContentAlignment="Center" 
+                    <TextBox Name="ScanTxtBox" VerticalContentAlignment="Center" 
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
-                         Margin="0">random text</TextBox>
+                         Margin="0"></TextBox>
                 </WrapPanel>
 
                 <WrapPanel>
                     <Label>Upload file:</Label>
-                    <Button Click="tempVT" Style="{DynamicResource selectBtn}">upload file</Button>
+                    <!--<Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>-->
                 </WrapPanel>
-                <Button Click="tempVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
+                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
 
                 <Separator Background="Red"/>
 
