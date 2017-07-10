@@ -17,7 +17,8 @@ using System.IO;
 using SecureNet.Classes;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Timers;
+using mshtml;
 
 namespace SecureNet.Pages.Manager
 {
@@ -31,6 +32,7 @@ namespace SecureNet.Pages.Manager
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+            Mouse.OverrideCursor = Cursors.Wait;
             startUp();
 
         }
@@ -52,13 +54,18 @@ namespace SecureNet.Pages.Manager
         private void startUp()
         {
 
-            pgHeader.Content = "Login Credentials";
-
             populateSelection();
+
+            pgHeader.Content = "Login Credentials";
 
             saButt.Content = "Add";
 
             errorMsg.Content = null;
+
+            Mouse.OverrideCursor = null;
+
+
+
 
         }
 
@@ -68,6 +75,7 @@ namespace SecureNet.Pages.Manager
         {
             if (selection.SelectedIndex != -1)
             {
+                Mouse.OverrideCursor = Cursors.Wait;
                 string selectedService = selection.SelectedItem.ToString();
 
                 List<Service> userServices = Service.retrieveRecords(getUserId());
@@ -100,8 +108,10 @@ namespace SecureNet.Pages.Manager
 
                 dcButt.Visibility = Visibility.Visible;
                 dcButt.Content = "Delete";
+                
 
                 errorMsg.Content = null;
+                Mouse.OverrideCursor = null;
             }
 
         }
@@ -113,6 +123,7 @@ namespace SecureNet.Pages.Manager
 
             if (command == "Submit")
             {
+                Mouse.OverrideCursor = Cursors.Wait;
                 Add(1);
 
 
@@ -136,7 +147,10 @@ namespace SecureNet.Pages.Manager
 
                 suButt.Visibility = Visibility.Collapsed;
 
+         
                 errorMsg.Content = null;
+
+
 
             }
 
@@ -162,6 +176,8 @@ namespace SecureNet.Pages.Manager
                 saButt.Visibility = Visibility.Visible;
 
                 suButt.Visibility = Visibility.Collapsed;
+
+       
 
                 dcButt.Content = "Delete";
                 dcButt.Visibility = Visibility.Collapsed;
@@ -219,7 +235,7 @@ namespace SecureNet.Pages.Manager
             }
             else
             {
-
+                Mouse.OverrideCursor = Cursors.Wait;
                 Add(0);
             }
 
@@ -286,6 +302,7 @@ namespace SecureNet.Pages.Manager
                         {
                             int serviceId = Convert.ToInt32(TextBoxId.Text);
                             Service.genKeyIv(service, getUserId(), serviceId);
+
                             errorMsg.Content = "Successfully updated!";
 
                         }
@@ -294,6 +311,7 @@ namespace SecureNet.Pages.Manager
                     catch (Exception ex)
                     {
                         errorMsg.Content = "Operation Error.Contact Tech Support.";
+
                     }
                 }
 
@@ -307,6 +325,8 @@ namespace SecureNet.Pages.Manager
                 errorMsg.Content = "Service Name, URL, Username and Password are compulsory fields.";
 
             }
+
+            Mouse.OverrideCursor = null;
         }
 
         //Populate ComboBox
@@ -379,5 +399,13 @@ namespace SecureNet.Pages.Manager
             return false;
         }
 
+
+
+        private void ShowPass_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(TextBoxPassword.Password);
+        }
+
+      
     }
 }

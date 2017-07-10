@@ -15,7 +15,7 @@
 
             <!--Back Button & Header-->
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
@@ -35,15 +35,16 @@
             <!--DropDownlist selection-->
             <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />
 
-            
 
-                <!--Requirements-->
+
+            <!--Requirements-->
             <StackPanel Name="Req" Visibility="Collapsed">
                 <Label Style="{DynamicResource PassGenDesc}" >Requirements</Label>
 
                 <Label Style="{DynamicResource AddServiceRequirement}" >1. Name: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website. No duplicate records allowed.</Label>
 
-                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid. Max 150 characters allowed.</Label>
+                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid and needs to be a login page for autofill.Autofill may not work always depending on the websites.
+                    Max 150 characters allowed.</Label>
             </StackPanel>
 
             <!--Form-->
@@ -53,7 +54,16 @@
                     <Label Style="{DynamicResource AddServiceTag}">Service Name</Label>
                     <Label Style="{DynamicResource AddServiceTag}">URL</Label>
                     <Label Style="{DynamicResource AddServiceTag}">Username</Label>
+                    <WrapPanel>
                     <Label Style="{DynamicResource AddServiceTag}" >Password</Label>
+                    <Button  Name="ShowPass" Style="{DynamicResource PassBackButton}" Cursor="Hand" Click="ShowPass_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/eye-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    </WrapPanel>
                     <Label Style="{DynamicResource AddServiceTag}">Other Login Notes</Label>
 
                 </StackPanel>
@@ -63,7 +73,7 @@
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUrl" />
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUsername" />
-                    <PasswordBox Style="{DynamicResource AddServiceSPB}" Name="TextBoxPassword" />
+                    <PasswordBox Style="{DynamicResource AddServiceSPB}" Name="TextBoxPassword"/>
                     <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxNotes" />
                 </StackPanel>
 
@@ -73,10 +83,10 @@
 
 
             <!--Submit/Update Button-->
-            <Button Visibility="Visible" Name="saButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  Click="ButtonSubmit_Click"  HorizontalAlignment="Left"/>
-            <Button Visibility="Collapsed" Name="suButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="uButt_Click" />
-            <Button Visibility="Collapsed" Name="dcButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="dcButt_Click"/>
-
+            <Button Visibility="Visible" Name="saButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  Click="ButtonSubmit_Click"  HorizontalAlignment="Left" Cursor="Hand"/>
+            <Button Visibility="Collapsed" Name="suButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="uButt_Click" Cursor="Hand" />
+            <Button Visibility="Collapsed" Name="dcButt" Width="80" Height="30" Margin="30,5,5,5" FontSize="18"  HorizontalAlignment="Left" Click="dcButt_Click" Cursor="Hand"/>
+            
 
             <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>
 

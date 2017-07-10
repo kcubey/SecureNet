@@ -12,27 +12,16 @@
     <Grid>
         <StackPanel>
 
-
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Label FontSize="20" Foreground="Orange"  FontWeight="Bold">
-                    Password Manager
-                </Label>
 
-                <Button Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Label Margin="0,10,0,0" Style="{DynamicResource PassTitleLabel}" >
+                <Label Style="{DynamicResource PassTitleLabel}" >
                     Activity Log
                 </Label>
             </WrapPanel>

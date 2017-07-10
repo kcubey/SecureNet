@@ -12,10 +12,11 @@
     <Grid>
         <StackPanel Name="stackMain" >
 
-
-            <!--Back Button & Header-->
+            
+            <!--Seperator-->
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
@@ -26,11 +27,11 @@
                     Password Generator
                 </Label>
             </WrapPanel>
-
-            <!--Separator-->
+            
+            <!--seperator-->
+           
             <Separator Background="Gray" />
-
-
+ 
 
             <!--Password Length Selection-->
             <Label Style="{DynamicResource PassGenInstruction}" >1. Select Password Length</Label>
@@ -68,7 +69,7 @@
 
             <!--Generate Button-->
 
-            <Button  Width="80" Height="30" Margin="30,5,5,5" FontSize="18" Content="Generate" Click="Button_Click"  HorizontalAlignment="Left"/>
+            <Button  Width="80" Height="30" Margin="30,5,5,5" FontSize="18" Content="Generate" Click="Button_Click"  HorizontalAlignment="Left" Cursor="Hand"/>
 
            
             <!--Output-->

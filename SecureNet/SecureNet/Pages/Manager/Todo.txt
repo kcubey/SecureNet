@@ -1,12 +1,12 @@
 ﻿1.Service.cs:
 
 2. AddService.xaml
+	
 	-Regex
 	-UserId
-	-Autofill/Copy
+	-Autofill/Copy/Phone
 	-See Password in text, Black Dots increase
 	-OTP/Fingerprint
 	-Log action into activity Log
 
 3. Activity Log
-4. All: Back Buttons

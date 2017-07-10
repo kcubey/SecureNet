@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Footer"
-      Background="Yellow" ShowsNavigationUI="False"
+      Background="#FCD736" ShowsNavigationUI="False"
       >
 
     <Grid>

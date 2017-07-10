@@ -14,7 +14,7 @@
             
             <!--Header-->
             <WrapPanel>
-                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}">
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
                             <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
