@@ -30,6 +30,9 @@
 
             <StackPanel>
                 <TextBlock Foreground="White" Margin="15,0,0,0">
+                We are a group of like-minded individuals who have come together to provide a secure browsing solution without having to change browsers.
+                    We also aim to provide the ease of usage by providing a password manager to prevent hackers from stealing your password through keylogging.
+                    <LineBreak/>
                 Contact us at <Hyperlink>securenetnyp@gmail.com</Hyperlink> for any app-related enquiries.
                 </TextBlock>
             </StackPanel>
