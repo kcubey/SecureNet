@@ -18,7 +18,6 @@ using SecureNet.Classes;
 using System.Data;
 using System.Data.SqlClient;
 using System.Timers;
-using mshtml;
 
 namespace SecureNet.Pages.Manager
 {
@@ -108,7 +107,6 @@ namespace SecureNet.Pages.Manager
 
                 dcButt.Visibility = Visibility.Visible;
                 dcButt.Content = "Delete";
-                
 
                 errorMsg.Content = null;
                 Mouse.OverrideCursor = null;
@@ -125,7 +123,7 @@ namespace SecureNet.Pages.Manager
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 Add(1);
-
+                
 
             }
             else
@@ -147,10 +145,7 @@ namespace SecureNet.Pages.Manager
 
                 suButt.Visibility = Visibility.Collapsed;
 
-         
                 errorMsg.Content = null;
-
-
 
             }
 
@@ -176,8 +171,6 @@ namespace SecureNet.Pages.Manager
                 saButt.Visibility = Visibility.Visible;
 
                 suButt.Visibility = Visibility.Collapsed;
-
-       
 
                 dcButt.Content = "Delete";
                 dcButt.Visibility = Visibility.Collapsed;
@@ -302,7 +295,7 @@ namespace SecureNet.Pages.Manager
                         {
                             int serviceId = Convert.ToInt32(TextBoxId.Text);
                             Service.genKeyIv(service, getUserId(), serviceId);
-
+                            
                             errorMsg.Content = "Successfully updated!";
 
                         }
@@ -311,7 +304,7 @@ namespace SecureNet.Pages.Manager
                     catch (Exception ex)
                     {
                         errorMsg.Content = "Operation Error.Contact Tech Support.";
-
+                       
                     }
                 }
 
@@ -399,13 +392,5 @@ namespace SecureNet.Pages.Manager
             return false;
         }
 
-
-
-        private void ShowPass_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(TextBoxPassword.Password);
-        }
-
-      
     }
 }
