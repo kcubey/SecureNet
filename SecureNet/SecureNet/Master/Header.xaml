@@ -7,7 +7,7 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Header"
       ShowsNavigationUI="False"
-      Background="#FCD736" 
+      Background="Yellow" 
       >
 
     <Grid>
