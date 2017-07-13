@@ -4,10 +4,9 @@
 	
 	-Regex
 	-UserId
-	-Autofill/Copy
-	-See Password in text, Black Dots increase
-	-OTP/Fingerprint
+	-Autofill
+	-Black Dots increase
+	-OTP
 	-Log action into activity Log
 
 3. Activity Log
-4. All: Back Buttons

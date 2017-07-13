@@ -392,5 +392,50 @@ namespace SecureNet.Pages.Manager
             return false;
         }
 
+        //Disable Copy & Cut Comm
+        private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut )
+            {
+                e.Handled = true;
+            }
+        }
+
+        //ShowPassword
+        private void ShowPass_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(TextBoxPassword.Password);
+        }
+
+        //Copy content
+        private void Copyname_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.Name == "Copyname")
+            {
+                Clipboard.SetText(TextBoxName.Text);
+            }
+            else if (button.Name == "Copyurl")
+            {
+                Clipboard.SetText(TextBoxUrl.Text);
+            }
+            else if (button.Name == "Copyusername")
+            {
+                Clipboard.SetText(TextBoxUsername.Text);
+            }
+            else if (button.Name == "Copypassword")
+            {
+                Clipboard.SetText(TextBoxPassword.Password);
+            }
+            else
+            {
+                Clipboard.SetText(TextBoxNotes.Text);
+            }
+
+            MessageBox.Show("Copied Successfully!");
+
+        }
     }
 }

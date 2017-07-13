@@ -213,7 +213,6 @@
   <ItemGroup>
     <Resource Include="Media\favicon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Media\SecureNetLogo.png" />
   </ItemGroup>
@@ -238,6 +237,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pages\Manager\Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\PasswordManager\eye-2-xxl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\PasswordManager\copy-xxl.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

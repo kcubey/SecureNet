@@ -35,15 +35,20 @@
             <!--DropDownlist selection-->
             <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />
 
-            
 
-                <!--Requirements-->
+
+            <!--Requirements-->
             <StackPanel Name="Req" Visibility="Collapsed">
                 <Label Style="{DynamicResource PassGenDesc}" >Requirements</Label>
 
                 <Label Style="{DynamicResource AddServiceRequirement}" >1. Name: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website. No duplicate records allowed.</Label>
 
-                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid. Max 150 characters allowed.</Label>
+                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid and needs to be a login page for autofill.Autofill may not work always depending on the websites.
+                    Max 150 characters allowed.</Label>
+
+
+
+
             </StackPanel>
 
             <!--Form-->
@@ -53,23 +58,115 @@
                     <Label Style="{DynamicResource AddServiceTag}">Service Name</Label>
                     <Label Style="{DynamicResource AddServiceTag}">URL</Label>
                     <Label Style="{DynamicResource AddServiceTag}">Username</Label>
-                    <Label Style="{DynamicResource AddServiceTag}" >Password</Label>
+                    <WrapPanel>
+                        <Label Style="{DynamicResource AddServiceTag}" >Password</Label>
+                        <Button  Name="ShowPass" Style="{DynamicResource PassBackButton}" Cursor="Hand" Click="ShowPass_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/SecureNet;component/Media/PasswordManager/eye-2-xxl.png" />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </WrapPanel>
                     <Label Style="{DynamicResource AddServiceTag}">Other Login Notes</Label>
 
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBox  Style="{DynamicResource AddServiceSTB}" Name="TextBoxId" Visibility="Collapsed" />
-                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" />
-                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUrl" />
-                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxUsername" />
-                    <PasswordBox Style="{DynamicResource AddServiceSPB}" Name="TextBoxPassword" />
-                    <TextBox Style="{DynamicResource AddServiceSTB}" Name="TextBoxNotes" />
+                    <TextBox CommandManager.PreviewExecuted="textBox_PreviewExecuted" Style="{DynamicResource AddServiceSTB}" Name="TextBoxId" Visibility="Collapsed" >
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="Paste">
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+                    
+                    <TextBox CommandManager.PreviewExecuted="textBox_PreviewExecuted" Style="{DynamicResource AddServiceSTB}" Name="TextBoxName" >
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="Paste">
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+
+                    <TextBox CommandManager.PreviewExecuted="textBox_PreviewExecuted"  Style="{DynamicResource AddServiceSTB}" Name="TextBoxUrl" >
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="Paste">
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+
+                    <TextBox CommandManager.PreviewExecuted="textBox_PreviewExecuted"  Style="{DynamicResource AddServiceSTB}" Name="TextBoxUsername" >
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="Paste">
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+
+                    <PasswordBox CommandManager.PreviewExecuted="textBox_PreviewExecuted" Style="{DynamicResource AddServiceSPB}" Name="TextBoxPassword" />
+                  
+
+                    <TextBox  CommandManager.PreviewExecuted="textBox_PreviewExecuted" Style="{DynamicResource AddServiceSTB}" Name="TextBoxNotes" >
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="Paste">
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
                 </StackPanel>
 
+                <StackPanel>
+                    <Button  Name="Copyname" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button  Name="Copyurl" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button  Name="Copyusername" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button  Name="Copypassword" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button  Name="Copynotes" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    
+                </StackPanel>
             </WrapPanel>
 
-            <Popup></Popup>
+
 
 
             <!--Submit/Update Button-->
