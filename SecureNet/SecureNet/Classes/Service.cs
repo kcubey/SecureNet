@@ -22,7 +22,7 @@ namespace SecureNet.Classes
         public string password { get; set; }
         public string notes { get; set; }
         public int serviceId { get; set; }
-
+  
         //Retrieve Records
         public static List<Service> retrieveRecords(int userId)
         {
@@ -307,6 +307,54 @@ namespace SecureNet.Classes
 
         }
 
+        //Log action
+        private static void insertLog(int userId, string details)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "Insert Into Passlog(logDetails, userId)" +
+                " Values(cast(@logDetails as nvarchar(MAX)), @userId);" ;
+            cmd.Parameters.AddWithValue("@logDetails", details);
+            cmd.Parameters.AddWithValue("@userId", userId);
+            cmd.Connection = GetConnection();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+        }
+
+        public static void logCommand(string serviceName, int commandType, string selectedvalue, int userId)
+        {
+            string details = null;
+            if (commandType == 1)
+            {
+                details = "Copied " + selectedvalue + " from "+ serviceName + " login details";
+            }
+            else if(commandType == 2)
+            {
+                details = "Viewed the login details for " + serviceName;
+            }
+            else if (commandType == 3)
+            {
+                details = "Inserted login details for " + serviceName;
+            }
+            else if (commandType == 4)
+            {
+                details = "Updated login details for " + serviceName;
+            }
+            else if(commandType == 5)
+            {
+                details = "Deleted login details for " + serviceName;
+            }
+            else
+            {
+                details = "Viewed plain password for " + serviceName;
+            }
+
+            insertLog(userId, details);
+        }
+
+ 
+
+      
         //Connection
         public static SqlConnection GetConnection()
         {

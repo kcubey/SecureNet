@@ -3,10 +3,12 @@
 2. AddService.xaml
 	
 	-Regex
-	-UserId
 	-Autofill
-	-Black Dots increase
+	-Add/Update Copy button see or not
+	-UserId
 	-OTP
-	-Log action into activity Log
+	
 
 3. Activity Log
+
+	-lock down data

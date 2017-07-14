@@ -31,9 +31,21 @@
             <!--Separator-->
             <Separator Background="Gray" />
 
+            <Label Style="{DynamicResource AddServiceRequirement}" > Note: Date and Time is in Singapore Timezone.You may click on the headers to sort the data.</Label>
 
+            <DataGrid Name="LogTable"  HorizontalAlignment="Left" Margin="30,0,0,0" AutoGenerateColumns = "False" IsReadOnly="True" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False"  Width="750px" Height="300px"  >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=logDateTime}" Header="DateTime"/>
+                    <DataGridTextColumn Binding="{Binding Path= logDetails}" Header="Details"  Width="*"/>
+                    
+                </DataGrid.Columns>
+                
+            </DataGrid>
 
+            
+            <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>
 
+            
 
         </StackPanel>
     </Grid>

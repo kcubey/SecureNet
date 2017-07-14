@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SecureNet.Classes;
 
 namespace SecureNet.Pages.Manager
 {
@@ -26,6 +27,7 @@ namespace SecureNet.Pages.Manager
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+            fillTable();
         }
 
 
@@ -33,6 +35,35 @@ namespace SecureNet.Pages.Manager
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Pages/Manager/PassHome.xaml", UriKind.Relative));
+        }
+
+        private void fillTable()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            List<Passlog> logEntries = Passlog.retrieveLogs(getUserId());
+
+            
+            if (logEntries != null)
+            {
+                LogTable.ItemsSource = logEntries;
+                
+                errorMsg.Content = null;
+
+            }
+            else
+            {
+                LogTable.Visibility = Visibility.Collapsed;
+              
+                errorMsg.Content = "No entries yet";
+            }
+
+             Mouse.OverrideCursor = null;
+
+        }
+
+        private int getUserId()
+        {
+            return 1;
         }
     }
 }

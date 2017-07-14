@@ -64,7 +64,7 @@ namespace SecureNet.Pages.Manager
             Mouse.OverrideCursor = null;
 
 
-
+            
 
         }
 
@@ -96,8 +96,14 @@ namespace SecureNet.Pages.Manager
                         {
                             TextBoxNotes.Text = j.notes;
                         }
+
+                     
+
                     }
                 }
+
+                Service.logCommand(TextBoxName.Text, 2, null, getUserId());
+
 
                 uneditable();
                 svcForm.Visibility = Visibility.Visible;
@@ -110,6 +116,8 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
                 Mouse.OverrideCursor = null;
+
+                //Log: Viewed Service Credentials
             }
 
         }
@@ -182,8 +190,9 @@ namespace SecureNet.Pages.Manager
             else
             {
                 int serviceId = Convert.ToInt32(TextBoxId.Text);
-
+                string serviceName = TextBoxName.Text;
                 Service.deleteService(serviceId);
+                Service.logCommand(serviceName, 5, null, getUserId());
 
                 selection.SelectedIndex = -1;
                 populateSelection();
@@ -197,7 +206,7 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = "Successfully deleted record";
 
-
+                //Log: Delete Record
             }
         }
 
@@ -224,12 +233,13 @@ namespace SecureNet.Pages.Manager
 
                 Req.Visibility = Visibility.Visible;
 
-
+               
             }
             else
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 Add(0);
+               
             }
 
         }
@@ -284,6 +294,7 @@ namespace SecureNet.Pages.Manager
                             {
                                 Service.genKeyIv(service, getUserId(), -1);
                                 resetfields();
+                                Service.logCommand(service.name, 3, null, getUserId());
                                 errorMsg.Content = "Successfully added!";
                             }
                             else
@@ -295,7 +306,7 @@ namespace SecureNet.Pages.Manager
                         {
                             int serviceId = Convert.ToInt32(TextBoxId.Text);
                             Service.genKeyIv(service, getUserId(), serviceId);
-                            
+                            Service.logCommand(service.name, 4, null, getUserId());
                             errorMsg.Content = "Successfully updated!";
 
                         }
@@ -406,34 +417,43 @@ namespace SecureNet.Pages.Manager
         private void ShowPass_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(TextBoxPassword.Password);
+            Service.logCommand(TextBoxName.Text, 6, null, getUserId());
         }
 
         //Copy content
         private void Copyname_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
+            string serviceName = TextBoxName.Text;
+            string type;
 
             if (button.Name == "Copyname")
             {
                 Clipboard.SetText(TextBoxName.Text);
+                type = "Service Name";
             }
             else if (button.Name == "Copyurl")
             {
                 Clipboard.SetText(TextBoxUrl.Text);
+                type = "URL";
             }
             else if (button.Name == "Copyusername")
             {
                 Clipboard.SetText(TextBoxUsername.Text);
+                type = "Username";
             }
             else if (button.Name == "Copypassword")
             {
                 Clipboard.SetText(TextBoxPassword.Password);
+                type = "Password";
             }
             else
             {
                 Clipboard.SetText(TextBoxNotes.Text);
+                type = "Notes";
             }
 
+            Service.logCommand(serviceName, 1 , type, getUserId());
             MessageBox.Show("Copied Successfully!");
 
         }
