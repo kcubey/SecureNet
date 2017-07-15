@@ -15,7 +15,7 @@ namespace SecureNet.Classes
 
         public int logId { get; set; }
 
-        public string currentName { get; set; }
+    
 
         public static List<Passlog> retrieveLogs(int userId)
         {

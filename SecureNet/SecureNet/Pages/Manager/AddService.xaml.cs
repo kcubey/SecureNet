@@ -27,8 +27,7 @@ namespace SecureNet.Pages.Manager
     
     public partial class AddService : Page
     {
-        private int state;
-        private Passlog currentValue;
+     
         public AddService()
         {
             InitializeComponent();
@@ -119,7 +118,7 @@ namespace SecureNet.Pages.Manager
                 Mouse.OverrideCursor = null;
 
 
-                state = 1;
+           
             }
 
         }
@@ -157,7 +156,7 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
 
-                state = 2;
+              
 
             }
 
@@ -189,7 +188,6 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
 
-                state = 1;
             }
             else
             {
@@ -221,7 +219,7 @@ namespace SecureNet.Pages.Manager
             if (command == "Update")
             {
 
-                currentValue.currentName = TextBoxName.Text;
+               
 
                 pgHeader.Content = "Update Service";
 
@@ -239,7 +237,7 @@ namespace SecureNet.Pages.Manager
 
                 Req.Visibility = Visibility.Visible;
 
-                state = 3;
+           
                
             }
             else
@@ -314,7 +312,6 @@ namespace SecureNet.Pages.Manager
                             int serviceId = Convert.ToInt32(TextBoxId.Text);
                             Service.genKeyIv(service, getUserId(), serviceId);
                             Service.logCommand(service.name, 4, null, getUserId());
-                            currentValue.currentName = TextBoxName.Text;
                             errorMsg.Content = "Successfully updated!";
 
                         }
@@ -380,7 +377,12 @@ namespace SecureNet.Pages.Manager
         //TextBox editable
         private void editable()
         {
-            TextBoxName.IsReadOnly = false;
+            string header = pgHeader.Content.ToString();
+            if (header == "Add Service")
+            {
+                TextBoxName.IsReadOnly = false;
+            }
+
             TextBoxUrl.IsReadOnly = false;
             TextBoxNotes.IsReadOnly = false;
             TextBoxPassword.IsEnabled = true;
@@ -424,14 +426,12 @@ namespace SecureNet.Pages.Manager
         //ShowPassword
         private void ShowPass_Click(object sender, RoutedEventArgs e)
         {
-            if(state == 1) { 
+            string header = pgHeader.Content.ToString();
+            if (header == "Update Service" || header == "Login Credentials") { 
            
             Service.logCommand(TextBoxName.Text, 6, null, getUserId());
             }
-            else if (state == 3) {
-
-            }
-
+          
             MessageBox.Show(TextBoxPassword.Password);
         }
 
@@ -441,7 +441,8 @@ namespace SecureNet.Pages.Manager
             var button = sender as Button;
             string serviceName = TextBoxName.Text;
             string type;
-            if (state == 1)
+            string header = pgHeader.Content.ToString();
+            if (header == "Update Service" || header == "Login Credentials")
             {
                 if (button.Name == "Copyname")
                 {
@@ -472,9 +473,8 @@ namespace SecureNet.Pages.Manager
                 Service.logCommand(serviceName, 1, type, getUserId());
                
             }
-            else if (state == 3)  {
-
-            }
+     
+            
             MessageBox.Show("Copied Successfully!");
         }
     }
