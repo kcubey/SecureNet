@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SecureNet.Classes;
+using System.Data;
 
 namespace SecureNet.Pages.Manager
 {
@@ -21,7 +22,7 @@ namespace SecureNet.Pages.Manager
     /// </summary>
     public partial class ActivityLog : Page
     {
-
+        string selectedIds = null;
         //StartUp
         public ActivityLog()
         {
@@ -65,5 +66,57 @@ namespace SecureNet.Pages.Manager
         {
             return 1;
         }
+
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+            string command = Report.Content.ToString();
+
+            if (command == "Report Suspicious Activity") { 
+            LogTable.HeadersVisibility = DataGridHeadersVisibility.All;
+            errorMsg.Content = "Click the small button on the left  to add into entries that indicate suspicious activity. After all entries has been selected, click submit and your data will be locked down. " +
+                    "Note that it is irreversible. ";
+            resultPassword.Visibility = Visibility.Visible;
+            Report.Content = "Submit";
+                selectedIds = null;
+                resultPassword.Text = null;
+            }
+            else
+            {
+                LogTable.HeadersVisibility = DataGridHeadersVisibility.Column;
+                errorMsg.Content = null;
+                resultPassword.Visibility = Visibility.Collapsed;
+                //Retreieve SelectedIds and Store into DB
+                MessageBox.Show(selectedIds);
+                Report.Content = "Report Suspicious Activity";
+            }
+
+        }
+
+       
+
+        private void LogTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+
+            Passlog selectedLog = (Passlog)LogTable.SelectedItem;
+
+            int logId = selectedLog.logId;
+            DateTime logDateTime = selectedLog.logDateTime;
+            string logDetails = selectedLog.logDetails;
+
+
+            selectedIds += logId.ToString() + ";";
+
+            StringBuilder builder = new StringBuilder();
+
+            string logEntry = logDateTime.ToString() + "\t" + logDetails;
+            builder.Append(logEntry);
+            builder.Append(Environment.NewLine);
+            resultPassword.Text += builder.ToString();
+
+
+        }
+
+        
     }
 }

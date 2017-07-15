@@ -1,14 +1,6 @@
-﻿1.Service.cs:
+﻿1. Autofill
+2. Regex, OTP
+3. Lockdown (admin , user, identity verfication, company PAGE AFTER PASSHOME& LOCKDOWN), userid
 
-2. AddService.xaml
-	
-	-Regex
-	-Autofill
-	-Add/Update Copy button see or not
-	-UserId
-	-OTP
 	
 
-3. Activity Log
-
-	-lock down data

@@ -13,13 +13,17 @@ namespace SecureNet.Classes
         public string logDetails { get; set; }
         public DateTime logDateTime { get; set; }
 
+        public int logId { get; set; }
+
+        public string currentName { get; set; }
+
         public static List<Passlog> retrieveLogs(int userId)
         {
             
 
             List<Passlog> logData = new List<Passlog>();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "SELECT logDateTime , logDetails From Passlog Where userId = @userId ORDER BY logDateTime DESC;";
+            cmd.CommandText = "SELECT logDateTime , logDetails, logId From Passlog Where userId = @userId ORDER BY logDateTime DESC;";
             cmd.Parameters.AddWithValue("@userId", userId);
             cmd.Connection = Service.GetConnection();
 
@@ -34,6 +38,8 @@ namespace SecureNet.Classes
                         logEntry.logDateTime = Convert.ToDateTime(saReader["logDateTime"]);
                        
                         logEntry.logDetails = saReader["logDetails"].ToString();
+
+                        logEntry.logId = Convert.ToInt32(saReader["logId"]);
                         
                         logData.Add(logEntry);
                     }

@@ -24,9 +24,11 @@ namespace SecureNet.Pages.Manager
     /// <summary>
     /// Interaction logic for AddService.xaml
     /// </summary>
+    
     public partial class AddService : Page
     {
-
+        private int state;
+        private Passlog currentValue;
         public AddService()
         {
             InitializeComponent();
@@ -62,7 +64,6 @@ namespace SecureNet.Pages.Manager
             errorMsg.Content = null;
 
             Mouse.OverrideCursor = null;
-
 
             
 
@@ -117,7 +118,8 @@ namespace SecureNet.Pages.Manager
                 errorMsg.Content = null;
                 Mouse.OverrideCursor = null;
 
-                //Log: Viewed Service Credentials
+
+                state = 1;
             }
 
         }
@@ -155,6 +157,8 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
 
+                state = 2;
+
             }
 
         }
@@ -185,7 +189,7 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
 
-
+                state = 1;
             }
             else
             {
@@ -205,8 +209,7 @@ namespace SecureNet.Pages.Manager
                 dcButt.Visibility = Visibility.Collapsed;
 
                 errorMsg.Content = "Successfully deleted record";
-
-                //Log: Delete Record
+                
             }
         }
 
@@ -217,6 +220,9 @@ namespace SecureNet.Pages.Manager
 
             if (command == "Update")
             {
+
+                currentValue.currentName = TextBoxName.Text;
+
                 pgHeader.Content = "Update Service";
 
                 selection.Visibility = Visibility.Collapsed;
@@ -233,13 +239,14 @@ namespace SecureNet.Pages.Manager
 
                 Req.Visibility = Visibility.Visible;
 
+                state = 3;
                
             }
             else
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 Add(0);
-               
+              
             }
 
         }
@@ -307,6 +314,7 @@ namespace SecureNet.Pages.Manager
                             int serviceId = Convert.ToInt32(TextBoxId.Text);
                             Service.genKeyIv(service, getUserId(), serviceId);
                             Service.logCommand(service.name, 4, null, getUserId());
+                            currentValue.currentName = TextBoxName.Text;
                             errorMsg.Content = "Successfully updated!";
 
                         }
@@ -416,8 +424,15 @@ namespace SecureNet.Pages.Manager
         //ShowPassword
         private void ShowPass_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(TextBoxPassword.Password);
+            if(state == 1) { 
+           
             Service.logCommand(TextBoxName.Text, 6, null, getUserId());
+            }
+            else if (state == 3) {
+
+            }
+
+            MessageBox.Show(TextBoxPassword.Password);
         }
 
         //Copy content
@@ -426,36 +441,41 @@ namespace SecureNet.Pages.Manager
             var button = sender as Button;
             string serviceName = TextBoxName.Text;
             string type;
+            if (state == 1)
+            {
+                if (button.Name == "Copyname")
+                {
+                    Clipboard.SetText(TextBoxName.Text);
+                    type = "Service Name";
+                }
+                else if (button.Name == "Copyurl")
+                {
+                    Clipboard.SetText(TextBoxUrl.Text);
+                    type = "URL";
+                }
+                else if (button.Name == "Copyusername")
+                {
+                    Clipboard.SetText(TextBoxUsername.Text);
+                    type = "Username";
+                }
+                else if (button.Name == "Copypassword")
+                {
+                    Clipboard.SetText(TextBoxPassword.Password);
+                    type = "Password";
+                }
+                else
+                {
+                    Clipboard.SetText(TextBoxNotes.Text);
+                    type = "Notes";
+                }
 
-            if (button.Name == "Copyname")
-            {
-                Clipboard.SetText(TextBoxName.Text);
-                type = "Service Name";
+                Service.logCommand(serviceName, 1, type, getUserId());
+               
             }
-            else if (button.Name == "Copyurl")
-            {
-                Clipboard.SetText(TextBoxUrl.Text);
-                type = "URL";
-            }
-            else if (button.Name == "Copyusername")
-            {
-                Clipboard.SetText(TextBoxUsername.Text);
-                type = "Username";
-            }
-            else if (button.Name == "Copypassword")
-            {
-                Clipboard.SetText(TextBoxPassword.Password);
-                type = "Password";
-            }
-            else
-            {
-                Clipboard.SetText(TextBoxNotes.Text);
-                type = "Notes";
-            }
+            else if (state == 3)  {
 
-            Service.logCommand(serviceName, 1 , type, getUserId());
+            }
             MessageBox.Show("Copied Successfully!");
-
         }
     }
 }
