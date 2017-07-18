@@ -10,7 +10,47 @@
       Title="Logs">
 
     <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <WrapPanel>
+                    <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+                         CommandParameter="/Pages/Browser/BrowserHome.xaml">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Style="{DynamicResource backLbl}" >
+                        Logs
+                    </Label>
+                </WrapPanel>
+                <Separator Background="Gray"/>
 
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox1" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox2" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox3" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox4" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox5" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+                <Separator Height="20" Background="Transparent"/>
+
+                <ListBox Name="listBox6" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- test
         <StackPanel>
             <DataGrid AlternatingRowBackground="#FFC4B0B0" Height="400" Width="350" AutoGenerateColumns="False" Name="gridLogs">
                 <DataGrid.Columns>
@@ -20,6 +60,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
+        -->
         
     </Grid>
 </Page>

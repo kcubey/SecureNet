@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fiddler;
 
 namespace SecureNet.Pages
 {
@@ -33,5 +34,37 @@ namespace SecureNet.Pages
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
             Console.WriteLine("redirecting now");
         }
+
+        
+        
+/* from net
+        void StartFiddler()
+        {
+            if (tbIgnoreResources.Checked)
+                CaptureConfiguration.IgnoreResources = true;
+            else
+                CaptureConfiguration.IgnoreResources = false;
+
+            string strProcId = txtProcessId.Text;
+            if (strProcId.Contains('-'))
+                strProcId = strProcId.Substring(strProcId.IndexOf('-') + 1).Trim();
+
+            strProcId = strProcId.Trim();
+
+            int procId = 0;
+            if (!string.IsNullOrEmpty(strProcId))
+            {
+                if (!int.TryParse(strProcId, out procId))
+                    procId = 0;
+            }
+            CaptureConfiguration.ProcessId = procId;
+            CaptureConfiguration.CaptureDomain = txtCaptureDomain.Text;
+
+            FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
+            FiddlerApplication.Startup(8888, true, true, true);
+
+            //Other events include BeforeRequest, BeforeResponse, RequestHeadersAvailable, ResponseHeadersAvailable and so on.
+        }*/
+    
     }
 }
