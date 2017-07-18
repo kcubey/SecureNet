@@ -42,6 +42,7 @@ namespace SecureNet
         void StartFiddler()
         {
             FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+            //FiddlerApplication.Startup(8877, true, true);
             Console.WriteLine("Fiddler Start");
         }
 

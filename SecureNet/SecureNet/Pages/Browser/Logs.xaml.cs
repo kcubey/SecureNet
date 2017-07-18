@@ -40,7 +40,7 @@ namespace SecureNet.Pages.Browser
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("redirecting now");
+            Console.WriteLine("Redirect to " +redirectAdd);
         }
 
         
