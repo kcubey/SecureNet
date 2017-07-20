@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNet", "SecureNet\SecureNet.csproj", "{2585D695-0F83-4F70-A152-0A17A997B5FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOTPLib", "..\..\..\..\Downloads\totp-net-master\TOTP\TOTPLib.csproj", "{2C51FAE6-7F0F-43CC-9EEC-D66958BF99B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2585D695-0F83-4F70-A152-0A17A997B5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2585D695-0F83-4F70-A152-0A17A997B5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2585D695-0F83-4F70-A152-0A17A997B5FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C51FAE6-7F0F-43CC-9EEC-D66958BF99B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C51FAE6-7F0F-43CC-9EEC-D66958BF99B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C51FAE6-7F0F-43CC-9EEC-D66958BF99B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C51FAE6-7F0F-43CC-9EEC-D66958BF99B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
