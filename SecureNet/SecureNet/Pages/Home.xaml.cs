@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fiddler;
 
 namespace SecureNet.Pages
 {
@@ -31,7 +32,7 @@ namespace SecureNet.Pages
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("redirecting now");
+            Console.WriteLine("Redirect to " +redirectAdd);
         }
     }
 }

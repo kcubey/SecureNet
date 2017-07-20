@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fiddler;
 
 namespace SecureNet
 {
@@ -25,9 +26,11 @@ namespace SecureNet
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Window));
-   //         MainFrame.NavigationService.GoBack();
-     //       MainFrame.NavigationService.GoForward();
-       //     MainFrame.NavigationService.Refresh();
+            StartFiddler();
+
+            //         MainFrame.NavigationService.GoBack();
+            //       MainFrame.NavigationService.GoForward();
+            //     MainFrame.NavigationService.Refresh();
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
@@ -36,6 +39,19 @@ namespace SecureNet
             //this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
         }
 
-        
+        void StartFiddler()
+        {
+            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+            //FiddlerApplication.Startup(8877, true, true);
+            Console.WriteLine("Fiddler Start");
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            Fiddler.FiddlerApplication.Shutdown();
+            Console.WriteLine("Fiddler Closed");
+        }
+
+
     }
 }
