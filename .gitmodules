@@ -1,3 +1,0 @@
-[submodule "totp"]
-	path = totp
-	url = https://github.com/mirthas/totp-net.git
