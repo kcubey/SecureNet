@@ -58,7 +58,8 @@
 
                                 <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan File</Button>
                                 <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
-                                
+                                <ListBox Name="lbFiles" />
+
                             </WrapPanel>
                             
                         </TabItem>
@@ -73,11 +74,11 @@
 
                 <!--<WrapPanel>
                     <Label>Upload file:</Label>
-                    --><!--<Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>--><!--
+                    <Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>
                 </WrapPanel>
-                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>-->
+                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
 
-                <!--<Separator Background="Red"/>
+                <Separator Background="Red"/>
 
                 <DockPanel Margin="10">
                     <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
