@@ -13,7 +13,6 @@
 
         <ScrollViewer>
             <StackPanel>
-                <Label Foreground="Red">to have 2 tabs maybe?</Label>
                 <WrapPanel>
                     <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
                      CommandParameter="/Pages/Home.xaml">
@@ -27,33 +26,65 @@
                         BrowserLogs Home
                     </Label>
                 </WrapPanel>
-                <Separator Background="Gray"/>
 
-                <Separator Height="20" Background="Transparent"/>
+                <Grid>
+                    <TabControl>
+                        <TabItem Header="URL">
+                            <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
 
-                <WrapPanel>
-                    <Label>Enter URL to scan:</Label>
-                    <TextBox Name="ScanTxtBox" VerticalContentAlignment="Center" 
+                                <Label>Enter URL to scan:</Label>
+                                <TextBox Name="ScanTxtBox" VerticalContentAlignment="Center" 
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
                          Margin="0"></TextBox>
-                </WrapPanel>
 
-                <WrapPanel>
+                                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan URL</Button>
+
+                            </WrapPanel>
+                            
+                            
+                            
+                        </TabItem>
+
+                        <TabItem Header="File">
+                            <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
+                                <Label>Upload a file to scan:</Label>
+                                <TextBox Name="ScanFile" VerticalContentAlignment="Center" 
+                         Padding="10" TextWrapping="Wrap" 
+                         MaxWidth="500" MinWidth="200" 
+                         AcceptsReturn="True" MinHeight="40"
+                         Margin="0"></TextBox>
+
+                                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan File</Button>
+                                <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
+                                
+                            </WrapPanel>
+                            
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+
+                <Separator Background="Gray"/>
+
+                <Separator Height="20" Background="Transparent"/>
+
+
+                <!--<WrapPanel>
                     <Label>Upload file:</Label>
-                    <!--<Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>-->
+                    --><!--<Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>--><!--
                 </WrapPanel>
-                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
+                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>-->
 
-                <Separator Background="Red"/>
+                <!--<Separator Background="Red"/>
 
                 <DockPanel Margin="10">
                     <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
                         <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
                     </WrapPanel>
                     <ListBox Name="lbFiles" />
-                </DockPanel>
+                </DockPanel>-->
 
                 <Button Click="istruebool">check if file exists</Button>
 
@@ -76,22 +107,7 @@
                 </DataGrid>
 
             </StackPanel>
-
-
-
-            <!--
-        <Button Style="{DynamicResource menuBtn}"
-                        Click="OnClick"
-                        CommandParameter="/Pages/Browser/BrowserHome.xaml">
-            <StackPanel>
-                <Image Source="/Media/browser.png"
-                               Style="{DynamicResource icon}"/>
-                <TextBlock TextAlignment="Center">
-                            <LineBreak/>Browser Logs
-                </TextBlock>
-            </StackPanel>
-        </Button>
--->
+            
         </ScrollViewer>
 
         
