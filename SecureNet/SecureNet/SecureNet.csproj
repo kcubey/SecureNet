@@ -121,6 +121,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\Browser\Logs.xaml.cs">
+      <DependentUpon>Logs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Totp.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -150,8 +153,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Browser\Logs.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Contact\Contact.xaml">
       <SubType>Designer</SubType>
@@ -191,9 +194,6 @@
     </Compile>
     <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
       <DependentUpon>BrowserHome.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Browser\Logs.xaml.cs">
-      <DependentUpon>Logs.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Contact\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
