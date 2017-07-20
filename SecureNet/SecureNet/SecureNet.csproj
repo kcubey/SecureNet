@@ -121,6 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Totp.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +130,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Base32.cs" />
     <Compile Include="Classes\Passlog.cs" />
     <Compile Include="Classes\Service.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SecureNet.Classes;
 using System.Data;
+using TOTP;
+
 
 namespace SecureNet.Pages.Manager
 {
@@ -69,6 +71,11 @@ namespace SecureNet.Pages.Manager
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
+            string secret = "CMFC4FUMEN7QNNHK4OZD2UVUIF6NJKPB";
+            Totp totp = new Totp(secret, 60, 6);
+            string totpCode = totp.getCodeString();
+            
+
             string command = Report.Content.ToString();
 
             if (command == "Report Suspicious Activity") { 
@@ -86,7 +93,7 @@ namespace SecureNet.Pages.Manager
                 errorMsg.Content = null;
                 resultPassword.Visibility = Visibility.Collapsed;
                 //Retreieve SelectedIds and Store into DB
-                MessageBox.Show(selectedIds);
+                MessageBox.Show(selectedIds + totpCode);
                 Report.Content = "Report Suspicious Activity";
             }
 
