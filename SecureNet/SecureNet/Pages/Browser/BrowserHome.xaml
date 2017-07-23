@@ -42,26 +42,26 @@
                                 <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan URL</Button>
 
                             </WrapPanel>
-                            
-                            
-                            
+
+
+
                         </TabItem>
 
                         <TabItem Header="File">
                             <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
                                 <Label>Upload a file to scan:</Label>
-                                <TextBox Name="ScanFile" VerticalContentAlignment="Center" 
+                                <TextBox x:Name="ScanFile" VerticalContentAlignment="Center" 
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
-                         Margin="0"></TextBox>
+                         Margin="0" IsEnabled="False" Height="34"/>
 
-                                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan File</Button>
-                                <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
-                                <ListBox Name="lbFiles" />
+                                <Button Click="CheckVTFile" Style="{DynamicResource selectBtn}">Scan File</Button>
+                                <Button Name="btnOpenFile" Click="btnOpenFiles_Click" Width="70" Height="40">Open files</Button>
+                                <Button x:Name="btnClearFile" Click="btnClearFile_Click" Content="Clear files" Width="70" Height="40"/>
 
                             </WrapPanel>
-                            
+
                         </TabItem>
                     </TabControl>
                 </Grid>
@@ -71,28 +71,6 @@
 
                 <Separator Height="20" Background="Transparent"/>
 
-
-                <!--<WrapPanel>
-                    <Label>Upload file:</Label>
-                    <Button Click="checkVT" Style="{DynamicResource selectBtn}">upload file</Button>
-                </WrapPanel>
-                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">CHECK YOUR FILE/URL</Button>
-
-                <Separator Background="Red"/>
-
-                <DockPanel Margin="10">
-                    <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
-                        <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
-                    </WrapPanel>
-                    <ListBox Name="lbFiles" />
-                </DockPanel>-->
-
-                <Button Click="istruebool">check if file exists</Button>
-
-                <WrapPanel>
-                    <Label>Has select file</Label>
-                    <Label Name="istrue"></Label>
-                </WrapPanel>
 
                 <DataGrid AutoGenerateColumns="False" 
           Height="200" 
@@ -108,10 +86,10 @@
                 </DataGrid>
 
             </StackPanel>
-            
+
         </ScrollViewer>
 
-        
+
 
     </Grid>
 </Page>
