@@ -22,35 +22,35 @@ namespace SecureNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-            Style = (Style)FindResource(typeof(Window));
-            StartFiddler();
+        //public MainWindow()
+        //{
+        //    InitializeComponent();
+        //    Style = (Style)FindResource(typeof(Window));
+        //    StartFiddler();
 
-            //         MainFrame.NavigationService.GoBack();
-            //       MainFrame.NavigationService.GoForward();
-            //     MainFrame.NavigationService.Refresh();
-        }
+        //    //         MainFrame.NavigationService.GoBack();
+        //    //       MainFrame.NavigationService.GoForward();
+        //    //     MainFrame.NavigationService.Refresh();
+        //}
 
-        private void OnClick(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
-            //this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
-        }
+        //private void OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
+        //    //this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
+        //}
 
-        void StartFiddler()
-        {
-            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
-            //FiddlerApplication.Startup(8877, true, true);
-            Console.WriteLine("Fiddler Start");
-        }
+        //void StartFiddler()
+        //{
+        //    FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+        //    //FiddlerApplication.Startup(8877, true, true);
+        //    Console.WriteLine("Fiddler Start");
+        //}
 
-        protected override void OnClosed(EventArgs e)
-        {
-            Fiddler.FiddlerApplication.Shutdown();
-            Console.WriteLine("Fiddler Closed");
-        }
+        //protected override void OnClosed(EventArgs e)
+        //{
+        //    Fiddler.FiddlerApplication.Shutdown();
+        //    Console.WriteLine("Fiddler Closed");
+        //}
 
 
     }
