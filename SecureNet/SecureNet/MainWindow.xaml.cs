@@ -48,6 +48,7 @@ namespace SecureNet
 
         protected override void OnClosed(EventArgs e)
         {
+            Fiddler.FiddlerApplication.oProxy.Detach();
             Fiddler.FiddlerApplication.Shutdown();
             Console.WriteLine("Fiddler Closed");
         }
