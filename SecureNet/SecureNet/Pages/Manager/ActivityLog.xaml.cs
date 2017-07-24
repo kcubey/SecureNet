@@ -14,8 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SecureNet.Classes;
 using System.Data;
-using TOTP;
-
 
 namespace SecureNet.Pages.Manager
 {
@@ -24,13 +22,18 @@ namespace SecureNet.Pages.Manager
     /// </summary>
     public partial class ActivityLog : Page
     {
-        string selectedIds = null;
+
         //StartUp
         public ActivityLog()
         {
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
             fillTable();
+            List<int> selectedItems = new List<int>();
+            Application.Current.Resources["logIdList"] = selectedItems;
+
+
+
         }
 
 
@@ -45,22 +48,23 @@ namespace SecureNet.Pages.Manager
             Mouse.OverrideCursor = Cursors.Wait;
             List<Passlog> logEntries = Passlog.retrieveLogs(getUserId());
 
-            
+
+
             if (logEntries != null)
             {
                 LogTable.ItemsSource = logEntries;
-                
+
                 errorMsg.Content = null;
 
             }
             else
             {
                 LogTable.Visibility = Visibility.Collapsed;
-              
+
                 errorMsg.Content = "No entries yet";
             }
 
-             Mouse.OverrideCursor = null;
+            Mouse.OverrideCursor = null;
 
         }
 
@@ -71,59 +75,100 @@ namespace SecureNet.Pages.Manager
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            string secret = "CMFC4FUMEN7QNNHK4OZD2UVUIF6NJKPB";
-            Totp totp = new Totp(secret, 60, 6);
-            string totpCode = totp.getCodeString();
-            
+
 
             string command = Report.Content.ToString();
 
-            if (command == "Report Suspicious Activity") { 
-            LogTable.HeadersVisibility = DataGridHeadersVisibility.All;
-            errorMsg.Content = "Click the small button on the left  to add into entries that indicate suspicious activity. After all entries has been selected, click submit and your data will be locked down. " +
-                    "Note that it is irreversible. ";
-            resultPassword.Visibility = Visibility.Visible;
-            Report.Content = "Submit";
-                selectedIds = null;
-                resultPassword.Text = null;
+            if (command == "Report Suspicious Activity")
+            {
+                LogTable.HeadersVisibility = DataGridHeadersVisibility.All;
+                errorMsg.Content = "To add, click the left buttons of the suspicious entries from the above table to add into the bottom table. If you clicked the wrong entry, remove it by clicking the left button" +
+                    "of the wrong entry from the bottom table   ";
+                ReportTable.Items.Clear();
+                Reporting.Visibility = Visibility.Visible;
+                Report.Content = "Submit";
+
+
             }
             else
             {
-                LogTable.HeadersVisibility = DataGridHeadersVisibility.Column;
-                errorMsg.Content = null;
-                resultPassword.Visibility = Visibility.Collapsed;
-                //Retreieve SelectedIds and Store into DB
-                MessageBox.Show(selectedIds + totpCode);
-                Report.Content = "Report Suspicious Activity";
+
+
+                List<int> test = (List<int>)Application.Current.Resources["logIdList"];
+                if (test.Count != 0)
+                {
+                    OTP hello = new OTP();
+                    hello.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    hello.ShowDialog();
+
+
+                    if (hello.DialogResult == true)
+                    {
+
+                        Passlog.lockDown(test, getUserId());
+                        LogTable.HeadersVisibility = DataGridHeadersVisibility.Column;
+                        errorMsg.Content = null;
+                        test.Clear();
+                        Application.Current.Resources["logIdList"] = test;
+                        Reporting.Visibility = Visibility.Collapsed;
+                        ReportTable.Items.Clear();
+                        Report.Content = "Report Suspicious Activity";
+                      
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("OTP not entered correctly");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select entries before submitting.");
+                }
+
             }
+            
+
 
         }
 
-       
+
 
         private void LogTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
 
             Passlog selectedLog = (Passlog)LogTable.SelectedItem;
+            List<int> test = (List<int>)Application.Current.Resources["logIdList"];
+            
 
-            int logId = selectedLog.logId;
-            DateTime logDateTime = selectedLog.logDateTime;
-            string logDetails = selectedLog.logDetails;
+            if (!test.Contains(selectedLog.logId))
+            {
+                ReportTable.Items.Add(selectedLog);
+                test.Add(selectedLog.logId);
+            }
+            Application.Current.Resources["logIdList"] = test;
 
-
-            selectedIds += logId.ToString() + ";";
-
-            StringBuilder builder = new StringBuilder();
-
-            string logEntry = logDateTime.ToString() + "\t" + logDetails;
-            builder.Append(logEntry);
-            builder.Append(Environment.NewLine);
-            resultPassword.Text += builder.ToString();
 
 
         }
 
-        
+        private void ReportTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (ReportTable.SelectedItems.Count > 0)
+            {
+                Passlog selectedLog = (Passlog)ReportTable.SelectedItem;
+                int logId = selectedLog.logId;
+                List<int> test = (List<int>)Application.Current.Resources["logIdList"];
+                test.Remove(logId);
+                ReportTable.Items.Remove(ReportTable.SelectedItem);
+
+                Application.Current.Resources["logIdList"] = test;
+
+            }
+                
+
+        }
     }
 }

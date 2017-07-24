@@ -15,6 +15,7 @@ namespace SecureNet.Classes
 
         public int logId { get; set; }
 
+
     
 
         public static List<Passlog> retrieveLogs(int userId)
@@ -51,6 +52,27 @@ namespace SecureNet.Classes
             }
             cmd.Connection.Close();
             return logData;
+
+        }
+
+
+        public static void lockDown (List<int> logEntries, int userId)
+        {
+            string selected = null;
+            foreach(int logId in logEntries)
+            {
+                selected += logId.ToString() + ",";
+            }
+
+             SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "Insert Into Lockdown(userId, lockDetails) Values(@userId, cast(@lockDetails as nvarchar(MAX)));";
+            cmd.Parameters.AddWithValue("@userId", userId);
+            cmd.Parameters.AddWithValue("@lockDetails", selected);
+            cmd.Connection = Service.GetConnection();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+
+
 
         }
     }
