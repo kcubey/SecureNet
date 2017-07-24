@@ -73,6 +73,12 @@ namespace SecureNet.Classes
             cmd.Connection.Close();
 
 
+            //Create User Table with lockdown default 0
+            //get userId
+            //set lockdown = 1
+            //Login Credentials cannot enter at PassHome
+            
+
 
         }
     }
