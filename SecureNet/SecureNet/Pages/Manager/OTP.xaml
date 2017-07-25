@@ -1,0 +1,21 @@
+﻿<Window x:Class="SecureNet.Pages.Manager.OTP"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SecureNet.Pages.Manager"
+        mc:Ignorable="d"
+        Title="OTP" Height="200" Width="550"
+        >
+    <Grid>
+        <StackPanel Background="Black">
+            <Label  Style="{DynamicResource PassGenInstruction}" >Enter OTP</Label>
+            <Label Style="{DynamicResource AddServiceRequirement}">Key in OTP from hardware token. New OTP is generated every 1min. Please key in the OTP currently displayed.</Label>
+
+            <TextBox Style="{DynamicResource AddServiceSTB}" Margin="35,5,5,5" Name="TextOTP" HorizontalAlignment="Left"/>
+            <Button Name="otpButt" Content="Continue" Width="80" Height="30" Margin="35,5,5,5" FontSize="18"   HorizontalAlignment="Left" Cursor="Hand" Click="otpButt_Click" />
+
+            
+        </StackPanel>
+    </Grid>
+</Window>

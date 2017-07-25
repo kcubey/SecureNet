@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 namespace SecureNet.Classes
 {
+
     class Service
     {
 
@@ -52,6 +53,9 @@ namespace SecureNet.Classes
                         serviceData.url = saReader["serviceUrl"].ToString();
                         usernameBytes = (byte[])saReader["serviceUsername"];
                         passwordBytes = (byte[])saReader["servicePassword"];
+
+
+                        //Migration: Remove all AesKey and Delete Aeskey Table & Update SQLCommand
                         byte[] aesKey = Convert.FromBase64String(saReader["aesKey"].ToString());
                         serviceData.password = DecryptStringFromBytes_Aes(passwordBytes, aesKey);
                         string password = serviceData.password;
@@ -84,9 +88,10 @@ namespace SecureNet.Classes
         //Generate Key and send for encryption
         public static void genKeyIv(Service service, int userId, int svcId)
         {
-
+            //Migration: Remove ALL AES RELATED STUFF LOL
             using (Aes myAes = Aes.Create())
             {
+                
                 myAes.KeySize = 256;
 
                 byte[] usernameBytes = encryptInformation(service.username, myAes.Key);
@@ -124,6 +129,13 @@ namespace SecureNet.Classes
             string plaintext = null;
             using (Aes aesAlg = Aes.Create())
             {
+                // Migration: byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+                // Migration : AES.KeySize = 256;
+                // Migration: AES.BlockSize = 128;
+                // Migration: Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
+                //  Migration: AES.Key = key.GetBytes(AES.KeySize / 8);
+                 //Migration: AES.IV = key.GetBytes(AES.BlockSize / 8);
+
                 aesAlg.Key = Key;
 
                 byte[] IV = new byte[aesAlg.BlockSize / 8];
@@ -132,8 +144,7 @@ namespace SecureNet.Classes
                 Array.Copy(cipherTextCombined, IV, IV.Length);
                 Array.Copy(cipherTextCombined, IV.Length, cipherText, 0, cipherText.Length);
 
-                // aesAlg.BlockSize = 128;
-                // aesAlg.KeySize = 256;
+                
                 aesAlg.IV = IV;
                 aesAlg.Mode = CipherMode.CBC;
 
@@ -161,9 +172,16 @@ namespace SecureNet.Classes
         {
             byte[] encrypted;
             byte[] IV;
+          
+
 
             using (Aes aesAlg = Aes.Create())
             {
+               //Migration: Get hashed passwordbytes based on userId
+               // Migration: byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+               // Migration: Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
+               //Migration: aesAlg.Key = key.GetBytes(AES.KeySize/8); => Keysize still 256
+               //Migration: aesAlg.IV = key.GetBytes(Aes.BlockSize/8); =>Blocksize still 128
                 aesAlg.BlockSize = 128;
                 aesAlg.KeySize = 256;
                 aesAlg.Key = aesKey;
@@ -173,15 +191,13 @@ namespace SecureNet.Classes
                 aesAlg.Mode = CipherMode.CBC;
 
                 var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                // Create the streams used for encryption. 
+                
                 using (var msEncrypt = new MemoryStream())
                 {
                     using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                     {
                         using (var swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            //Write all data to the stream.
                             swEncrypt.Write(input);
                         }
                         encrypted = msEncrypt.ToArray();
@@ -189,11 +205,13 @@ namespace SecureNet.Classes
                 }
 
             }
+
+            //Migration: No longer need to combine IV with Cipher Text
             var combinedIvCt = new byte[IV.Length + encrypted.Length];
             Array.Copy(IV, 0, combinedIvCt, 0, IV.Length);
             Array.Copy(encrypted, 0, combinedIvCt, IV.Length, encrypted.Length);
 
-            // Return the encrypted bytes from the memory stream. 
+           
             return combinedIvCt;
         }
 

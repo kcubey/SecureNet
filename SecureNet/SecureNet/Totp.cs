@@ -81,5 +81,13 @@ namespace TOTP
                 return false;
             }
         }
+
+        public static string newOTP()
+        {
+            string secret = "CMFC4FUMEN7QNNHK4OZD2UVUIF6NJKPB";
+            Totp totp = new Totp(secret, 60, 6);
+            string totpCode = totp.getCodeString();
+            return totpCode;
+        }
     }
 }
