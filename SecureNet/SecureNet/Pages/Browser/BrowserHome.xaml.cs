@@ -43,6 +43,28 @@ namespace SecureNet.Pages.Browser
             this.dataGrid1.ItemsSource = list;
         }
 
+        //Change cursor when waiting
+        public class WaitCursor : IDisposable
+        {
+            private Cursor _previousCursor;
+
+            public WaitCursor()
+            {
+                _previousCursor = Mouse.OverrideCursor;
+
+                Mouse.OverrideCursor = Cursors.Wait;
+            }
+
+            #region IDisposable Members
+
+            public void Dispose()
+            {
+                Mouse.OverrideCursor = _previousCursor;
+            }
+
+            #endregion
+        }
+
         public class DataObject
         {
             public int A { get; set; }
@@ -71,26 +93,28 @@ namespace SecureNet.Pages.Browser
         {
             if (string.IsNullOrWhiteSpace(ScanFile.Text))
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "All files (*.*)|*.*";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    String path = openFileDialog.FileName; // get name of file
-                    String size = Convert.ToString(openFileDialog.FileName.Length); // get size of file
-                    if (openFileDialog.FileName.Length > 104857600) // 100mb, may want to change to something smaller
+                
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "All files (*.*)|*.*";
+                    openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        ScanFile.Text = "File exceeds upload limit";
-                    }
-                    else
-                    {
-                        using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
+                        String path = openFileDialog.FileName; // get name of file
+                        String size = Convert.ToString(openFileDialog.FileName.Length); // get size of file
+                        if (openFileDialog.FileName.Length > 104857600) // 100mb, may want to change to something smaller
                         {
-                            ScanFile.Text = path;
+                            ScanFile.Text = "File exceeds upload limit";
+                        }
+                        else
+                        {
+                            using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
+                            {
+                                ScanFile.Text = path;
+                            }
                         }
                     }
                 }
-            }
+            
             else
             {
                 MessageBox.Show("File has been uploaded");
@@ -109,28 +133,31 @@ namespace SecureNet.Pages.Browser
         /// <param name="urlText"></param>
         private async void startVTAsyncURL(string urlText)
         {
-
-            //If textbox empty, won't scan
-            if (string.IsNullOrEmpty((ScanTxtBox.Text))) return;
-
-            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
-            vt.UseTLS = true;
-            UrlReport urlReport = await vt.GetUrlReport(urlText);
-
-            bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
-            Console.WriteLine(hasUrlBeenScannedBefore);
-            Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-            MessageBox.Show("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-
-            //If the url has been scanned before, the results are embedded inside the report.
-            if (hasUrlBeenScannedBefore)
+            using (new WaitCursor())
             {
-                PrintScan(urlReport);
-            }
-            else
-            {
-                UrlScanResult urlResult = await vt.ScanUrl(urlText);
-                PrintScan(urlResult);
+
+                //If textbox empty, won't scan
+                if (string.IsNullOrEmpty((ScanTxtBox.Text))) return;
+
+                VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+                vt.UseTLS = true;
+                UrlReport urlReport = await vt.GetUrlReport(urlText);
+
+                bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
+                Console.WriteLine(hasUrlBeenScannedBefore);
+                Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
+                MessageBox.Show("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
+
+                //If the url has been scanned before, the results are embedded inside the report.
+                if (hasUrlBeenScannedBefore)
+                {
+                    PrintScan(urlReport);
+                }
+                else
+                {
+                    UrlScanResult urlResult = await vt.ScanUrl(urlText);
+                    PrintScan(urlResult);
+                }
             }
 
         }
@@ -157,38 +184,43 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-       
+
         private async void startVTAsyncFile()
         {
-
-            if (string.IsNullOrEmpty((ScanFile.Text))) return;
-
-            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
-            vt.UseTLS = true;
-            FileInfo fileInfo = new FileInfo(ScanFile.Text);
-            byte[] byteArray;
-            using (StreamReader reader = new StreamReader(new FileStream(ScanFile.Text, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
+            using (new WaitCursor())
             {
-                byteArray = Encoding.UTF8.GetBytes(reader.ReadToEnd());
-            }
 
-            File.WriteAllText(fileInfo.FullName,System.Text.Encoding.UTF8.GetString(byteArray));
-            MessageBox.Show(System.Text.Encoding.UTF8.GetString(byteArray));
-            FileReport fileReport = await vt.GetFileReport(fileInfo);
-            bool hasFileBeenScannedBefore = fileReport.ResponseCode == ReportResponseCode.Present;
+                if (string.IsNullOrEmpty((ScanFile.Text)))
+                    
+                    return;
 
-            Console.WriteLine("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
-            MessageBox.Show("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
+                VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+                vt.UseTLS = true;
+                FileInfo fileInfo = new FileInfo(ScanFile.Text);
+                byte[] byteArray;
+                using (StreamReader reader = new StreamReader(new FileStream(ScanFile.Text, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
+                {
+                    byteArray = Encoding.UTF8.GetBytes(reader.ReadToEnd());
+                }
 
-            //If the file has been scanned before, the results are embedded inside the report.
-            if (hasFileBeenScannedBefore)
-            {
-                PrintScan(fileReport);
-            }
-            else
-            {
-                ScanResult fileResult = await vt.ScanFile(fileInfo);
-                PrintScan(fileResult);
+                File.WriteAllText(fileInfo.FullName, System.Text.Encoding.UTF8.GetString(byteArray));
+                MessageBox.Show(System.Text.Encoding.UTF8.GetString(byteArray));
+                FileReport fileReport = await vt.GetFileReport(fileInfo);
+                bool hasFileBeenScannedBefore = fileReport.ResponseCode == ReportResponseCode.Present;
+
+                Console.WriteLine("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
+                MessageBox.Show("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
+
+                //If the file has been scanned before, the results are embedded inside the report.
+                if (hasFileBeenScannedBefore)
+                {
+                    PrintScan(fileReport);
+                }
+                else
+                {
+                    ScanResult fileResult = await vt.ScanFile(fileInfo);
+                    PrintScan(fileResult);
+                }
             }
         }
 
