@@ -1,8 +1,15 @@
 ﻿1. Password Based AES encryption for both OTP & Seed
+		Get Password hashed Bytes and additional hash bytes for comparing
+		Derive Aes Key from Password Hashed Bytes
+		Use it to encrypt AES KEY
+		then after decrypt use the AES Key to decrypt information
+		YAY Plain Text
 2. a. Add -> Require OTP -> Specify if need OTP for Update/Delete/Viewing
    b. Update -> SPecify if need OTP for Update/Delete/Viewing in Future
    c. Delete -> Check if OTP required
    d. Viewing -> Check if OTP required
 3. Report Suspicious Activity -> User unable to access Login Credentials Page -> Admin Console?
-4. REGEX, Autofill, Session, References
-5. Back Up data
+4. REGEX, Autofill, Session, References, Understand codes
+	
+	Autofill --> SendKeys Class MSDN, Selenium ok
+
