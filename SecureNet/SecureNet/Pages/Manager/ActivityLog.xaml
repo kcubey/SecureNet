@@ -26,15 +26,49 @@
                 </Label>
             </WrapPanel>
 
-            
+
 
             <!--Separator-->
             <Separator Background="Gray" />
 
+            <Label Style="{DynamicResource AddServiceRequirement}" >Note: Date and Time is in Singapore Timezone.</Label>
+
+            <DataGrid Name="LogTable"  HorizontalAlignment="Left" Margin="30,0,0,0" AutoGenerateColumns = "False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False"  Width="750px" Height="150px"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" SelectionChanged="LogTable_SelectionChanged" HeadersVisibility="Column" SelectionMode="Single" >
+                
 
 
+                <DataGrid.Columns>
+                    
+                    <DataGridTextColumn  Binding="{Binding Path=logDateTime}" Header="DateTime" IsReadOnly="True" Width="170"/>
+                    <DataGridTextColumn Binding="{Binding Path=logDetails}" Header="Details"  Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Path=logId}" Header="logId" IsReadOnly="True" Visibility="Collapsed"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
 
 
+            <Label Style="{DynamicResource AddServiceTag}" Name="errorMsg"></Label>
+
+      
+            <Button  Width="200" Height="30" Margin="30,5,5,5" FontSize="14"  HorizontalAlignment="Left" Cursor="Hand" Name="Report" Content="Report Suspicious Activity" Click="Report_Click"/>
+
+            <StackPanel Name="Reporting" Visibility="Collapsed">
+            <Label Style="{DynamicResource AddServiceRequirement}" >Selected Entries</Label>
+                <DataGrid Name="ReportTable"  HorizontalAlignment="Left" Margin="30,0,0,0" AutoGenerateColumns = "False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserReorderColumns="False"  Width="750px" Height="150px"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"  HeadersVisibility="All" SelectionMode="Single" SelectionChanged="ReportTable_SelectionChanged" >
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn  Binding="{Binding Path=logDateTime}" Header="DateTime" IsReadOnly="True" Width="170"/>
+                        <DataGridTextColumn Binding="{Binding Path=logDetails}" Header="Details"  Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Path=logId}" Header="logId" IsReadOnly="True" Visibility="Collapsed"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+
+            </StackPanel>
+        
         </StackPanel>
+
+        
     </Grid>
 </Page>
