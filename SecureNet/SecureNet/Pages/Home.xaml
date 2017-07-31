@@ -65,6 +65,21 @@
                         </TextBlock>
                     </StackPanel>
                 </Button>
+                
+                <Separator/>
+                <Button Style="{DynamicResource menuBtn}"
+                        Click="OnClick"
+                        CommandParameter="/Pages/Browser/Logs.xaml">
+                    <StackPanel>
+                        <Image Source="/Media/settings.png"
+                               Style="{DynamicResource icon}"/>
+                        <TextBlock TextAlignment="Center">
+                            <LineBreak/>Logs Page
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+
+
             </DockPanel>
         </StackPanel>
         
