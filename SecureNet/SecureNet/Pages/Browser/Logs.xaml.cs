@@ -33,17 +33,20 @@ namespace SecureNet.Pages.Browser
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
             FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
+            //FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
         }
+        /*
+        private void FiddlerApplication_BeforeRequest(Session oSession)
+        {
 
-
+        }
+        */
         private void OnClick(object sender, RoutedEventArgs e)
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
             Console.WriteLine("Redirect to " +redirectAdd);
         }
-
-        
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {
