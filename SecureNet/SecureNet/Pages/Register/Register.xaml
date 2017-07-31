@@ -7,9 +7,29 @@
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="1050"
       Title="Page1">
+    <Page.Resources>
+        <!-- Control Styles-->
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" Text="Register" VerticalAlignment="Top" Foreground="White" FontFamily="Tahoma" FontSize="22"/>
+    </Page.Resources>
+
+    <Grid x:Name="txtMaster">
+
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="REGISTER" VerticalAlignment="Top" Foreground="#FFFCD736" FontFamily="Myriad Pro" FontSize="36" RenderTransformOrigin="0.908,0.799" Width="220" FontWeight="Bold"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="31" Margin="49,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22"/>
+        <Label x:Name="lblEmail" Content="Email:" HorizontalAlignment="Left" Margin="49,91,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
+        <Label x:Name="lblMasterPass" Content="Master Password:" HorizontalAlignment="Left" Margin="49,159,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
+        <TextBox x:Name="txtMasterPass" HorizontalAlignment="Left" Height="31" Margin="49,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22"/>
+        <Label x:Name="lblPhone" Content="Phone:" HorizontalAlignment="Left" Margin="49,227,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
+        <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Height="31" Margin="49,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22" Text="+65"/>
+        <Button x:Name="btnRegister" Content="Submit" HorizontalAlignment="Left" Margin="49,318,0,0" VerticalAlignment="Top" Width="85" Height="35" Background="#FFFCD736" FontSize="20" Click="btnRegister_Click"/>
+        <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="73,389,0,0" VerticalAlignment="Top"/>
+
+
 
     </Grid>
 </Page>

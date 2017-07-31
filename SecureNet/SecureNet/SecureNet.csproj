@@ -281,9 +281,6 @@
     <Resource Include="Media\PasswordManager\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pages\Manager\Todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\PasswordManager\eye-2-xxl.png" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +298,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Pages\Manager\TODO.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
