@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using Fiddler;
+using System.Collections.ObjectModel;
 
 namespace SecureNet.Pages.Browser
 {
@@ -33,14 +34,38 @@ namespace SecureNet.Pages.Browser
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
             FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
-            //FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
+            FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
+            
         }
-        /*
+
+        
+
+        public class DataObject
+        {
+            public string A { get; set; }
+            public string B { get; set; }
+            public string C { get; set; }
+            public string D { get; set; }
+            public string E { get; set; }
+        }
+
         private void FiddlerApplication_BeforeRequest(Session oSession)
         {
+            oSession.bBufferResponse = true;
+            oSession.utilDecodeResponse();
+            Console.WriteLine(oSession.GetRequestBodyAsString());
+            oSession.utilReplaceInResponse("google", "yahoo");
 
+            dataGrid2.Dispatcher.Invoke(new UpdateUI(() =>
+            {
+                dataGrid2.Items.Add(new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+
+            }));
         }
-        */
+        
+
+
         private void OnClick(object sender, RoutedEventArgs e)
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
@@ -50,35 +75,13 @@ namespace SecureNet.Pages.Browser
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {
-            listBox1.Dispatcher.Invoke(new UpdateUI(() =>
+            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
-                listBox1.Items.Add(oSession.url);
+                dataGrid1.Items.Add(new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname , D=oSession.fullUrl, E= oSession.state.ToString()});
+                
             }));
 
-            listBox2.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                listBox2.Items.Add(oSession.hostname);
-            }));
-
-            listBox3.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                listBox3.Items.Add(oSession.id);
-            }));
-
-            listBox4.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                listBox4.Items.Add(oSession.isHTTPS);
-            }));
-
-            listBox5.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                listBox5.Items.Add(oSession.LocalProcessID);
-            }));
-
-            listBox6.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                listBox6.Items.Add(oSession.port);
-            }));
         }
 
         

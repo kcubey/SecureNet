@@ -56,12 +56,15 @@ namespace SecureNet
             //FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
             //FiddlerApplication.Startup(8877, true, true);
 
-            var cert = InstallCertificate();
+            if (FiddlerApplication.IsStarted())
+                FiddlerApplication.Shutdown();
+
+            DoCertificate();
 
             FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
             Console.WriteLine("Fiddler Start");
 
-            FiddlerApplication.OnNotification += delegate(object sender, NotificationEventArgs oNEA)
+            FiddlerApplication.OnNotification += delegate (object sender, NotificationEventArgs oNEA)
             {
                 Console.WriteLine("** NotifyUser: " + oNEA.NotifyString);
             };
@@ -71,21 +74,46 @@ namespace SecureNet
                 Console.WriteLine("** LogString: " + oLEA.LogString);
             };
 
-            
-
         }
 
-        private static void RequestDetails(Session oSession)
+        private void RequestDetails(Session oSession)
         {
             Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
 
         }
 
 
-        public static bool InstallCertificate()
+        public void DoCertificate()
         {
+            var checkCert = CertMaker.GetRootCertificate();
+
+            if (checkCert == null)
+            {
+                Console.WriteLine("Cert does not exist");
+                CertMaker.createRootCert();
+                CertMaker.trustRootCert();
+                Console.WriteLine("Cert created & trusted");
+            }
+
+            else if (checkCert != null)
+            {
+                Console.WriteLine("Cert exists");
+                bool checktrust = CertMaker.rootCertIsMachineTrusted();
+                if (checktrust == true)
+                {
+                    Console.WriteLine("is trusted");
+                }
+                else if (checktrust == false)
+                {
+                    Console.WriteLine("not trusted");
+                }
+            }
+
+            /*
             if (!CertMaker.rootCertExists())
             {
+                Console.WriteLine("root cert does not exist");
+
                 if (!CertMaker.createRootCert())
                     return false;
 
@@ -97,10 +125,9 @@ namespace SecureNet
                 App.Configuration.UrlCapture.Key =
                     FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.key", null);
                     */
-            }
-
-            return true;
         }
+
+
 
         private void EncryptConnString()
         {
@@ -133,11 +160,32 @@ namespace SecureNet
         protected override void OnClosed(EventArgs e)
         {
             FiddlerApplication.oProxy.Detach();
-            FiddlerApplication.Prefs.SetBoolPref("fiddler.certmaker.CleanupServerCertsOnExit", true);
+            CheckCertificate();
+            Console.WriteLine("Detach proxy");
+
+            CertMaker.removeFiddlerGeneratedCerts(false);
+            //FiddlerApplication.Prefs.SetBoolPref("fiddler.certmaker.CleanupServerCertsOnExit", true);
+            CheckCertificate();
+            Console.WriteLine("Remove gen cert");
+
             FiddlerApplication.Shutdown();
+            CheckCertificate();
             Console.WriteLine("Fiddler Closed");
         }
 
 
+        public void CheckCertificate()
+        {
+            var checkCert = CertMaker.GetRootCertificate();
+
+            if (checkCert == null)
+            {
+                Console.WriteLine("Cert does not exist");
+            }
+            else if (checkCert != null)
+            {
+                Console.WriteLine("Cert exists");
+            }
+        }
     }
 }
