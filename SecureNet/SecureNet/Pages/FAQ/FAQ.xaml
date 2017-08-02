@@ -1,0 +1,57 @@
+﻿<Page x:Class="SecureNet.Pages.FAQ.FAQ"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages.FAQ"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
+      Title="FAQ">
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <WrapPanel>
+                    <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+                             CommandParameter="/Pages/Home.xaml">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Style="{DynamicResource backLbl}" >
+                        Frequently Asked Questions
+                    </Label>
+                </WrapPanel>
+                <Separator Background="Gray"/>
+
+                <Separator Height="20" Background="Transparent"/>
+
+                <Label Style="{DynamicResource backLbl}">What is SecureNet?</Label>
+                <TextBlock Style="{DynamicResource faqTB}">
+                    SecureNet is an app which is designed to view your traffic and determine if it is safe or not.
+                    In addition, SecureNet allows you to manually scan URLs and files to check if they are safe. 
+                </TextBlock>
+
+                <Label Style="{DynamicResource backLbl}">Why am I getting a proxy server error when running the browser?</Label>
+                <TextBlock Style="{DynamicResource faqTB}">
+                    This could be because our app did not shutdown properly.
+                    <LineBreak/>
+                    <LineBreak/>
+                    To rectify this issue:
+                    <LineBreak/>
+                    Chrome:
+                    Go to Settings > Advanced > System > Open proxy settings
+                    <LineBreak/>
+                    In the Internet Properties popup, under the Connections tab, click on the button 'LAN settings'.
+                    Uncheck the box for the option 'Use a proxy server for your LAN'.
+                    <LineBreak/>
+                    If the problem persists, please contact our helpdesk at <Hyperlink>securenetnyp@gmail.com</Hyperlink>.
+                </TextBlock>
+            
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

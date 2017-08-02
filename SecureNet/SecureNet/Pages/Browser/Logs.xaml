@@ -26,26 +26,54 @@
                     </Label>
                 </WrapPanel>
                 <Separator Background="Gray"/>
+                
+                <Separator Height="20" Background="Transparent"/>
+
+                <DataGrid AutoGenerateColumns="False" 
+                      Height="300" 
+                      HorizontalAlignment="Center" 
+                      Name="dataGrid1" 
+                      VerticalAlignment="Top" 
+                          IsReadOnly="True"
+                      Width="800">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="ID" Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Url" Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="hostname" Binding="{Binding Path=C}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="fullurl" Binding="{Binding Path=D}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="session state" Binding="{Binding Path=E}" MinWidth="50" MaxWidth="200"/>
+<!--
+                        <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200" />
+                        <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=D}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=E}" MinWidth="50" MaxWidth="200"/> -->
+                    </DataGrid.Columns>
+                </DataGrid>
 
                 <Separator Height="20" Background="Transparent"/>
 
-                <ListBox Name="listBox1" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
-
-                <Separator Height="20" Background="Transparent"/>
-
-                <ListBox Name="listBox2" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
-                <Separator Height="20" Background="Transparent"/>
-
-                <ListBox Name="listBox3" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
-                <Separator Height="20" Background="Transparent"/>
-
-                <ListBox Name="listBox4" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
-                <Separator Height="20" Background="Transparent"/>
-
-                <ListBox Name="listBox5" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
-                <Separator Height="20" Background="Transparent"/>
-
-                <ListBox Name="listBox6" MinHeight="100" MaxHeight="200" MaxWidth="300"/>
+                <DataGrid AutoGenerateColumns="False" 
+                      Height="300" 
+                      HorizontalAlignment="Center" 
+                      Name="dataGrid2" 
+                      VerticalAlignment="Top" 
+                          IsReadOnly="True"
+                      Width="800">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="ID" Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Url" Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="hostname" Binding="{Binding Path=C}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="fullurl" Binding="{Binding Path=D}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="session state" Binding="{Binding Path=E}" MinWidth="50" MaxWidth="200"/>
+                        <!--
+                        <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200" />
+                        <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=D}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Binding="{Binding Path=E}" MinWidth="50" MaxWidth="200"/> -->
+                    </DataGrid.Columns>
+                </DataGrid>
 
             </StackPanel>
         </ScrollViewer>

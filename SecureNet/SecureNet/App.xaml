@@ -159,9 +159,24 @@
             <Setter Property="Margin" Value="10"/>
         </Style>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        
+
         <Style TargetType="ScrollViewer">
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="True"/>
+            <Setter Property="CanUserSortColumns" Value="False"/>
+            <Setter Property="AreRowDetailsFrozen" Value="True"/>
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
         </Style>
 
         <!-- Label Style-->
@@ -170,10 +185,14 @@
             <Setter Property="Foreground" Value="Orange" />
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
-        
-        <Style TargetType="TextBlock">
+
+        <Style TargetType="TextBlock" x:Key="faqTB">
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
         </Style>
+
+
 
         <!-- alternate way to define
         <Style x:Key="commonStyle" TargetType="{x:Type FrameworkElement}">
