@@ -38,7 +38,7 @@ namespace SecureNet.Pages.Register
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            string email = txtEmail.Text; //email and phone is encrypted in varbinary
+            string email = txtEmail.Text; //phone is encrypted in varbinary
             string masterPass = txtMasterPass.Text;
             string phone = txtPhone.Text;
 
@@ -46,8 +46,27 @@ namespace SecureNet.Pages.Register
             if (!string.IsNullOrEmpty(txtEmail.Text) || (!string.IsNullOrEmpty(txtMasterPass.Text) || (!string.IsNullOrEmpty(txtPhone.Text))))
 
             {
-                bool result = Users.addUser(email, phone, masterPass);
+                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SecureNetCon"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select * from Users where userEmail= @userEmail", con);
+                cmd.Parameters.AddWithValue("@userEmail", txtEmail.Text);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    MessageBoxResult errorEmail = MessageBox.Show("Email already exists. Please choose a different one.", "Error");
+                }
+                else
+                {
+                    bool result = Users.addUser(email, phone, masterPass);
+                    this.NavigationService.Navigate(new Uri("/Pages/Register/Login.xaml", UriKind.Relative));
+                    Console.WriteLine("Successfully registered.");
+                }
+              
+            }
 
+            else
+            {
+                MessageBoxResult errorRegistering = MessageBox.Show("Register error", "Error");
             }
         }
     }

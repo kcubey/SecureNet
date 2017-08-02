@@ -10,6 +10,6 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="NOT VERIFIED" VerticalAlignment="Top" Foreground="#FFFCD736" FontFamily="Myriad Pro" FontSize="36" RenderTransformOrigin="0.908,0.799" Width="325" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="232,221,0,0" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtTest" HorizontalAlignment="Left" Height="23" Margin="185,225,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Page>
