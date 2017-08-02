@@ -46,7 +46,8 @@ namespace SecureNet.Pages.Manager
         //Retrieve Session userID
         private int getUserId()
         {
-            return 1;
+            int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
+            return  mySession;
         }
 
 
@@ -249,6 +250,24 @@ namespace SecureNet.Pages.Manager
 
         }
 
+        private bool popup()
+        {
+            Mouse.OverrideCursor = null;
+            OTP hello = new OTP();
+            hello.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            hello.ShowDialog();
+
+            if(hello.DialogResult == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+          
+        }
 
         //Add/Update Service
         private void Add(int command)
@@ -297,10 +316,21 @@ namespace SecureNet.Pages.Manager
                         {
                             if (!sameName(name))
                             {
-                                Service.genKeyIv(service, getUserId(), -1);
-                                resetfields();
-                                Service.logCommand(service.name, 3, null, getUserId());
-                                errorMsg.Content = "Successfully added!";
+                                bool otp = popup();
+
+                                if(otp == true)
+                                {
+                                    Mouse.OverrideCursor = Cursors.Wait;
+                                    Service.genKeyIv(service, getUserId(), -1);
+                                    resetfields();
+                                    Service.logCommand(service.name, 3, null, getUserId());
+                                    errorMsg.Content = "Successfully added!";
+                                }
+                                else
+                                {
+                                    errorMsg.Content = "OTP not entered correctly!";
+                                }
+                               
                             }
                             else
                             {
@@ -338,6 +368,7 @@ namespace SecureNet.Pages.Manager
             Mouse.OverrideCursor = null;
         }
 
+     
         //Populate ComboBox
         private void populateSelection()
         {
