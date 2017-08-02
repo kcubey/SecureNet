@@ -58,7 +58,7 @@ namespace SecureNet.Pages.Register
                 else
                 {
                     bool result = Users.addUser(email, phone, masterPass);
-                    this.NavigationService.Navigate(new Uri("Login.xaml", UriKind.Relative));
+                    this.NavigationService.Navigate(new Uri("/Pages/Register/Login.xaml", UriKind.Relative));
                     Console.WriteLine("Successfully registered.");
                 }
               

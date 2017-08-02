@@ -119,6 +119,7 @@ namespace SecureNet.Pages.Register
                             string userIV = Convert.ToString(dr2["userIV"]);
                             byte[] decryptPhone = DecryptAES256((byte[])dr["userPhone"], userKey, userIV);
                             string decryptedPhone = System.Text.Encoding.UTF8.GetString(decryptPhone);
+                            string phoneNumber = decryptedPhone;
                         }
                                               
                     }       

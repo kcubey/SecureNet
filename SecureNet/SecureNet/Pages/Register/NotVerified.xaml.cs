@@ -22,7 +22,12 @@ namespace SecureNet.Pages.Register
     {
         public NotVerified()
         {
-            InitializeComponent();
+            InitializeComponent();          
+           // txtTest.Text = Application.Current.Properties["SessionID"].ToString();
         }
+
+        
+        
+
     }
 }
