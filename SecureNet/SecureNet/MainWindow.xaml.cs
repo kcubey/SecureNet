@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Fiddler;
 using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SecureNet
 {
@@ -29,30 +30,17 @@ namespace SecureNet
             EncryptConnString();
             Style = (Style)FindResource(typeof(Window));
 
-            /*
-            if (!string.IsNullOrEmpty(App.Configuration.UrlCapture.Cert))
-            {
-                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.key", App.Configuration.UrlCapture.Key);
-                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.cert", App.Configuration.UrlCapture.Cert);
-            }
-            */
             StartFiddler();
-
-            //         MainFrame.NavigationService.GoBack();
-            //       MainFrame.NavigationService.GoForward();
-            //     MainFrame.NavigationService.Refresh();
+            EncryptConnString();
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
-            //this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
         }
 
         void StartFiddler()
         {
-            //CONFIG.IgnoreServerCertErrors = false;
-
             //FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
             //FiddlerApplication.Startup(8877, true, true);
 
@@ -127,7 +115,20 @@ namespace SecureNet
                     */
         }
 
+        //does not work
+        public void InstallCertificate()
+        {
+            X509Store certStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser);
+            // Try to open the store.
 
+            certStore.Open(OpenFlags.ReadOnly);
+            // Find the certificate that matches the name.
+            X509Certificate2Collection certCollection = certStore.Certificates.Find(X509FindType.FindBySubjectName, "DO_NOT_TRUST_FiddlerRoot", false);
+
+            X509Certificate2 certTry = new X509Certificate2(@"D:\PFX.PFX", "1", X509KeyStorageFlags.UserKeySet |
+                                        X509KeyStorageFlags.PersistKeySet |
+                                        X509KeyStorageFlags.Exportable);
+        }
 
         private void EncryptConnString()
         {
@@ -178,7 +179,7 @@ namespace SecureNet
         {
             var checkCert = CertMaker.GetRootCertificate();
 
-            if (checkCert == null)
+            if (checkCert == null) 
             {
                 Console.WriteLine("Cert does not exist");
             }
