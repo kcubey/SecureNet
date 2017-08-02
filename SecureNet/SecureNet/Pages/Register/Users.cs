@@ -120,10 +120,8 @@ namespace SecureNet.Pages.Register
                             byte[] decryptPhone = DecryptAES256((byte[])dr["userPhone"], userKey, userIV);
                             string decryptedPhone = System.Text.Encoding.UTF8.GetString(decryptPhone);
                         }
-                        
-                        
-                    }
-                        
+                                              
+                    }       
 
                     //  SqlCommand cmd1 =new SqlCommand ("SELECT verified FROM [Users] WHERE Username=@Username", con);
 
