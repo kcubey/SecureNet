@@ -46,7 +46,8 @@ namespace SecureNet.Pages.Manager
         //Retrieve Session userID
         private int getUserId()
         {
-            return 1;
+            int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
+            return  mySession;
         }
 
 
