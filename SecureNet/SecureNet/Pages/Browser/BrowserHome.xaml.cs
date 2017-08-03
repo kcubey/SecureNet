@@ -32,7 +32,7 @@ namespace SecureNet.Pages.Browser
     {
         public BrowserHome()
         {
-            Console.WriteLine("navigate success");
+            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
         }
@@ -63,7 +63,7 @@ namespace SecureNet.Pages.Browser
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("Redirect to " +redirectAdd);
+            Console.WriteLine("** Redirect to " + redirectAdd);
         }
 
         private void CheckVT(object sender, RoutedEventArgs e)

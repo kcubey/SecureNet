@@ -30,7 +30,7 @@ namespace SecureNet.Pages.Browser
 
         public Logs()
         {
-            Console.WriteLine("navigate success");
+            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
@@ -41,7 +41,7 @@ namespace SecureNet.Pages.Browser
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("Redirect to " + redirectAdd);
+            Console.WriteLine("** Redirect to " + redirectAdd);
         }
 
         public class DataObject

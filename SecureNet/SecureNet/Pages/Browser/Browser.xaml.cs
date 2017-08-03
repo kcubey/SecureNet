@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SecureNet.Pages.FAQ
+namespace SecureNet.Pages.Browser
 {
     /// <summary>
-    /// Interaction logic for FAQ.xaml
+    /// Interaction logic for Browser.xaml
     /// </summary>
-    public partial class FAQ : Page
+    public partial class Browser : Page
     {
-        public FAQ()
+        public Browser()
         {
             Console.WriteLine("** Navigate success");
             InitializeComponent();
@@ -33,5 +33,6 @@ namespace SecureNet.Pages.FAQ
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
             Console.WriteLine("** Redirect to " + redirectAdd);
         }
+
     }
 }
