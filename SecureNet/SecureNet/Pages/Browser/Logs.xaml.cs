@@ -33,12 +33,16 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine("navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
-            FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
-            
+            FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
         }
 
-        
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            string redirectAdd = ((Button)sender).CommandParameter.ToString();
+            this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
+            Console.WriteLine("Redirect to " + redirectAdd);
+        }
 
         public class DataObject
         {
@@ -51,27 +55,86 @@ namespace SecureNet.Pages.Browser
 
         private void FiddlerApplication_BeforeRequest(Session oSession)
         {
-            oSession.bBufferResponse = true;
-            oSession.utilDecodeResponse();
-            Console.WriteLine(oSession.GetRequestBodyAsString());
-            oSession.utilReplaceInResponse("google", "yahoo");
+            string getLongUrl = oSession.url; //Mostly url+port
+            string getUrl = null;
 
-            dataGrid2.Dispatcher.Invoke(new UpdateUI(() =>
+            int delimiterColon = getLongUrl.IndexOf(':');
+            int delimiterSlash = getLongUrl.IndexOf('/');
+
+            //Gets URL only
+            if (delimiterColon != -1)
             {
-                dataGrid2.Items.Add(new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+                getUrl = getLongUrl.Substring(0, delimiterColon);
+            }
+            else if (delimiterSlash != -1)
+            {
+                getUrl = getLongUrl.Substring(0, delimiterSlash);
+            }
+            else
+            {
+                getUrl = getLongUrl;
+            }
+
+            Console.WriteLine("** Long Url: " + getLongUrl);
+            Console.WriteLine("** Shortened url: " +getUrl);
+
+            //EnterStanleyCode();
+
+            bool stanley = true;
+
+            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+            {
+                dataGrid1.Items.Add(new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" });
 
             }));
+
+            if (oSession.HostnameIs("www.yahoo.com"))
+            {
+                stanley = false;
+            }
+
+            if (stanley == false) //site is unsafe
+            {
+                oSession.Abort();
+                Console.WriteLine("** Session Aborted");
+
+                //update datagrid of failure
+                dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+                {
+                    dataGrid1.Items.Add(new DataObject()
+                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+
+                }));
+            }
+            
         }
-        
 
-
-        private void OnClick(object sender, RoutedEventArgs e)
+        /*
+        public bool enterStanleyCode()
         {
-            string redirectAdd = ((Button)sender).CommandParameter.ToString();
-            this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("Redirect to " +redirectAdd);
+
+            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+            {
+                dataGrid1.Items.Add(new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" });
+
+            }));
+            bool safe = false;
+
+            if (safe == false) //not safe
+            {
+                return false;
+            }
+
+            else if (safe == true) //safe
+            {
+                return true;
+            }
+            else //errors
+                return false;
         }
+        */
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {

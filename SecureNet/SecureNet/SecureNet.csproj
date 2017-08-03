@@ -121,8 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="cGenerator\SetSerialNumber.cs" />
-    <Compile Include="Classes\CertificateGenerator.cs" />
+    <Compile Include="Classes\FiddlerService.cs" />
     <Compile Include="Pages\Browser\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>
     </Compile>

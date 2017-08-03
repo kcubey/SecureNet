@@ -17,6 +17,7 @@ using Fiddler;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Threading;
 
 namespace SecureNet
 {
@@ -76,6 +77,7 @@ namespace SecureNet
                 Console.WriteLine("** Closing previous instance of Fiddler");
             }
 
+            //INstallation of cert
             try
             {
                 Console.WriteLine("** Retrieving Cert...");
@@ -140,7 +142,7 @@ namespace SecureNet
             CertMaker.createRootCert();
             CertMaker.trustRootCert();
 
-            var certX = Fiddler.CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
+            var certX = CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
             File.WriteAllBytes(saveFile, certX.Export(X509ContentType.SerializedCert));
             //File.WriteAllBytes(@"C:\PFX.PFX", certX.Export(X509ContentType.SerializedCert));
         }
@@ -192,18 +194,20 @@ namespace SecureNet
 
         protected override void OnClosed(EventArgs e)
         {
+
             FiddlerApplication.oProxy.Detach();
             Console.WriteLine("** Detached proxy");
 
-            CertMaker.removeFiddlerGeneratedCerts(false);
-            FiddlerApplication.Prefs.SetBoolPref("fiddler.certmaker.CleanupServerCertsOnExit", true);
-            Console.WriteLine("** Remove gen cert");
+            //reemoveFiddler();
 
             FiddlerApplication.Shutdown();
             Console.WriteLine("** Fiddler Closed");
         }
 
-
-        
+        private async void reemoveFiddler()
+        {
+            Console.WriteLine("Waiting for 5s");
+            await Task.Delay(500000000);
+        }
     }
 }
