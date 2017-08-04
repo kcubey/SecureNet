@@ -72,18 +72,18 @@
                 <Separator Height="20" Background="Transparent"/>
 
 
-                <DataGrid AutoGenerateColumns="False" 
+                <!--<DataGrid AutoGenerateColumns="False" 
           Height="200" 
           HorizontalAlignment="Left" 
           Name="dataGrid1" 
           VerticalAlignment="Top" 
-          Width="200">
+          Width="200" SelectionChanged="dataGrid1_SelectionChanged">
                     <DataGrid.Columns >
                         <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" />
                         <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" />
                         <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" />
                     </DataGrid.Columns>
-                </DataGrid>
+                </DataGrid>-->
 
             </StackPanel>
 

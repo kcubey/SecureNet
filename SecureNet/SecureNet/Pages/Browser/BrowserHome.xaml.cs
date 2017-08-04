@@ -36,11 +36,11 @@ namespace SecureNet.Pages.Browser
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
 
-            var list = new ObservableCollection<DataObject>();
-            list.Add(new DataObject() { A = 6, B = 7, C = 5 });
-            list.Add(new DataObject() { A = 5, B = 8, C = 4 });
-            list.Add(new DataObject() { A = 4, B = 3, C = 0 });
-            this.dataGrid1.ItemsSource = list;
+            //var list = new ObservableCollection<DataObject>();
+            //list.Add(new DataObject() { A = 6, B = 7, C = 5 });
+            //list.Add(new DataObject() { A = 5, B = 8, C = 4 });
+            //list.Add(new DataObject() { A = 4, B = 3, C = 0 });
+            //this.dataGrid1.ItemsSource = list;
         }
 
         //Change cursor when waiting
