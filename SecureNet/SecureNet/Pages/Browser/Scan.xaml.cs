@@ -22,17 +22,17 @@ using VirusTotalNET;
 using VirusTotalNET.Objects;
 using VirusTotalNET.ResponseCodes;
 using VirusTotalNET.Results;
+using SecureNet.Classes;
 
 namespace SecureNet.Pages.Browser
 {
     /// <summary>
-    /// Interaction logic for BrowserHome.xaml
+    /// Interaction logic for Scan.xaml
     /// </summary>
-    public partial class BrowserHome : Page
+    public partial class Scan : Page
     {
-        public BrowserHome()
+        public Scan()
         {
-            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
         }
@@ -69,39 +69,41 @@ namespace SecureNet.Pages.Browser
         private void CheckVT(object sender, RoutedEventArgs e)
         {
             startVTAsyncURL(ScanTxtBox.Text);
+            ScanTxtBox.Text = String.Empty;
         }
 
         private void CheckVTFile(object sender, RoutedEventArgs e)
         {
             startVTAsyncFile();
+            ScanFile.Text = String.Empty;
         }
 
         private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ScanFile.Text))
             {
-                
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "All files (*.*)|*.*";
-                    openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    if (openFileDialog.ShowDialog() == true)
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    String path = openFileDialog.FileName; // get name of file
+                    String size = Convert.ToString(openFileDialog.FileName.Length); // get size of file
+                    if (openFileDialog.FileName.Length > 104857600) // 100mb, may want to change to something smaller
                     {
-                        String path = openFileDialog.FileName; // get name of file
-                        String size = Convert.ToString(openFileDialog.FileName.Length); // get size of file
-                        if (openFileDialog.FileName.Length > 104857600) // 100mb, may want to change to something smaller
+                        ScanFile.Text = "File exceeds upload limit";
+                    }
+                    else
+                    {
+                        using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
                         {
-                            ScanFile.Text = "File exceeds upload limit";
-                        }
-                        else
-                        {
-                            using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
-                            {
-                                ScanFile.Text = path;
-                            }
+                            ScanFile.Text = path;
                         }
                     }
                 }
-            
+            }
+
             else
             {
                 MessageBox.Show("File has been uploaded");
@@ -112,6 +114,8 @@ namespace SecureNet.Pages.Browser
             if (!string.IsNullOrWhiteSpace(ScanFile.Text))
                 ScanFile.Text = "";
         }
+
+
 
 
         /// <summary>
@@ -131,9 +135,11 @@ namespace SecureNet.Pages.Browser
                 UrlReport urlReport = await vt.GetUrlReport(urlText);
 
                 bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
+
                 Console.WriteLine(hasUrlBeenScannedBefore);
                 Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
                 MessageBox.Show("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
+                MessageBox.Show(urlText + " scanned");
 
                 //If the url has been scanned before, the results are embedded inside the report.
                 if (hasUrlBeenScannedBefore)
@@ -159,6 +165,7 @@ namespace SecureNet.Pages.Browser
         {
             Console.WriteLine("Scan ID: " + urlReport.ScanId);
             Console.WriteLine("Message: " + urlReport.VerboseMsg);
+            MessageBox.Show("Scan ID: " + urlReport.ScanId);
 
             if (urlReport.ResponseCode == ReportResponseCode.Present)
             {
@@ -172,13 +179,14 @@ namespace SecureNet.Pages.Browser
         }
 
 
+
         private async void startVTAsyncFile()
         {
             using (new WaitCursor())
             {
 
                 if (string.IsNullOrEmpty((ScanFile.Text)))
-                    
+
                     return;
 
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
@@ -191,7 +199,7 @@ namespace SecureNet.Pages.Browser
                 }
 
                 File.WriteAllText(fileInfo.FullName, System.Text.Encoding.UTF8.GetString(byteArray));
-                MessageBox.Show(System.Text.Encoding.UTF8.GetString(byteArray));
+                //MessageBox.Show(System.Text.Encoding.UTF8.GetString(byteArray));
                 FileReport fileReport = await vt.GetFileReport(fileInfo);
                 bool hasFileBeenScannedBefore = fileReport.ResponseCode == ReportResponseCode.Present;
 
@@ -207,6 +215,8 @@ namespace SecureNet.Pages.Browser
                 {
                     ScanResult fileResult = await vt.ScanFile(fileInfo);
                     PrintScan(fileResult);
+
+
                 }
             }
         }
@@ -222,6 +232,9 @@ namespace SecureNet.Pages.Browser
         {
             Console.WriteLine("Scan ID: " + fileReport.ScanId);
             Console.WriteLine("Message: " + fileReport.VerboseMsg);
+            MessageBox.Show("Scan ID: " + fileReport.ScanId);
+
+
 
             if (fileReport.ResponseCode == ReportResponseCode.Present)
             {
@@ -234,6 +247,6 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-       
+
     }
 }
