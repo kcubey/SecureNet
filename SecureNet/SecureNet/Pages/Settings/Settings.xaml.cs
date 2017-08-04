@@ -22,7 +22,7 @@ namespace SecureNet.Pages.Settings
     {
         public Settings()
         {
-            Console.WriteLine("navigate success");
+            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
         }

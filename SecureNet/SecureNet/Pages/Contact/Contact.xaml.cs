@@ -22,7 +22,7 @@ namespace SecureNet.Pages.Contact
     {
         public Contact()
         {
-            Console.WriteLine("navigate success");
+            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
         }

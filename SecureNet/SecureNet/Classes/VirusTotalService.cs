@@ -1,131 +1,22 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using VirusTotalNET;
 using VirusTotalNET.Objects;
 using VirusTotalNET.ResponseCodes;
 using VirusTotalNET.Results;
 
-namespace SecureNet.Pages.Browser
+namespace SecureNet.Classes
 {
-    /// <summary>
-    /// Interaction logic for BrowserHome.xaml
-    /// </summary>
-    public partial class BrowserHome : Page
+    class VirusTotalService
     {
-        public BrowserHome()
-        {
-            Console.WriteLine("** Navigate success");
-            InitializeComponent();
-            Style = (Style)FindResource(typeof(Page));
-        }
-
-        //Change cursor when waiting
-        public class WaitCursor : IDisposable
-        {
-            private Cursor _previousCursor;
-
-            public WaitCursor()
-            {
-                _previousCursor = Mouse.OverrideCursor;
-
-                Mouse.OverrideCursor = Cursors.Wait;
-            }
-
-            #region IDisposable Members
-
-            public void Dispose()
-            {
-                Mouse.OverrideCursor = _previousCursor;
-            }
-
-            #endregion
-        }
-
-        private void OnClick(object sender, RoutedEventArgs e)
-        {
-            string redirectAdd = ((Button)sender).CommandParameter.ToString();
-            this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("** Redirect to " + redirectAdd);
-        }
-
-        private void CheckVT(object sender, RoutedEventArgs e)
-        {
-            startVTAsyncURL(ScanTxtBox.Text);
-        }
-
-        private void CheckVTFile(object sender, RoutedEventArgs e)
-        {
-            startVTAsyncFile();
-        }
-
-        private void btnOpenFiles_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(ScanFile.Text))
-            {
-                
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "All files (*.*)|*.*";
-                    openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    if (openFileDialog.ShowDialog() == true)
-                    {
-                        String path = openFileDialog.FileName; // get name of file
-                        String size = Convert.ToString(openFileDialog.FileName.Length); // get size of file
-                        if (openFileDialog.FileName.Length > 104857600) // 100mb, may want to change to something smaller
-                        {
-                            ScanFile.Text = "File exceeds upload limit";
-                        }
-                        else
-                        {
-                            using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
-                            {
-                                ScanFile.Text = path;
-                            }
-                        }
-                    }
-                }
-            
-            else
-            {
-                MessageBox.Show("File has been uploaded");
-            }
-        }
-        private void btnClearFile_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(ScanFile.Text))
-                ScanFile.Text = "";
-        }
-
-
-        /// <summary>
-        /// URL Scan
-        /// </summary>
-        /// <param name="urlText"></param>
         private async void startVTAsyncURL(string urlText)
         {
-            using (new WaitCursor())
-            {
-
-                //If textbox empty, won't scan
-                if (string.IsNullOrEmpty((ScanTxtBox.Text))) return;
-
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
                 UrlReport urlReport = await vt.GetUrlReport(urlText);
@@ -145,9 +36,8 @@ namespace SecureNet.Pages.Browser
                     UrlScanResult urlResult = await vt.ScanUrl(urlText);
                     PrintScan(urlResult);
                 }
-            }
-
         }
+
         private static void PrintScan(UrlScanResult scanResult)
         {
             Console.WriteLine("Scan ID: " + scanResult.ScanId);
@@ -172,20 +62,13 @@ namespace SecureNet.Pages.Browser
         }
 
 
-        private async void startVTAsyncFile()
+        private async void startVTAsyncFile(string fileinfostring)
         {
-            using (new WaitCursor())
-            {
-
-                if (string.IsNullOrEmpty((ScanFile.Text)))
-                    
-                    return;
-
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
-                FileInfo fileInfo = new FileInfo(ScanFile.Text);
+                FileInfo fileInfo = new FileInfo(fileinfostring);
                 byte[] byteArray;
-                using (StreamReader reader = new StreamReader(new FileStream(ScanFile.Text, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
+                using (StreamReader reader = new StreamReader(new FileStream(fileinfostring, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
                 {
                     byteArray = Encoding.UTF8.GetBytes(reader.ReadToEnd());
                 }
@@ -208,7 +91,6 @@ namespace SecureNet.Pages.Browser
                     ScanResult fileResult = await vt.ScanFile(fileInfo);
                     PrintScan(fileResult);
                 }
-            }
         }
 
         private static void PrintScan(ScanResult scanResult)
@@ -233,7 +115,5 @@ namespace SecureNet.Pages.Browser
 
             Console.WriteLine();
         }
-
-       
     }
 }
