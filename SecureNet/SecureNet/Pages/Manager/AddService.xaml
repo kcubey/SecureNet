@@ -18,7 +18,7 @@
                 <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
-                            <Image Source="/Media/PasswordManager/back.png" />
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
@@ -63,7 +63,7 @@
                         <Button  Name="ShowPass" Style="{DynamicResource PassBackButton}" Cursor="Hand" Click="ShowPass_Click">
                             <Button.Template>
                                 <ControlTemplate>
-                                    <Image Source="/Media/PasswordManager/eye-2-xxl.png" />
+                                    <Image Source="/SecureNet;component/Media/PasswordManager/eye-2-xxl.png" />
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
@@ -126,7 +126,7 @@
                     <Button  Name="Copyname" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Media/PasswordManager/copy-xxl.png" />
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -134,7 +134,7 @@
                     <Button  Name="Copyurl" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Media/PasswordManager/copy-xxl.png" />
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -142,7 +142,7 @@
                     <Button  Name="Copyusername" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Media/PasswordManager/copy-xxl.png" />
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -150,7 +150,7 @@
                     <Button  Name="Copypassword" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Media/PasswordManager/copy-xxl.png" />
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
@@ -158,7 +158,7 @@
                     <Button  Name="Copynotes" Style="{DynamicResource CopyButton}" Cursor="Hand" Click="Copyname_Click" >
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Media/PasswordManager/copy-xxl.png" />
+                                <Image Source="/SecureNet;component/Media/PasswordManager/copy-xxl.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>

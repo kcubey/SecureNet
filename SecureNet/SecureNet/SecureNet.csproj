@@ -121,12 +121,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\DataObject.cs" />
     <Compile Include="Classes\FiddlerService.cs" />
     <Compile Include="Classes\VirusTotalService.cs" />
     <Compile Include="Classes\WaitCursor.cs" />
-    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
-      <DependentUpon>BrowserHome.xaml</DependentUpon>
+    <Compile Include="Pages\Browser\Browser.xaml.cs">
+      <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Browser\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>
@@ -169,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Master\Header.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Browser\Browser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,6 +238,9 @@
     </Compile>
     <Compile Include="Master\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
+      <DependentUpon>BrowserHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Contact\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
@@ -332,16 +338,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pages\Manager\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Media\scanwhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Media\logswhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Media\logs.png" />
-    <Resource Include="Media\scan.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

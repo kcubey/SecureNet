@@ -18,7 +18,6 @@ using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
-using SecureNet.Classes;
 
 namespace SecureNet
 {
@@ -28,9 +27,6 @@ namespace SecureNet
     public partial class MainWindow : Window
     {
         protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
-        public delegate void PrintLogResultsDelegate(Classes.DataObject logResults);
-
-        public event PrintLogResultsDelegate GetLogResults;
 
         public MainWindow()
         {

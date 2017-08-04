@@ -19,7 +19,7 @@
                 <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate>
-                            <Image Source="/Media/PasswordManager/back.png" />
+                            <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
