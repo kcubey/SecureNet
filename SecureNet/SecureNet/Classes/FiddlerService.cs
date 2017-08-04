@@ -10,8 +10,8 @@ namespace SecureNet.Classes
     class FiddlerService
     {
 
-
         /*
+
         private void runService()
         {
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
@@ -80,6 +80,8 @@ namespace SecureNet.Classes
 
             }));
 
-        }*/
+        }
+        
+         */
     }
 }

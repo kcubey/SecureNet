@@ -10,86 +10,72 @@
       Title="BrowserHome">
 
     <Grid>
+        <StackPanel>
 
-        <ScrollViewer>
-            <StackPanel>
-                <WrapPanel>
-                    <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
-                     CommandParameter="/Pages/Home.xaml">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    <Label Style="{DynamicResource backLbl}" >
-                        BrowserLogs Home
+            <!-- Back bar-->
+            <WrapPanel>
+                <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
+                         CommandParameter="/Pages/Home.xaml">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label Style="{DynamicResource backLbl}" >
+                    Browser
+                </Label>
+            </WrapPanel>
+            <Separator Background="Gray"/>
+
+
+            <!-- Menu bar-->
+            <WrapPanel>
+                <Button  Click="OnClick" Style="{DynamicResource browserMenuBtn}"
+                         CommandParameter="/Pages/Browser/Scan.xaml">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/scan.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Label Style="{DynamicResource browserMenuTitleLbl}">
+                        Manual Scan
                     </Label>
-                </WrapPanel>
+                    <Label Style="{DynamicResource browserMenuDescLbl}">
+                        Manually scan URLs and files.
+                    </Label>
+                </StackPanel>
+            </WrapPanel>
 
-                <Grid>
-                    <TabControl>
-                        <TabItem Header="URL">
-                            <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
+            <Separator Background="Gray" />
 
-                                <Label>Enter URL to scan:</Label>
-                                <TextBox Name="ScanTxtBox" VerticalContentAlignment="Center" 
-                         Padding="10" TextWrapping="Wrap" 
-                         MaxWidth="500" MinWidth="200" 
-                         AcceptsReturn="True" MinHeight="40"
-                         Margin="0"></TextBox>
+            <WrapPanel>
+                <Button  Click="OnClick" Style="{DynamicResource browserMenuBtn}"
+                         CommandParameter="/Pages/Browser/Logs.xaml">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/logs.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-                                <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan URL</Button>
+                <StackPanel VerticalAlignment="Center">
+                    <Label Style="{DynamicResource browserMenuTitleLbl}">
+                        Logs
+                    </Label>
+                    <Label Style="{DynamicResource browserMenuDescLbl}">
+                        View all traffic logs on your computer.
+                    </Label>
+                </StackPanel>
+            </WrapPanel>
 
-                            </WrapPanel>
-
-
-
-                        </TabItem>
-
-                        <TabItem Header="File">
-                            <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
-                                <Label>Upload a file to scan:</Label>
-                                <TextBox x:Name="ScanFile" VerticalContentAlignment="Center" 
-                         Padding="10" TextWrapping="Wrap" 
-                         MaxWidth="500" MinWidth="200" 
-                         AcceptsReturn="True" MinHeight="40"
-                         Margin="0" IsEnabled="False" Height="34"/>
-
-                                <Button Click="CheckVTFile" Style="{DynamicResource selectBtn}">Scan File</Button>
-                                <Button Name="btnOpenFile" Click="btnOpenFiles_Click" Width="70" Height="40">Open files</Button>
-                                <Button x:Name="btnClearFile" Click="btnClearFile_Click" Content="Clear files" Width="70" Height="40"/>
-
-                            </WrapPanel>
-
-                        </TabItem>
-                    </TabControl>
-                </Grid>
+            <Separator Background="Gray" />
 
 
-                <Separator Background="Gray"/>
-
-                <Separator Height="20" Background="Transparent"/>
-
-
-                <DataGrid AutoGenerateColumns="False" 
-          Height="200" 
-          HorizontalAlignment="Left" 
-          Name="dataGrid1" 
-          VerticalAlignment="Top" 
-          Width="200">
-                    <DataGrid.Columns >
-                        <DataGridTextColumn Binding="{Binding Path=A}" MinWidth="50" />
-                        <DataGridTextColumn Binding="{Binding Path=B}" MinWidth="50" />
-                        <DataGridTextColumn Binding="{Binding Path=C}" MinWidth="50" />
-                    </DataGrid.Columns>
-                </DataGrid>
-
-            </StackPanel>
-
-        </ScrollViewer>
-
-
+        </StackPanel>
 
     </Grid>
 </Page>
