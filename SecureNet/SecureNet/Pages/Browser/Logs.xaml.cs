@@ -88,7 +88,7 @@ namespace SecureNet.Pages.Browser
             }
 
             Console.WriteLine("** Long Url: " + getLongUrl);
-            Console.WriteLine("** Shortened url: " +getUrl);
+            Console.WriteLine("** Shortened url: " + getUrl);
 
             //EnterStanleyCode();
 
@@ -119,7 +119,7 @@ namespace SecureNet.Pages.Browser
 
                 }));
             }
-            
+
         }
 
         /*
@@ -153,13 +153,13 @@ namespace SecureNet.Pages.Browser
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
                 dataGrid1.Items.Add(new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname , D=oSession.fullUrl, E= oSession.state.ToString()});
-                
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+
             }));
 
         }
 
-        
+
 
         /*
         private void FillDataGrid()

@@ -178,7 +178,10 @@
     <Page Include="Pages\Browser\BrowserHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Browser\Logs.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Browser\Scan.xaml">
       <SubType>Designer</SubType>

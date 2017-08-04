@@ -14,7 +14,7 @@
             <StackPanel>
                 <WrapPanel>
                     <Button  Click="OnClick" Style="{DynamicResource backBtn}" 
-                     CommandParameter="/Pages/Home.xaml">
+                     CommandParameter="/Pages/Browser/BrowserHome.xaml">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
@@ -22,9 +22,12 @@
                         </Button.Template>
                     </Button>
                     <Label Style="{DynamicResource backLbl}" >
-                        BrowserLogs Home
+                        Manual Scan
                     </Label>
                 </WrapPanel>
+                <Separator Background="Gray"/>
+                <Separator Height="20" Background="Transparent"/>
+
 
                 <Grid>
                     <TabControl>
@@ -62,12 +65,6 @@
                         </TabItem>
                     </TabControl>
                 </Grid>
-
-
-                <Separator Background="Gray"/>
-
-                <Separator Height="20" Background="Transparent"/>
-
 
             </StackPanel>
 
