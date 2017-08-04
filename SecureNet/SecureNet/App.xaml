@@ -219,7 +219,9 @@
         </Style>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource commonStyle}" />
         -->
-
+        <Style TargetType="TabControl">
+            <Setter Property="Margin" Value="100"/>
+        </Style>
 
 
         <!--Password Manager Home Page & Common Layout for Pages-->

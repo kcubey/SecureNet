@@ -140,7 +140,7 @@ namespace SecureNet
             Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
 
         }
-        
+
         public void InstallCertificate() //Create & trust cert, saves PFX file
         {
             CertMaker.createRootCert();
@@ -165,30 +165,30 @@ namespace SecureNet
             X509Certificate2 certTry = new X509Certificate2(saveFile, "1", X509KeyStorageFlags.UserKeySet |
                                         X509KeyStorageFlags.PersistKeySet |
                                         X509KeyStorageFlags.Exportable);
- /*
-            bool checktrust = certTry.Verify();
+            /*
+                       bool checktrust = certTry.Verify();
 
-            if (checktrust == true)
-            {
-                Console.WriteLine("** Cert verified");
-            }
-            else if (checktrust == false)
-            {
-                Console.WriteLine("** Cert UNverified");
+                       if (checktrust == true)
+                       {
+                           Console.WriteLine("** Cert verified");
+                       }
+                       else if (checktrust == false)
+                       {
+                           Console.WriteLine("** Cert UNverified");
 
-            }
+                       }
 
-           
-            bool checktrust = CertMaker.rootCertIsMachineTrusted();
-            if (checktrust == true)
-            {
-                Console.WriteLine("** cert is trusted");
-            }
-            else if (checktrust == false)
-            {
-                Console.WriteLine("** cert not trusted");
-                InstallCertificate();
-            }*/
+
+                       bool checktrust = CertMaker.rootCertIsMachineTrusted();
+                       if (checktrust == true)
+                       {
+                           Console.WriteLine("** cert is trusted");
+                       }
+                       else if (checktrust == false)
+                       {
+                           Console.WriteLine("** cert not trusted");
+                           InstallCertificate();
+                       }*/
         }
 
         private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
@@ -202,7 +202,7 @@ namespace SecureNet
             FiddlerApplication.oProxy.Detach();
             Console.WriteLine("** Detached proxy");
 
-            //reemoveFiddler();
+            //removeFiddler();
 
             FiddlerApplication.Shutdown();
             Console.WriteLine("** Fiddler Closed");
