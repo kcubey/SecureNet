@@ -17,7 +17,7 @@
                          CommandParameter="/Pages/Browser/BrowserHome.xaml">
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/SecureNet;component/Media/PasswordManager/back.png" />
+                                <Image Source="/Media/PasswordManager/back.png" />
                             </ControlTemplate>
                         </Button.Template>
                     </Button>

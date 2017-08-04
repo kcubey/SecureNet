@@ -18,6 +18,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Fiddler;
 using System.Collections.ObjectModel;
+using SecureNet.Classes;
 
 namespace SecureNet.Pages.Browser
 {
@@ -52,6 +53,17 @@ namespace SecureNet.Pages.Browser
             public string D { get; set; }
             public string E { get; set; }
         }
+
+        /*
+         * 
+         * there is a need to start printing to the logs page
+         * immediately from when the app starts
+        private void DisplayUI()
+        {
+            FiddlerService.PrintResults(oSession);
+        }
+
+            */
 
         private void FiddlerApplication_BeforeRequest(Session oSession)
         {
