@@ -1,213 +1,213 @@
-﻿//using SecureNet.Pages;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows;
-//using System.Windows.Controls;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Navigation;
-//using System.Windows.Shapes;
-//using Fiddler;
-//using System.Configuration;
-//using System.Security.Cryptography.X509Certificates;
-//using System.IO;
-//using System.Threading;
+﻿using SecureNet.Pages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Fiddler;
+using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
+using System.Threading;
 
-//namespace SecureNet
-//{
-//    /// <summary>
-//    /// Interaction logic for MainWindow.xaml
-//    /// </summary>
-//    public partial class MainWindow : Window
-//    {
-//        protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
+namespace SecureNet
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
 
-//        public MainWindow()
-//        {
-//            InitializeComponent();
-//            EncryptConnString();
-//            Style = (Style)FindResource(typeof(Window));
+        public MainWindow()
+        {
+            InitializeComponent();
+            EncryptConnString();
+            Style = (Style)FindResource(typeof(Window));
 
-//            StartFiddler();
-//            EncryptConnString();
-//        }
+            StartFiddler();
+            EncryptConnString();
+        }
 
-//        private void OnClick(object sender, RoutedEventArgs e)
-//        {
-//            MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
-//        }
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
+        }
 
-//        private void EncryptConnString()
-//        {
-//            // Open the app.config file.
-//            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        private void EncryptConnString()
+        {
+            // Open the app.config file.
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-//            // Get the section in the file.
-//            ConfigurationSection section = config.GetSection("connectionStrings");
+            // Get the section in the file.
+            ConfigurationSection section = config.GetSection("connectionStrings");
 
-//            // If the section exists and the section is not readonly, then protect the section.
-//            if (section != null)
-//            {
-//                if (!section.IsReadOnly())
-//                {
-//                    // Protect the section.
-//                    section.SectionInformation.ProtectSection("RsaProtectedConfigurationProvider");
-//                    section.SectionInformation.ForceSave = true;
-//                    // Save the change.
-//                    config.Save(ConfigurationSaveMode.Modified);
+            // If the section exists and the section is not readonly, then protect the section.
+            if (section != null)
+            {
+                if (!section.IsReadOnly())
+                {
+                    // Protect the section.
+                    section.SectionInformation.ProtectSection("RsaProtectedConfigurationProvider");
+                    section.SectionInformation.ForceSave = true;
+                    // Save the change.
+                    config.Save(ConfigurationSaveMode.Modified);
 
-//                }
-//            }
-//        }
+                }
+            }
+        }
 
-//        void StartFiddler()
-//        {
-//            //FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
-//            //FiddlerApplication.Startup(8877, true, true);
+        void StartFiddler()
+        {
+            //FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+            //FiddlerApplication.Startup(8877, true, true);
 
-//            if (FiddlerApplication.IsStarted())
-//            {
-//                FiddlerApplication.Shutdown();
-//                Console.WriteLine("** Closing previous instance of Fiddler");
-//            }
+            if (FiddlerApplication.IsStarted())
+            {
+                FiddlerApplication.Shutdown();
+                Console.WriteLine("** Closing previous instance of Fiddler");
+            }
 
-//            //INstallation of cert
-//            try
-//            {
-//                Console.WriteLine("** Retrieving Cert...");
-//                RetrieveCertificate();
-//            }
-//            catch
-//            {
-//                Console.WriteLine("** Installing Cert...");
-//                InstallCertificate();
-//            }
+            //INstallation of cert
+            try
+            {
+                Console.WriteLine("** Retrieving Cert...");
+                RetrieveCertificate();
+            }
+            catch
+            {
+                Console.WriteLine("** Installing Cert...");
+                InstallCertificate();
+            }
 
-//            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
-//            Console.WriteLine("** Fiddler Start");
+            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+            Console.WriteLine("** Fiddler Start");
 
-//            FiddlerApplication.OnNotification += delegate (object sender, NotificationEventArgs oNEA)
-//            {
-//                Console.WriteLine("** NotifyUser: " + oNEA.NotifyString);
-//            };
+            FiddlerApplication.OnNotification += delegate (object sender, NotificationEventArgs oNEA)
+            {
+                Console.WriteLine("** NotifyUser: " + oNEA.NotifyString);
+            };
 
-//            FiddlerApplication.Log.OnLogString += delegate (object sender, LogEventArgs oLEA)
-//            {
-//                Console.WriteLine("** LogString: " + oLEA.LogString);
-//            };
+            FiddlerApplication.Log.OnLogString += delegate (object sender, LogEventArgs oLEA)
+            {
+                Console.WriteLine("** LogString: " + oLEA.LogString);
+            };
 
-//        }
+        }
 
-//        public void CheckCertificate()
-//        {
-//            var checkCert = CertMaker.GetRootCertificate();
+        public void CheckCertificate()
+        {
+            var checkCert = CertMaker.GetRootCertificate();
 
-//            if (checkCert == null)
-//            {
-//                Console.WriteLine("Cert does not exist");
-//                CertMaker.createRootCert();
-//                CertMaker.trustRootCert();
-//                Console.WriteLine("Cert created & trusted");
-//            }
+            if (checkCert == null)
+            {
+                Console.WriteLine("Cert does not exist");
+                CertMaker.createRootCert();
+                CertMaker.trustRootCert();
+                Console.WriteLine("Cert created & trusted");
+            }
 
-//            else if (checkCert != null)
-//            {
-//                Console.WriteLine("Cert exists");
-//                bool checktrust = CertMaker.rootCertIsMachineTrusted();
-//                if (checktrust == true)
-//                {
-//                    Console.WriteLine("is trusted");
-//                }
-//                else if (checktrust == false)
-//                {
-//                    Console.WriteLine("not trusted");
-//                }
-//            }
-//        }
+            else if (checkCert != null)
+            {
+                Console.WriteLine("Cert exists");
+                bool checktrust = CertMaker.rootCertIsMachineTrusted();
+                if (checktrust == true)
+                {
+                    Console.WriteLine("is trusted");
+                }
+                else if (checktrust == false)
+                {
+                    Console.WriteLine("not trusted");
+                }
+            }
+        }
 
-//        private void RequestDetails(Session oSession)
-//        {
-//            Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
+        private void RequestDetails(Session oSession)
+        {
+            Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
 
-//        }
+        }
 
-//        public void InstallCertificate() //Create & trust cert, saves PFX file
-//        {
-//            CertMaker.createRootCert();
-//            CertMaker.trustRootCert();
+        public void InstallCertificate() //Create & trust cert, saves PFX file
+        {
+            CertMaker.createRootCert();
+            CertMaker.trustRootCert();
 
-//            var certX = CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
-//            File.WriteAllBytes(saveFile, certX.Export(X509ContentType.SerializedCert));
-//            //File.WriteAllBytes(@"C:\PFX.PFX", certX.Export(X509ContentType.SerializedCert));
-//        }
+            var certX = CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
+            File.WriteAllBytes(saveFile, certX.Export(X509ContentType.SerializedCert));
+            //File.WriteAllBytes(@"C:\PFX.PFX", certX.Export(X509ContentType.SerializedCert));
+        }
 
-//        public void RetrieveCertificate()
-//        {
-//            Console.WriteLine("** PFX file is at: " + saveFile);
+        public void RetrieveCertificate()
+        {
+            Console.WriteLine("** PFX file is at: " + saveFile);
 
-//            X509Store certStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser);
-//            // Try to open the store.
+            X509Store certStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser);
+            // Try to open the store.
 
-//            certStore.Open(OpenFlags.ReadOnly);
-//            // Find the certificate that matches the name.
-//            X509Certificate2Collection certCollection = certStore.Certificates.Find(X509FindType.FindBySubjectName, "DO_NOT_TRUST_FiddlerRoot", false);
+            certStore.Open(OpenFlags.ReadOnly);
+            // Find the certificate that matches the name.
+            X509Certificate2Collection certCollection = certStore.Certificates.Find(X509FindType.FindBySubjectName, "DO_NOT_TRUST_FiddlerRoot", false);
 
-//            X509Certificate2 certTry = new X509Certificate2(saveFile, "1", X509KeyStorageFlags.UserKeySet |
-//                                        X509KeyStorageFlags.PersistKeySet |
-//                                        X509KeyStorageFlags.Exportable);
-//            /*
-//                       bool checktrust = certTry.Verify();
+            X509Certificate2 certTry = new X509Certificate2(saveFile, "1", X509KeyStorageFlags.UserKeySet |
+                                        X509KeyStorageFlags.PersistKeySet |
+                                        X509KeyStorageFlags.Exportable);
+            /*
+                       bool checktrust = certTry.Verify();
 
-//                       if (checktrust == true)
-//                       {
-//                           Console.WriteLine("** Cert verified");
-//                       }
-//                       else if (checktrust == false)
-//                       {
-//                           Console.WriteLine("** Cert UNverified");
+                       if (checktrust == true)
+                       {
+                           Console.WriteLine("** Cert verified");
+                       }
+                       else if (checktrust == false)
+                       {
+                           Console.WriteLine("** Cert UNverified");
 
-//                       }
+                       }
 
 
-//                       bool checktrust = CertMaker.rootCertIsMachineTrusted();
-//                       if (checktrust == true)
-//                       {
-//                           Console.WriteLine("** cert is trusted");
-//                       }
-//                       else if (checktrust == false)
-//                       {
-//                           Console.WriteLine("** cert not trusted");
-//                           InstallCertificate();
-//                       }*/
-//        }
+                       bool checktrust = CertMaker.rootCertIsMachineTrusted();
+                       if (checktrust == true)
+                       {
+                           Console.WriteLine("** cert is trusted");
+                       }
+                       else if (checktrust == false)
+                       {
+                           Console.WriteLine("** cert not trusted");
+                           InstallCertificate();
+                       }*/
+        }
 
-//        private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
-//        {
-//            throw new NotImplementedException();
-//        }
+        private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
-//        protected override void OnClosed(EventArgs e)
-//        {
+        protected override void OnClosed(EventArgs e)
+        {
 
-//            FiddlerApplication.oProxy.Detach();
-//            Console.WriteLine("** Detached proxy");
+            FiddlerApplication.oProxy.Detach();
+            Console.WriteLine("** Detached proxy");
 
-//            //removeFiddler();
+            //removeFiddler();
 
-//            FiddlerApplication.Shutdown();
-//            Console.WriteLine("** Fiddler Closed");
-//        }
+            FiddlerApplication.Shutdown();
+            Console.WriteLine("** Fiddler Closed");
+        }
 
-//        private async void reemoveFiddler()
-//        {
-//            Console.WriteLine("Waiting for 5s");
-//            await Task.Delay(500000000);
-//        }
-//    }
-//}
+        private async void reemoveFiddler()
+        {
+            Console.WriteLine("Waiting for 5s");
+            await Task.Delay(500000000);
+        }
+    }
+}
