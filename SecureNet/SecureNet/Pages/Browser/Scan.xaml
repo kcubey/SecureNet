@@ -39,7 +39,7 @@
                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
-                         Margin="0"></TextBox>
+                         Margin="0" ></TextBox>
 
                                 <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan URL</Button>
 
