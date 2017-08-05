@@ -28,12 +28,24 @@ namespace SecureNet.Pages.Browser
     public partial class Logs : Page
     {
         delegate void UpdateUI();
+        public static List<DataObject> DataObjects { get; set; }
 
         public Logs()
         {
             Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+
+
+            if (DataObjects == null)
+            {
+                DataObjects = new List<DataObject>();
+            }
+            foreach (DataObject dataObject in DataObjects)
+            {
+                dataGrid1.Items.Add(dataObject);
+
+            }
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
             FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
         }
@@ -54,18 +66,7 @@ namespace SecureNet.Pages.Browser
             public string E { get; set; }
         }
 
-        /*
-         * 
-         * there is a need to start printing to the logs page
-         * immediately from when the app starts
-        private void DisplayUI()
-        {
-            FiddlerService.PrintResults(oSession);
-        }
-
-            */
-
-        private void FiddlerApplication_BeforeRequest(Session oSession)
+        public void FiddlerApplication_BeforeRequest(Session oSession)
         {
             string getLongUrl = oSession.url; //Mostly url+port
             string getUrl = null;
@@ -96,8 +97,11 @@ namespace SecureNet.Pages.Browser
 
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
-                dataGrid1.Items.Add(new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" });
+                DataObject newDataObject = new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" };
+                DataObjects.Add(newDataObject);
+                dataGrid1.Items.Add(newDataObject);
+                Console.WriteLine("Add to DataObject");
 
             }));
 
@@ -114,14 +118,19 @@ namespace SecureNet.Pages.Browser
                 //update datagrid of failure
                 dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
                 {
-                    dataGrid1.Items.Add(new DataObject()
-                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+                    DataObject newDataObject = new DataObject()
+                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                    DataObjects.Add(newDataObject);
+                    dataGrid1.Items.Add(newDataObject);
+                Console.WriteLine("Add to DataObject");
 
                 }));
             }
 
+
         }
 
+        #region stanley's
         /*
         public bool enterStanleyCode()
         {
@@ -147,19 +156,20 @@ namespace SecureNet.Pages.Browser
                 return false;
         }
         */
+        #endregion
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
-                dataGrid1.Items.Add(new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() });
+                DataObject newDataObject = new DataObject()
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                DataObjects.Add(newDataObject);
+                dataGrid1.Items.Add(newDataObject);
 
             }));
 
         }
-
-
 
         /*
         private void FillDataGrid()

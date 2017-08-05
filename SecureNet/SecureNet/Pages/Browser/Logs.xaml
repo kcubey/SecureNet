@@ -35,7 +35,8 @@
                       Name="dataGrid1" 
                       VerticalAlignment="Top" 
                           IsReadOnly="True"
-                      Width="800">
+                      Width="800"
+                          x:FieldModifier="public">
                     <DataGrid.Columns >
                         <DataGridTextColumn Header="ID" Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
                         <DataGridTextColumn Header="Url" Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200"/>
