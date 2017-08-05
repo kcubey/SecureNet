@@ -20,6 +20,9 @@ namespace SecureNet.Pages.Browser
     /// </summary>
     public partial class BrowserHome : Page
     {
+        delegate void UpdateUI();
+        public static List<DataObject> DataObjects { get; set; }
+
         public BrowserHome()
         {
             Console.WriteLine("** Navigate success");

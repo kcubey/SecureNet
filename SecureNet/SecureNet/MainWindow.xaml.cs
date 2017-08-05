@@ -1,24 +1,12 @@
-﻿using SecureNet.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Fiddler;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
-using System.Threading;
-using SecureNet.Classes;
 
 namespace SecureNet
 {
@@ -28,23 +16,36 @@ namespace SecureNet
     public partial class MainWindow : Window
     {
         protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
-        public delegate void PrintLogResultsDelegate(Classes.DataObject logResults);
+        SecureNet.Pages.Browser.Logs logsPage = new SecureNet.Pages.Browser.Logs();
 
-        public event PrintLogResultsDelegate GetLogResults;
+        delegate void UpdateUI();
+        public static List<DataObject> DataObjects { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             EncryptConnString();
             Style = (Style)FindResource(typeof(Window));
-
-            StartFiddler();
             EncryptConnString();
+                
+            StartFiddler();
+
+            FiddlerApplication.BeforeRequest += logsPage.FiddlerApplication_BeforeRequest;
+            FiddlerApplication.AfterSessionComplete += logsPage.FiddlerApplication_AfterSessionComplete;
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
+        }
+
+        public class DataObject
+        {
+            public string A { get; set; }
+            public string B { get; set; }
+            public string C { get; set; }
+            public string D { get; set; }
+            public string E { get; set; }
         }
 
         private void EncryptConnString()
@@ -165,6 +166,8 @@ namespace SecureNet
             X509Certificate2 certTry = new X509Certificate2(saveFile, "1", X509KeyStorageFlags.UserKeySet |
                                         X509KeyStorageFlags.PersistKeySet |
                                         X509KeyStorageFlags.Exportable);
+
+#region verify trusted cert
             /*
                        bool checktrust = certTry.Verify();
 
@@ -189,6 +192,7 @@ namespace SecureNet
                            Console.WriteLine("** cert not trusted");
                            InstallCertificate();
                        }*/
+#endregion
         }
 
         private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
@@ -213,5 +217,6 @@ namespace SecureNet
             Console.WriteLine("Waiting for 5s");
             await Task.Delay(500000000);
         }
+
     }
 }

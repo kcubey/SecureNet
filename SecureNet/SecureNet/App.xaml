@@ -187,7 +187,12 @@
             <Setter Property="CanUserSortColumns" Value="False"/>
             <Setter Property="AreRowDetailsFrozen" Value="True"/>
             <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
+            <Setter Property="AreRowDetailsFrozen" Value="True"/>
         </Style>
+
 
         <!-- Label Style-->
         <Style TargetType="Label" x:Key="backLbl">
