@@ -31,15 +31,16 @@
 
                 <Grid>
                     <TabControl>
-                        <TabItem Header="URL">
+                        <TabItem Header="URL" Height="35" Width="55">
                             <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
 
                                 <Label>Enter URL to scan:</Label>
                                 <TextBox Name="ScanTxtBox" VerticalContentAlignment="Center" 
-                         Padding="10" TextWrapping="Wrap" 
+                          Padding="10" TextWrapping="Wrap" 
                          MaxWidth="500" MinWidth="200" 
                          AcceptsReturn="True" MinHeight="40"
-                         Margin="0" ></TextBox>
+                         Margin="0" Height="34"/>
+
 
                                 <Button Click="CheckVT" Style="{DynamicResource selectBtn}">Scan URL</Button>
 
@@ -47,7 +48,7 @@
 
                         </TabItem>
 
-                        <TabItem Header="File">
+                        <TabItem Header="File" Height="35" Width="55">
                             <WrapPanel Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}">
                                 <Label>Upload a file to scan:</Label>
                                 <TextBox x:Name="ScanFile" VerticalContentAlignment="Center" 
