@@ -301,9 +301,6 @@
     <Resource Include="Media\SecureNetLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="README.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\browser.png" />
     <Resource Include="Media\contact.png" />
     <Resource Include="Media\key.png" />
