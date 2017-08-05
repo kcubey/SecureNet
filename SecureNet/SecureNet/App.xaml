@@ -189,7 +189,6 @@
             <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
             <Setter Property="CanUserReorderColumns" Value="False"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
-            <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
             <Setter Property="AreRowDetailsFrozen" Value="True"/>
         </Style>
 
