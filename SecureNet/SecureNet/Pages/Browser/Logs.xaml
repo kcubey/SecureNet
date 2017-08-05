@@ -49,18 +49,5 @@
 
             </StackPanel>
         </ScrollViewer>
-
-        <!-- test
-        <StackPanel>
-            <DataGrid AlternatingRowBackground="#FFC4B0B0" Height="400" Width="350" AutoGenerateColumns="False" Name="gridLogs">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding FirstName}" Width="100" Header="First Name"/>
-                    <DataGridTextColumn Binding="{Binding LastName}" Width="100" Header="Last Name"/>
-                    <DataGridTextColumn Binding="{Binding Salary}" Width="100" Header="Salary"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-        -->
-
     </Grid>
 </Page>
