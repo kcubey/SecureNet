@@ -23,6 +23,7 @@ using VirusTotalNET.Objects;
 using VirusTotalNET.ResponseCodes;
 using VirusTotalNET.Results;
 using SecureNet.Classes;
+using System.Threading;
 
 namespace SecureNet.Pages.Browser
 {
@@ -165,17 +166,40 @@ namespace SecureNet.Pages.Browser
         {
             Console.WriteLine("Scan ID: " + urlReport.ScanId);
             Console.WriteLine("Message: " + urlReport.VerboseMsg);
-            MessageBox.Show("Scan ID: " + urlReport.ScanId);
 
-            if (urlReport.ResponseCode == ReportResponseCode.Present)
+            string allLines = ""; // For writing to file
+            allLines += "Scan ID : " + urlReport.ScanId + Environment.NewLine;
+            allLines += "Scan Result from VirusTotal \n";
+
+            using (new WaitCursor())
             {
-                foreach (KeyValuePair<string, ScanEngine> scan in urlReport.Scans)
+                if (urlReport.ResponseCode == ReportResponseCode.Present)
                 {
-                    Console.WriteLine("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
-                }
-            }
+                    foreach (KeyValuePair<string, ScanEngine> scan in urlReport.Scans)
+                    {
+                        string currentLine = string.Format("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
 
-            Console.WriteLine();
+                        allLines += currentLine + Environment.NewLine; // Adds to string, so it can be written to file later
+                        Console.WriteLine(currentLine); // Writes to console
+                    }
+                }
+
+                // Creating a Text File
+                try
+                {
+                    File.WriteAllText("URLResults.txt", allLines);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Cannot create URLResults.txt for writing");
+                    Console.WriteLine(e.Message);
+                    return;
+
+                }
+
+                MessageBox.Show(allLines);
+            }
         }
 
 
@@ -235,18 +259,40 @@ namespace SecureNet.Pages.Browser
             MessageBox.Show("Scan ID: " + fileReport.ScanId);
 
 
+            string allLines2 = ""; // For writing to file
+            allLines2 += "Scan ID : " + fileReport.ScanId + Environment.NewLine;
+            allLines2 += "Scan Result from VirusTotal \n";
 
-            if (fileReport.ResponseCode == ReportResponseCode.Present)
+            using (new WaitCursor())
             {
-                foreach (KeyValuePair<string, ScanEngine> scan in fileReport.Scans)
+
+                if (fileReport.ResponseCode == ReportResponseCode.Present)
                 {
-                    Console.WriteLine("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
+                    foreach (KeyValuePair<string, ScanEngine> scan in fileReport.Scans)
+                    {
+                        string currentLine2 = string.Format("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
+
+                        allLines2 += currentLine2 + Environment.NewLine; // Adds to string, so it can be written to file later
+                        Console.WriteLine(currentLine2); // Writes to console                    }
+                    }
+
                 }
+                // Creating a Text File
+                try
+                {
+                    File.WriteAllText("FileReports.txt", allLines2);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Cannot create FileReports.txt for writing");
+                    Console.WriteLine(e.Message);
+                    return;
+
+                }
+
+                MessageBox.Show(allLines2);
             }
-
-            Console.WriteLine();
         }
-
-      
     }
 }
