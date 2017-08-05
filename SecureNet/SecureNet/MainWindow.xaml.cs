@@ -18,7 +18,6 @@ namespace SecureNet
         protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
         SecureNet.Pages.Browser.Logs logsPage = new SecureNet.Pages.Browser.Logs();
 
-        delegate void UpdateUI();
         public static List<DataObject> DataObjects { get; set; }
 
         public MainWindow()
@@ -210,6 +209,8 @@ namespace SecureNet
 
             FiddlerApplication.Shutdown();
             Console.WriteLine("** Fiddler Closed");
+
+            logsPage.ExportToFile();
         }
 
         private async void reemoveFiddler()
