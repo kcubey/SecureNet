@@ -10,6 +10,7 @@ using System.IO;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using SecureNet.Classes;
 
 namespace SecureNet.Classes
 {
@@ -55,8 +56,9 @@ namespace SecureNet.Classes
                         passwordBytes = (byte[])saReader["servicePassword"];
 
 
-                        //Migration: Remove all AesKey and Delete Aeskey Table & Update SQLCommand
+                       
                         byte[] aesKey = Convert.FromBase64String(saReader["aesKey"].ToString());
+                        aesKey = deAesKey(aesKey);
                         serviceData.password = DecryptStringFromBytes_Aes(passwordBytes, aesKey);
                         string password = serviceData.password;
                         serviceData.username = DecryptStringFromBytes_Aes(usernameBytes, aesKey);
@@ -88,7 +90,7 @@ namespace SecureNet.Classes
         //Generate Key and send for encryption
         public static void genKeyIv(Service service, int userId, int svcId)
         {
-            //Migration: Remove ALL AES RELATED STUFF LOL
+           
             using (Aes myAes = Aes.Create())
             {
                 
@@ -129,12 +131,7 @@ namespace SecureNet.Classes
             string plaintext = null;
             using (Aes aesAlg = Aes.Create())
             {
-                // Migration: byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-                // Migration : AES.KeySize = 256;
-                // Migration: AES.BlockSize = 128;
-                // Migration: Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
-                //  Migration: AES.Key = key.GetBytes(AES.KeySize / 8);
-                 //Migration: AES.IV = key.GetBytes(AES.BlockSize / 8);
+             
 
                 aesAlg.Key = Key;
 
@@ -177,11 +174,7 @@ namespace SecureNet.Classes
 
             using (Aes aesAlg = Aes.Create())
             {
-               //Migration: Get hashed passwordbytes based on userId
-               // Migration: byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-               // Migration: Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
-               //Migration: aesAlg.Key = key.GetBytes(AES.KeySize/8); => Keysize still 256
-               //Migration: aesAlg.IV = key.GetBytes(Aes.BlockSize/8); =>Blocksize still 128
+             
                 aesAlg.BlockSize = 128;
                 aesAlg.KeySize = 256;
                 aesAlg.Key = aesKey;
@@ -296,6 +289,7 @@ namespace SecureNet.Classes
         //Add AesKey
         private static void insertKey(int serviceId, byte[] aesKey)
         {
+            aesKey = enAesKey(aesKey);
             string aesKeyString = Convert.ToBase64String(aesKey);
             SqlCommand cmd = new SqlCommand();
 
@@ -313,6 +307,7 @@ namespace SecureNet.Classes
         //Update AesKey
         private static void updateKey(int serviceId, byte[] aesKey)
         {
+            aesKey = enAesKey(aesKey);
             string aesKeyString = Convert.ToBase64String(aesKey);
             SqlCommand cmd = new SqlCommand();
 
@@ -371,10 +366,68 @@ namespace SecureNet.Classes
         }
 
        
+        private static byte[] enAesKey( byte[] aesKey)
+        {
+            byte[] enAesKey = null;
+            using (Aes AES = Aes.Create())
+            {
+                AES.KeySize = 256;
+                AES.BlockSize = 128;
+             
+                AES.Key = PrivateKey.privKey;
+                AES.IV = PrivateKey.privIV;
+
+                AES.Mode = CipherMode.CBC;
+
+              
+
+                using (var msEncrypt = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(msEncrypt, AES.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(aesKey, 0, aesKey.Length);
+                        cs.Close();
+                    }
+                    enAesKey = msEncrypt.ToArray();
+                }
+
+                return enAesKey;
+
+            }
+        }
+
+        private static byte[] deAesKey(byte[] aesKey)
+        {
+            byte[] deAesKey = null;
+            using (Aes AES = Aes.Create())
+            {
+                AES.KeySize = 256;
+                AES.BlockSize = 128;
+               
+                AES.Key = PrivateKey.privKey;
+                AES.IV = PrivateKey.privIV;
+
+                AES.Mode = CipherMode.CBC;
 
 
 
-      
+                using (var ms = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(ms, AES.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(aesKey, 0, aesKey.Length);
+                        cs.Close();
+                    }
+                    deAesKey = ms.ToArray();
+                }
+
+                return deAesKey;
+
+            }
+        }
+
+
+
         //Connection
         public static SqlConnection GetConnection()
         {

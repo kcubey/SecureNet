@@ -122,6 +122,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\FiddlerService.cs" />
+    <Compile Include="Classes\PrivateKey.cs" />
     <Compile Include="Classes\VirusTotalService.cs" />
     <Compile Include="Classes\WaitCursor.cs" />
     <Compile Include="Pages\Browser\Browser.xaml.cs">
