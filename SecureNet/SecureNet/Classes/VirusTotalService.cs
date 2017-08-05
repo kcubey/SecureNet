@@ -15,7 +15,7 @@ namespace SecureNet.Classes
 {
     class VirusTotalService
     {
-        private async void startVTAsyncURL(string urlText)
+        public async void startVTServicesAsyncURL(string urlText)
         {
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
@@ -38,14 +38,14 @@ namespace SecureNet.Classes
                 }
         }
 
-        private static void PrintScan(UrlScanResult scanResult)
+        public static void PrintScan(UrlScanResult scanResult)
         {
             Console.WriteLine("Scan ID: " + scanResult.ScanId);
             Console.WriteLine("Message: " + scanResult.VerboseMsg);
             Console.WriteLine();
         }
 
-        private static void PrintScan(UrlReport urlReport)
+        public static void PrintScan(UrlReport urlReport)
         {
             Console.WriteLine("Scan ID: " + urlReport.ScanId);
             Console.WriteLine("Message: " + urlReport.VerboseMsg);
@@ -62,7 +62,7 @@ namespace SecureNet.Classes
         }
 
 
-        private async void startVTAsyncFile(string fileinfostring)
+        public async void startVTSeriviceAsyncFile(string fileinfostring)
         {
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
@@ -93,14 +93,14 @@ namespace SecureNet.Classes
                 }
         }
 
-        private static void PrintScan(ScanResult scanResult)
+        public static void PrintScan(ScanResult scanResult)
         {
             Console.WriteLine("Scan ID: " + scanResult.ScanId);
             Console.WriteLine("Message: " + scanResult.VerboseMsg);
             Console.WriteLine();
         }
 
-        private static void PrintScan(FileReport fileReport)
+        public static void PrintScan(FileReport fileReport)
         {
             Console.WriteLine("Scan ID: " + fileReport.ScanId);
             Console.WriteLine("Message: " + fileReport.VerboseMsg);

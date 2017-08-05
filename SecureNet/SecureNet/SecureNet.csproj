@@ -125,11 +125,14 @@
     <Compile Include="Classes\PrivateKey.cs" />
     <Compile Include="Classes\VirusTotalService.cs" />
     <Compile Include="Classes\WaitCursor.cs" />
-    <Compile Include="Pages\Browser\Browser.xaml.cs">
-      <DependentUpon>Browser.xaml</DependentUpon>
+    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
+      <DependentUpon>BrowserHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Browser\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Browser\Scan.xaml.cs">
+      <DependentUpon>Scan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FAQ\FAQ.xaml.cs">
       <DependentUpon>FAQ.xaml</DependentUpon>
@@ -172,17 +175,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Browser\Browser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\Browser\BrowserHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Browser\Logs.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Browser\Scan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Contact\Contact.xaml">
       <SubType>Designer</SubType>
@@ -239,9 +242,6 @@
     </Compile>
     <Compile Include="Master\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
-      <DependentUpon>BrowserHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Contact\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
@@ -301,9 +301,6 @@
     <Resource Include="Media\SecureNetLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="README.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\browser.png" />
     <Resource Include="Media\contact.png" />
     <Resource Include="Media\key.png" />
@@ -339,6 +336,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pages\Manager\TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\scanwhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\logswhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\logs.png" />
+    <Resource Include="Media\scan.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

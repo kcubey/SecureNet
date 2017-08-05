@@ -27,7 +27,7 @@
                         <Image Source="/Media/browser.png"
                                Style="{DynamicResource icon}"/>
                         <TextBlock TextAlignment="Center">
-                            <LineBreak/>Browser Logs
+                            <LineBreak/>Browser
                         </TextBlock>
                     </StackPanel>
                 </Button>
@@ -73,18 +73,6 @@
             <DockPanel>
                 <Button Style="{DynamicResource menuBtn}"
                             Click="OnClick"
-                            CommandParameter="/Pages/Browser/Logs.xaml">
-                    <StackPanel>
-                        <Image Source="/Media/settings.png"
-                                   Style="{DynamicResource icon}"/>
-                        <TextBlock TextAlignment="Center">
-                                <LineBreak/>Logs Page
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-
-                <Button Style="{DynamicResource menuBtn}"
-                            Click="OnClick"
                             CommandParameter="/Pages/FAQ/FAQ.xaml">
                     <StackPanel>
                         <Image Source="/Media/settings.png"
@@ -95,18 +83,6 @@
                     </StackPanel>
                 </Button>
 
-                <Button Style="{DynamicResource menuBtn}"
-                            Click="OnClick"
-                            CommandParameter="/Pages/Browser/Browser.xaml">
-                    <StackPanel>
-                        <Image Source="/Media/settings.png"
-                                   Style="{DynamicResource icon}"/>
-                        <TextBlock TextAlignment="Center">
-                                <LineBreak/>Browser
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-                
             </DockPanel>
 
         </StackPanel>
