@@ -203,7 +203,7 @@ namespace SecureNet.Pages.Browser
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Cannot create URLResults.txt for writing");
+                    Console.WriteLine("Cannot create text file for writing");
                     Console.WriteLine(e.Message);
                     return;
 
