@@ -147,7 +147,7 @@ namespace SecureNet.Pages.Browser
                 //If the url has been scanned before, the results are embedded inside the report.
                 if (hasUrlBeenScannedBefore)
                 {
-                    PrintScan(urlReport);
+                    PrintScan(urlReport, urlText);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-        public static void PrintScan(UrlReport urlReport)
+        public static void PrintScan(UrlReport urlReport, string urlText)
         {
             Console.WriteLine("Scan ID: " + urlReport.ScanId);
             Console.WriteLine("Message: " + urlReport.VerboseMsg);
@@ -197,7 +197,7 @@ namespace SecureNet.Pages.Browser
                 // Creating a Text File
                 try
                 {
-                    string pathURL = @"ScanReports\URL\URLReport.txt";             
+                    string pathURL = @"ScanReports\URL\" + urlText + ".txt";             
                     File.WriteAllText(pathURL, allLines);
 
                 }
@@ -227,6 +227,9 @@ namespace SecureNet.Pages.Browser
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
                 FileInfo fileInfo = new FileInfo(ScanFile.Text);
+                //get filename
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(ScanFile.Text);
+
                 byte[] byteArray;
                 using (StreamReader reader = new StreamReader(new FileStream(ScanFile.Text, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
                 {
@@ -244,7 +247,7 @@ namespace SecureNet.Pages.Browser
                 //If the file has been scanned before, the results are embedded inside the report.
                 if (hasFileBeenScannedBefore)
                 {
-                    PrintScan(fileReport);
+                    PrintScan(fileReport, fileName);
                 }
                 else
                 {
@@ -263,7 +266,7 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-        private static void PrintScan(FileReport fileReport)
+        private static void PrintScan(FileReport fileReport, string fileName)
         {
             Console.WriteLine("Scan ID: " + fileReport.ScanId);
             Console.WriteLine("Message: " + fileReport.VerboseMsg);
@@ -294,7 +297,7 @@ namespace SecureNet.Pages.Browser
                 // Creating a Text File
                 try
                 {
-                    string pathFile = @"ScanReports\File\FileReport.txt";
+                    string pathFile = @"ScanReports\File\" + fileName + "Report.txt";
                     File.WriteAllText(pathFile, allLines2);
                    
 
