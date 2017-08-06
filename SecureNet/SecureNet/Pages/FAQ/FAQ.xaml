@@ -27,15 +27,19 @@
                 </WrapPanel>
                 <Separator Background="Gray"/>
 
-                <Separator Height="20" Background="Transparent"/>
+                <Separator Height="10" Background="Transparent"/>
 
-                <Label Style="{DynamicResource backLbl}">What is SecureNet?</Label>
+                <Label Style="{DynamicResource FAQLbl}">What is SecureNet?</Label>
                 <TextBlock Style="{DynamicResource faqTB}">
                     SecureNet is an app which is designed to view your traffic and determine if it is safe or not.
                     In addition, SecureNet allows you to manually scan URLs and files to check if they are safe. 
                 </TextBlock>
 
-                <Label Style="{DynamicResource backLbl}">Why am I getting a proxy server error when running the browser?</Label>
+                <Separator Height="10" Background="Transparent"/>
+                <Separator Background="Gray"/>
+                <Separator Height="10" Background="Transparent"/>
+
+                <Label Style="{DynamicResource FAQLbl}">Why am I getting a proxy server error when running the browser?</Label>
                 <TextBlock Style="{DynamicResource faqTB}">
                     This could be because our app did not shutdown properly.
                     <LineBreak/>
@@ -50,7 +54,16 @@
                     <LineBreak/>
                     If the problem persists, please contact our helpdesk at <Hyperlink>securenetnyp@gmail.com</Hyperlink>.
                 </TextBlock>
-            
+
+                <Separator Height="10" Background="Transparent"/>
+                <Separator Background="Gray"/>
+                <Separator Height="10" Background="Transparent"/>
+
+                <Label Style="{DynamicResource FAQLbl}">Who do I contact if there are any issues?</Label>
+                <TextBlock Style="{DynamicResource faqTB}">
+                    Contact us at <Hyperlink>securenetnyp@gmail.com</Hyperlink> for any app-related enquiries.
+                </TextBlock>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

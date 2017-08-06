@@ -45,12 +45,12 @@
                 </Button>
                 <Button Style="{DynamicResource menuBtn}"
                         Click="OnClick"
-                        CommandParameter="/Pages/Contact/Contact.xaml">
+                        CommandParameter="/Pages/FAQ/FAQ.xaml">
                     <StackPanel>
-                        <Image Source="/Media/contact.png"
+                        <Image Source="/Media/faq.png"
                                Style="{DynamicResource icon}"/>
                         <TextBlock TextAlignment="Center">
-                            <LineBreak/>Contact
+                            <LineBreak/>FAQ
                         </TextBlock>
                     </StackPanel>
                 </Button>
@@ -65,24 +65,6 @@
                         </TextBlock>
                     </StackPanel>
                 </Button>
-            </DockPanel>
-
-            <!-- ======================================================================= -->
-            <Separator Height="20" Background="Transparent"/>
-
-            <DockPanel>
-                <Button Style="{DynamicResource menuBtn}"
-                            Click="OnClick"
-                            CommandParameter="/Pages/FAQ/FAQ.xaml">
-                    <StackPanel>
-                        <Image Source="/Media/settings.png"
-                                   Style="{DynamicResource icon}"/>
-                        <TextBlock TextAlignment="Center">
-                                <LineBreak/>FAQ
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-
             </DockPanel>
 
         </StackPanel>

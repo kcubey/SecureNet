@@ -71,6 +71,21 @@ namespace SecureNet
             }
 
             //INstallation of cert
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["FiddlerCert"]))
+            {
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.key", ConfigurationManager.AppSettings["FiddlerKey"]);
+                Console.WriteLine("Key is: "+ConfigurationManager.AppSettings["FiddlerKey"]);
+
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.cert", ConfigurationManager.AppSettings["FiddlerCert"]);
+                Console.WriteLine("Cert is: "+ConfigurationManager.AppSettings["FiddlerCert"]);
+            }
+            else
+            {
+                Console.WriteLine("Key is: " + ConfigurationManager.AppSettings["FiddlerKey"]);
+                Console.WriteLine("Cert is: " + ConfigurationManager.AppSettings["FiddlerCert"]);
+            }
+            InstallCertificate();
+            /*
             try
             {
                 Console.WriteLine("** Retrieving Cert...");
@@ -81,7 +96,7 @@ namespace SecureNet
                 Console.WriteLine("** Installing Cert...");
                 InstallCertificate();
             }
-
+            */
             FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
             Console.WriteLine("** Fiddler Start");
 
@@ -124,18 +139,55 @@ namespace SecureNet
             }
         }
 
-        public void InstallCertificate() //Create & trust cert, saves PFX file
+        public static bool InstallCertificate()
         {
-            CertMaker.createRootCert();
-            CertMaker.trustRootCert();
+            if (!CertMaker.rootCertExists())
+            {
+                Console.WriteLine("Rootcert does not exist");
+                if (!CertMaker.createRootCert())
+                {
+                    Console.WriteLine("creating root cert");
+                    return false;
+                }
 
-            var certX = CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
-            File.WriteAllBytes(saveFile, certX.Export(X509ContentType.SerializedCert));
+                if (!CertMaker.trustRootCert())
+                {
+                    Console.WriteLine("trusting root cert");
+                    return false;
+                }
+
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                config.AppSettings.Settings["FiddlerCert"].Value = FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.cert", null);
+                Console.WriteLine("Cert is: " + ConfigurationManager.AppSettings["FiddlerCert"]);
+
+                config.AppSettings.Settings["FiddlerKey"].Value = FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.key", null);
+                Console.WriteLine("Key is: " + ConfigurationManager.AppSettings["FiddlerKey"]);
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+
+            return true;
+        }
+
+        public void InstallTruCertificate() //Create & trust cert, saves PFX file
+        {
+            //var certX = CertMaker.oCertProvider.GetCertificateForHost("<Machine Name>");
+            //File.WriteAllBytes(saveFile, certX.Export(X509ContentType.SerializedCert));
+
+
             //File.WriteAllBytes(@"C:\PFX.PFX", certX.Export(X509ContentType.SerializedCert));
         }
 
         public void RetrieveCertificate()
         {
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["FiddlerCert"]))
+            {
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.key", ConfigurationManager.AppSettings["FiddlerKey"]);
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.cert", ConfigurationManager.AppSettings["FiddlerCert"]);
+            }
+            /*
             Console.WriteLine("** PFX file is at: " + saveFile);
 
             X509Store certStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser);
@@ -145,9 +197,11 @@ namespace SecureNet
             // Find the certificate that matches the name.
             X509Certificate2Collection certCollection = certStore.Certificates.Find(X509FindType.FindBySubjectName, "DO_NOT_TRUST_FiddlerRoot", false);
 
-            X509Certificate2 certTry = new X509Certificate2(saveFile, "1", X509KeyStorageFlags.UserKeySet |
-                                        X509KeyStorageFlags.PersistKeySet |
-                                        X509KeyStorageFlags.Exportable);
+            X509Certificate2 certTry = new X509Certificate2(
+                saveFile, "1", 
+                X509KeyStorageFlags.UserKeySet |
+                X509KeyStorageFlags.PersistKeySet |
+                X509KeyStorageFlags.Exportable);*/
 
             #region verify trusted cert
             /*
@@ -189,12 +243,49 @@ namespace SecureNet
             Console.WriteLine("** Fiddler Closed");
 
             logsPage.ExportToFile();
+            MessageBoxResult result = MessageBox.Show("Do you want to uninstall certificate?", "SecureNet", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    {
+                        UninstallCertificate();
+                    }
+                    break;
+                case MessageBoxResult.No:
+                    {
+                        break;
+                    }
+            }
+            //UninstallCertificate();
         }
 
         private async void reemoveFiddler()
         {
             Console.WriteLine("Waiting for 5s");
             await Task.Delay(500000000);
+        }
+
+        public static bool UninstallCertificate()
+        {
+            if (CertMaker.rootCertExists())
+            {
+                if (!CertMaker.removeFiddlerGeneratedCerts(true))
+                    return false;
+            }
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings["FiddlerCert"].Value = null;
+            Console.WriteLine("Cert is: " + ConfigurationManager.AppSettings["FiddlerCert"]);
+
+            config.AppSettings.Settings["FiddlerKey"].Value = null;
+            Console.WriteLine("Key is: " + ConfigurationManager.AppSettings["FiddlerKey"]);
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            Console.WriteLine("uninstall cert");
+            return true;
         }
 
     }
