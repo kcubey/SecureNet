@@ -37,12 +37,49 @@
                       IsReadOnly="True"
                       Width="800">
                     <DataGrid.Columns >
-                        <DataGridTextColumn Header="Log ID" Binding="{Binding Path=A}" MinWidth="50" MaxWidth="200"/>
-                        <DataGridTextColumn Header="Url" Binding="{Binding Path=B}" MinWidth="50" MaxWidth="200"/>
-                        <DataGridTextColumn Header="hostname" Binding="{Binding Path=C}" MinWidth="50" MaxWidth="200"/>
-                        <DataGridTextColumn Header="fullurl" Binding="{Binding Path=D}" MinWidth="50" MaxWidth="200"/>
-                        <DataGridTextColumn Header="session state" Binding="{Binding Path=E}" MinWidth="50" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Log ID" Binding="{Binding Path=A}" MinWidth="60" MaxWidth="60">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="URL" Binding="{Binding Path=B}" MinWidth="232" MaxWidth="232">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Host Name" Binding="{Binding Path=C}" MinWidth="232" MaxWidth="232">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="State" Binding="{Binding Path=D}" MinWidth="80" MaxWidth="80">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Date/Time" Binding="{Binding Path=E}" MinWidth="171" MaxWidth="171">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
                     </DataGrid.Columns>
+
+                    
                 </DataGrid>
 
                 <Separator Height="20" Background="Transparent"/>
