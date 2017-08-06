@@ -114,6 +114,7 @@ namespace SecureNet.Pages.Manager
                         Reporting.Visibility = Visibility.Collapsed;
                         ReportTable.Items.Clear();
                         Report.Content = "Report Suspicious Activity";
+                        MessageBox.Show("Our Tech Support will contact you shortly");
                       
                     }
 

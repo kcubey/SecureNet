@@ -151,7 +151,7 @@ namespace TOTP
         }
 
         
-       /* public static void encryptSeed(int userId)
+        public static void encryptSeed(int userId)
         {
             string seed = "CMFC4FUMEN7QNNHK4OZD2UVUIF6NJKPB";
             byte[] seedBytes = Base32.FromBase32String(seed);
@@ -189,7 +189,7 @@ namespace TOTP
             cmd.Connection = Service.GetConnection();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
-        }*/
+        }
         
     }
 }

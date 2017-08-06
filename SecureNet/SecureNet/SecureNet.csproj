@@ -318,9 +318,6 @@
     <Resource Include="Media\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Media\PasswordManager\alog.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\PasswordManager\creden.png" />
     <Resource Include="Media\PasswordManager\gen.png" />
   </ItemGroup>
@@ -357,6 +354,9 @@
   <ItemGroup>
     <Resource Include="Media\logs.png" />
     <Resource Include="Media\scan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\PasswordManager\alog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
