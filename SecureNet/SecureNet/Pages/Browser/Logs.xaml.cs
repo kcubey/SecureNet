@@ -19,6 +19,11 @@ using System.Data.SqlClient;
 using Fiddler;
 using System.Collections.ObjectModel;
 using SecureNet.Classes;
+using VirusTotalNET;
+using VirusTotalNET.Results;
+using VirusTotalNET.ResponseCodes;
+using System.IO;
+using VirusTotalNET.Objects;
 
 namespace SecureNet.Pages.Browser
 {
@@ -29,13 +34,13 @@ namespace SecureNet.Pages.Browser
     {
         delegate void UpdateUI();
         public static List<DataObject> DataObjects { get; set; }
+        public static bool checkIsNotSafe;
 
         public Logs()
         {
             Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
-
 
             if (DataObjects == null)
             {
@@ -44,15 +49,12 @@ namespace SecureNet.Pages.Browser
             foreach (DataObject dataObject in DataObjects)
             {
                 dataGrid1.Items.Add(dataObject);
-
             }
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
             FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
 
             //FiddlerApplication.BeforeReturningError += FiddlerApplication_BeforeReturningError;
         }
-
-        
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
@@ -72,23 +74,23 @@ namespace SecureNet.Pages.Browser
 
         public void FiddlerApplication_BeforeRequest(Session oSession)
         {
-            string getLongUrl = oSession.url; //Mostly url+port
-            string getUrl = null;
+            string longUrl = oSession.url; //Mostly url+port
+            string shortUrl = null;
 
-            int delimiterColon = getLongUrl.IndexOf(':');
+            int delimiterColon = longUrl.IndexOf(':');
 
             //Gets URL only
             if (delimiterColon != -1)
             {
-                getUrl = getLongUrl.Substring(0, delimiterColon);
+                shortUrl = longUrl.Substring(0, delimiterColon);
             }
             else
             {
-                getUrl = getLongUrl;
+                shortUrl = longUrl;
             }
 
-            Console.WriteLine("** Long Url: " + getLongUrl);
-            Console.WriteLine("** Short url: " + getUrl);
+            Console.WriteLine("** Long Url: " + longUrl);
+            Console.WriteLine("** Short url: " + shortUrl);
 
             //EnterStanleyCode();
 
@@ -103,6 +105,25 @@ namespace SecureNet.Pages.Browser
                 Console.WriteLine("Add to DataObject");
 
             }));
+
+            //VirusTotalURLScan(shortUrl);
+            /*
+            if (checkIsNotSafe==true) //site is unsafe
+            {
+                oSession.Abort();
+                Console.WriteLine("** Session Aborted");
+
+                //update datagrid of failure
+                dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+                {
+                    DataObject newDataObject = new DataObject()
+                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                    DataObjects.Add(newDataObject);
+                    dataGrid1.Items.Add(newDataObject);
+                Console.WriteLine("Add to DataObject");
+
+                }));
+            }*/
 
             if (oSession.HostnameIs("www.yahoo.com"))
             {
@@ -121,41 +142,11 @@ namespace SecureNet.Pages.Browser
                     { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
                     DataObjects.Add(newDataObject);
                     dataGrid1.Items.Add(newDataObject);
-                Console.WriteLine("Add to DataObject");
+                    Console.WriteLine("Add to DataObject");
 
                 }));
             }
-
-
         }
-
-        #region stanley's
-        /*
-        public bool enterStanleyCode()
-        {
-
-            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
-            {
-                dataGrid1.Items.Add(new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" });
-
-            }));
-            bool safe = false;
-
-            if (safe == false) //not safe
-            {
-                return false;
-            }
-
-            else if (safe == true) //safe
-            {
-                return true;
-            }
-            else //errors
-                return false;
-        }
-        */
-        #endregion
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {
@@ -208,8 +199,57 @@ namespace SecureNet.Pages.Browser
             //reference https://kidaatlantis.wordpress.com/2013/11/04/data-export-from-datagrid-to-excel-in-wpf/
         }
 
+        #region VirusTotal
+        public async void VirusTotalURLScan(string shortUrl)
+        {
+            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+            vt.UseTLS = true;
+            UrlReport urlReport = await vt.GetUrlReport(shortUrl);
 
+            bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
 
+            if (hasUrlBeenScannedBefore)
+            {
+                ReviewScan(urlReport);
+            }
+            else
+            {
+                UrlScanResult urlResult = await vt.ScanUrl(shortUrl);
+                NewScan(urlResult);
+            }
+        }
+
+        private static void NewScan(UrlScanResult scanResult)
+        {
+            if (scanResult.VerboseMsg.Contains("True"))
+            {
+                checkIsNotSafe = true;
+            }
+            else
+                checkIsNotSafe = false;
+        }
+
+        public static void ReviewScan(UrlReport urlReport)
+        {
+            string allLines = null;
+
+            if (urlReport.ResponseCode == ReportResponseCode.Present)
+            {
+                foreach (KeyValuePair<string, ScanEngine> scan in urlReport.Scans)
+                {
+                    string currentLine = string.Format("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
+                    allLines += currentLine + Environment.NewLine; // Adds to string, so it can be written to file later
+                }
+            }
+
+            if (allLines.Contains("True"))
+            {
+                checkIsNotSafe = true;
+            }
+            else
+                checkIsNotSafe = false;
+        }
+#endregion
         /*
         private void FillDataGrid()
         {
