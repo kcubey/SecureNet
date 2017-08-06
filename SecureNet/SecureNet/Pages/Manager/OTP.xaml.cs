@@ -30,10 +30,8 @@ namespace SecureNet.Pages.Manager
  
         private void otpButt_Click(object sender, RoutedEventArgs e)
         {
-            string otp = Totp.newOTP();
-
-           
-           
+            int userId = int.Parse(Application.Current.Properties["SessionID"].ToString());
+            string otp = Totp.newOTP(userId);
             if(TextOTP.Text == otp)
             {
 

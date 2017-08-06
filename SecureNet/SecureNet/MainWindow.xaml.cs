@@ -24,7 +24,7 @@ namespace SecureNet
             InitializeComponent();
             EncryptConnString();
             Style = (Style)FindResource(typeof(Window));
-                
+
             StartFiddler();
 
             FiddlerApplication.BeforeRequest += logsPage.FiddlerApplication_BeforeRequest;
@@ -149,7 +149,7 @@ namespace SecureNet
                                         X509KeyStorageFlags.PersistKeySet |
                                         X509KeyStorageFlags.Exportable);
 
-#region verify trusted cert
+            #region verify trusted cert
             /*
                        bool checktrust = certTry.Verify();
 
@@ -174,7 +174,7 @@ namespace SecureNet
                            Console.WriteLine("** cert not trusted");
                            InstallCertificate();
                        }*/
-#endregion
+            #endregion
         }
 
         protected override void OnClosed(EventArgs e)
