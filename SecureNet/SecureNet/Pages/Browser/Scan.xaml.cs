@@ -25,6 +25,7 @@ using VirusTotalNET.Results;
 using SecureNet.Classes;
 using System.Threading;
 
+
 namespace SecureNet.Pages.Browser
 {
     /// <summary>
@@ -67,7 +68,7 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine("** Redirect to " + redirectAdd);
         }
 
-        private void CheckVT(object sender, RoutedEventArgs e)
+       private void CheckVT(object sender, RoutedEventArgs e)
         {
             startVTAsyncURL(ScanTxtBox.Text);
             ScanTxtBox.Text = String.Empty;
@@ -123,8 +124,10 @@ namespace SecureNet.Pages.Browser
         /// URL Scan
         /// </summary>
         /// <param name="urlText"></param>
-        private async void startVTAsyncURL(string urlText)
+        public async void startVTAsyncURL(string urlText)
         {
+
+
             using (new WaitCursor())
             {
 
@@ -139,13 +142,12 @@ namespace SecureNet.Pages.Browser
 
                 Console.WriteLine(hasUrlBeenScannedBefore);
                 Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-                MessageBox.Show("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-                MessageBox.Show(urlText + " scanned");
+                MessageBox.Show(urlText + " has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
 
                 //If the url has been scanned before, the results are embedded inside the report.
                 if (hasUrlBeenScannedBefore)
                 {
-                    PrintScan(urlReport);
+                    PrintScan(urlReport, urlText);
                 }
                 else
                 {
@@ -155,6 +157,9 @@ namespace SecureNet.Pages.Browser
             }
 
         }
+
+      
+
         private static void PrintScan(UrlScanResult scanResult)
         {
             Console.WriteLine("Scan ID: " + scanResult.ScanId);
@@ -162,10 +167,15 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-        private static void PrintScan(UrlReport urlReport)
+        public static void PrintScan(UrlReport urlReport, string urlText)
         {
             Console.WriteLine("Scan ID: " + urlReport.ScanId);
             Console.WriteLine("Message: " + urlReport.VerboseMsg);
+
+            string folderName = @"ScanReports";
+            string pathStringURL = System.IO.Path.Combine(folderName, "URL");
+            System.IO.Directory.CreateDirectory(pathStringURL);
+
 
             string allLines = ""; // For writing to file
             allLines += "Scan ID : " + urlReport.ScanId + Environment.NewLine;
@@ -187,7 +197,8 @@ namespace SecureNet.Pages.Browser
                 // Creating a Text File
                 try
                 {
-                    File.WriteAllText("URLResults.txt", allLines);
+                    string pathURL = @"ScanReports\URL\" + urlText + ".txt";             
+                    File.WriteAllText(pathURL, allLines);
 
                 }
                 catch (Exception e)
@@ -197,8 +208,8 @@ namespace SecureNet.Pages.Browser
                     return;
 
                 }
-
-                MessageBox.Show(allLines);
+                MessageBox.Show("A report of this scan has been created with Scan ID : " + urlReport.ScanId);
+                //MessageBox.Show(allLines);
             }
         }
 
@@ -216,6 +227,9 @@ namespace SecureNet.Pages.Browser
                 VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
                 vt.UseTLS = true;
                 FileInfo fileInfo = new FileInfo(ScanFile.Text);
+                //get filename
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(ScanFile.Text);
+
                 byte[] byteArray;
                 using (StreamReader reader = new StreamReader(new FileStream(ScanFile.Text, FileMode.Open), new UTF8Encoding())) // do anything you want, e.g. read it
                 {
@@ -233,7 +247,7 @@ namespace SecureNet.Pages.Browser
                 //If the file has been scanned before, the results are embedded inside the report.
                 if (hasFileBeenScannedBefore)
                 {
-                    PrintScan(fileReport);
+                    PrintScan(fileReport, fileName);
                 }
                 else
                 {
@@ -252,11 +266,14 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine();
         }
 
-        private static void PrintScan(FileReport fileReport)
+        private static void PrintScan(FileReport fileReport, string fileName)
         {
             Console.WriteLine("Scan ID: " + fileReport.ScanId);
             Console.WriteLine("Message: " + fileReport.VerboseMsg);
-            MessageBox.Show("Scan ID: " + fileReport.ScanId);
+
+            string folderName2 = @"ScanReports";
+            string pathStringFile = System.IO.Path.Combine(folderName2, "File");
+            System.IO.Directory.CreateDirectory(pathStringFile);
 
 
             string allLines2 = ""; // For writing to file
@@ -280,7 +297,9 @@ namespace SecureNet.Pages.Browser
                 // Creating a Text File
                 try
                 {
-                    File.WriteAllText("FileReports.txt", allLines2);
+                    string pathFile = @"ScanReports\File\" + fileName + "Report.txt";
+                    File.WriteAllText(pathFile, allLines2);
+                   
 
                 }
                 catch (Exception e)
@@ -290,8 +309,7 @@ namespace SecureNet.Pages.Browser
                     return;
 
                 }
-
-                MessageBox.Show(allLines2);
+                MessageBox.Show("A report of this scan has been created with Scan ID : " + fileReport.ScanId);
             }
         }
     }

@@ -165,12 +165,10 @@ namespace SecureNet.Pages.Browser
                 { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
                 DataObjects.Add(newDataObject);
                 dataGrid1.Items.Add(newDataObject);
-
             }));
-
         }
 
-        private void FiddlerApplication_BeforeReturningError(Session oSession)
+        public void FiddlerApplication_BeforeReturningError(Session oSession)
         {
             if (oSession.bHasResponse)
             {
@@ -201,31 +199,31 @@ namespace SecureNet.Pages.Browser
             dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             ApplicationCommands.Copy.Execute(null, dataGrid1);
             String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            //String result = (string)Clipboard.GetData(DataFormats.Text);
             dataGrid1.UnselectAllCells();
             System.IO.StreamWriter file = new System.IO.StreamWriter(saveFile);
-            //file.WriteLine(resultat.Replace('	', ','));
             file.WriteLine(resultat);
             file.Close();
             Console.WriteLine("File exported");
-    }
 
-
-
-    /*
-    private void FillDataGrid()
-    {
-        string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-        string CmdString = string.Empty;
-        using (SqlConnection con = new SqlConnection(ConString))
-        {
-            CmdString = "SELECT emp_id, fname, lname, hire_date FROM Employee";
-            SqlCommand cmd = new SqlCommand(CmdString, con);
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable("Employee");
-            sda.Fill(dt);
-            gridLogs.ItemsSource = dt.DefaultView;
+            //reference https://kidaatlantis.wordpress.com/2013/11/04/data-export-from-datagrid-to-excel-in-wpf/
         }
-    }*/
-}
+
+
+
+        /*
+        private void FillDataGrid()
+        {
+            string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+            string CmdString = string.Empty;
+            using (SqlConnection con = new SqlConnection(ConString))
+            {
+                CmdString = "SELECT emp_id, fname, lname, hire_date FROM Employee";
+                SqlCommand cmd = new SqlCommand(CmdString, con);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("Employee");
+                sda.Fill(dt);
+                gridLogs.ItemsSource = dt.DefaultView;
+            }
+        }*/
+    }
 }

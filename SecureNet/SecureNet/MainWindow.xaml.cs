@@ -15,17 +15,15 @@ namespace SecureNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
         SecureNet.Pages.Browser.Logs logsPage = new SecureNet.Pages.Browser.Logs();
+        protected string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "PFX.PFX";
 
-        public static List<DataObject> DataObjects { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             EncryptConnString();
             Style = (Style)FindResource(typeof(Window));
-            EncryptConnString();
 
             StartFiddler();
 
@@ -36,15 +34,6 @@ namespace SecureNet
         private void OnClick(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
-        }
-
-        public class DataObject
-        {
-            public string A { get; set; }
-            public string B { get; set; }
-            public string C { get; set; }
-            public string D { get; set; }
-            public string E { get; set; }
         }
 
         private void EncryptConnString()
@@ -135,12 +124,6 @@ namespace SecureNet
             }
         }
 
-        private void RequestDetails(Session oSession)
-        {
-            Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
-
-        }
-
         public void InstallCertificate() //Create & trust cert, saves PFX file
         {
             CertMaker.createRootCert();
@@ -192,11 +175,6 @@ namespace SecureNet
                            InstallCertificate();
                        }*/
             #endregion
-        }
-
-        private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         protected override void OnClosed(EventArgs e)
