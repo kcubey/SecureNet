@@ -24,6 +24,7 @@ using VirusTotalNET.Results;
 using VirusTotalNET.ResponseCodes;
 using System.IO;
 using VirusTotalNET.Objects;
+using System.Text.RegularExpressions;
 
 namespace SecureNet.Pages.Browser
 {
@@ -35,12 +36,20 @@ namespace SecureNet.Pages.Browser
         delegate void UpdateUI();
         public static List<DataObject> DataObjects { get; set; }
         public static bool checkIsNotSafe;
+        public static int checkSafeInt; // 1 = safe, 2 = suspicious, 3 = malicious
+        public static List<CheckedHostList> URLHostList;
+        public static string dateTimeString = DateTime.Now.ToLocalTime().ToString();
 
         public Logs()
         {
             Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
+
+            if (URLHostList == null)
+            {
+                URLHostList = new List<CheckedHostList>();
+            }
 
             if (DataObjects == null)
             {
@@ -72,10 +81,23 @@ namespace SecureNet.Pages.Browser
             public string E { get; set; }
         }
 
+        public class CheckedHostList
+        {
+            private string hostname;
+            private int checkSafeInt;
+
+            public CheckedHostList(string hostname, int checkSafeInt)
+            {
+                this.hostname = hostname;
+                this.checkSafeInt = checkSafeInt;
+            }
+        }
+
         public void FiddlerApplication_BeforeRequest(Session oSession)
         {
             string longUrl = oSession.url; //Mostly url+port
             string shortUrl = null;
+            string hostname = oSession.hostname;
 
             int delimiterColon = longUrl.IndexOf(':');
 
@@ -93,22 +115,25 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine("** Short url: " + shortUrl);
 
             //EnterStanleyCode();
-
-            bool stanley = true;
+            bool malicious = false;
+            bool suspicious = false;
 
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
                 DataObject newDataObject = new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = "Checking" };
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = "Checking", E = dateTimeString };
                 DataObjects.Add(newDataObject);
                 dataGrid1.Items.Add(newDataObject);
                 Console.WriteLine("Add to DataObject");
 
             }));
 
-            //VirusTotalURLScan(shortUrl);
-            /*
-            if (checkIsNotSafe==true) //site is unsafe
+            if (oSession.HostnameIs("www.yahoo.com"))
+            {
+                malicious = true;
+            }
+
+            if (malicious == true) //site is unsafe
             {
                 oSession.Abort();
                 Console.WriteLine("** Session Aborted");
@@ -117,20 +142,43 @@ namespace SecureNet.Pages.Browser
                 dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
                 {
                     DataObject newDataObject = new DataObject()
-                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname,  D = oSession.state.ToString(), E = dateTimeString };
                     DataObjects.Add(newDataObject);
                     dataGrid1.Items.Add(newDataObject);
-                Console.WriteLine("Add to DataObject");
+                    Console.WriteLine("Add to DataObject");
 
                 }));
-            }*/
-
-            if (oSession.HostnameIs("www.yahoo.com"))
-            {
-                stanley = false;
             }
 
-            if (stanley == false) //site is unsafe
+            #region todo if have time
+            /*
+            AddtoHostList(hostname); //hardcoding of suspicious & malicious hosts
+
+            #region checking if urlhostlist has checked host before
+            for (int i = 0; i < URLHostList.Count; i++)
+            {
+                if (URLHostList.ToString().Contains(hostname))
+                {
+                    string element = URLHostList[i].ToString();
+                    if (element.Contains("1"))
+                    {
+                        checkSafeInt = 1; //safe
+                    }
+                    else if (element.Contains("2"))
+                    {
+                        checkSafeInt = 2; //suspicious
+                    }
+                    else if (element.Contains("3"))
+                    {
+                        checkSafeInt = 3; //malicious
+                    }
+                    else
+                        checkSafeInt = 0; //not checked
+                }
+            }
+#endregion
+
+            if (checkSafeInt == 3) //site is unsafe
             {
                 oSession.Abort();
                 Console.WriteLine("** Session Aborted");
@@ -146,6 +194,145 @@ namespace SecureNet.Pages.Browser
 
                 }));
             }
+            else if (checkSafeInt == 2)//site may be compromised
+            {
+                //pause thread to ask to proceed
+                MessageBoxResult result = MessageBox.Show(
+                    "This URL is potentially compromised, do you wish to proceed?",
+                    "SecureNet",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        {
+
+                        }
+                        //user assume is safe
+                        break;
+                    case MessageBoxResult.No:
+                        {
+                            oSession.Abort();
+                            Console.WriteLine("** Session Aborted");
+
+                            //update datagrid of failure
+                            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+                            {
+                                DataObject newDataObject = new DataObject()
+                                {
+                                    A = oSession.id.ToString(),
+                                    B = oSession.url,
+                                    C = oSession.hostname,
+                                    D = oSession.fullUrl,
+                                    E = oSession.state.ToString()
+                                };
+                                DataObjects.Add(newDataObject);
+                                dataGrid1.Items.Add(newDataObject);
+                                Console.WriteLine("Add to DataObject");
+                            }));
+                            break;
+                        }
+                }
+            }
+            else //site is safe
+            {
+                //do nothing, proceed to after session
+                return;
+            }*/
+#endregion
+
+            #region VirusTotal URL check logic; not completed as unable to check if it works due to public API constraints
+            /*
+            if (URLHostList.ToString().Contains(hostname))
+            {
+                URLHostList.
+                checkSafeInt = URLHostList
+            }
+
+            VirusTotalURLScan(shortUrl,hostname);
+
+            if (checkSafeInt==3) //site is unsafe
+            {
+                oSession.Abort();
+                Console.WriteLine("** Session Aborted");
+
+                //update datagrid of failure
+                dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+                {
+                    DataObject newDataObject = new DataObject()
+                    { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                    DataObjects.Add(newDataObject);
+                    dataGrid1.Items.Add(newDataObject);
+                Console.WriteLine("Add to DataObject");
+
+                }));
+            }
+            else if (checkSafeInt==2)//site may be compromised
+            {
+                //pause thread to ask to proceed
+                MessageBoxResult result = MessageBox.Show(
+                    "This URL is potentially compromised, do you wish to proceed?", 
+                    "SecureNet", 
+                    MessageBoxButton.YesNo, 
+                    MessageBoxImage.Warning);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        //user assume is safe
+                        break;
+                    case MessageBoxResult.No:
+                        {
+                            oSession.Abort();
+                            Console.WriteLine("** Session Aborted");
+
+                            //update datagrid of failure
+                            dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
+                            {
+                                DataObject newDataObject = new DataObject()
+                                {
+                                    A = oSession.id.ToString(),
+                                    B = oSession.url,
+                                    C = oSession.hostname,
+                                    D = oSession.fullUrl,
+                                    E = oSession.state.ToString()
+                                };
+                                DataObjects.Add(newDataObject);
+                                dataGrid1.Items.Add(newDataObject);
+                                Console.WriteLine("Add to DataObject");
+                            }));
+                            break;
+                        }
+                }
+            }
+            else //site is safe
+            {
+                //do nothing, proceed to after session
+                return;
+            }
+            */
+            #endregion
+
+
+        }
+
+        //hardcoding of suspicious & malicious hosts
+        public void AddtoHostList(string hostname)
+        {
+            if (hostname=="learn.nyp.edu.sg") //suspicious host
+            {
+                checkSafeInt = 2;
+                URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
+            }
+            else if (hostname=="myportal.nyp.edu.sg") //malicious host
+            {
+                checkSafeInt = 3;
+                URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
+            }
+            else //safe host
+                checkSafeInt = 1;
+            URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
         }
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
@@ -153,12 +340,13 @@ namespace SecureNet.Pages.Browser
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
                 DataObject newDataObject = new DataObject()
-                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.fullUrl, E = oSession.state.ToString() };
+                { A = oSession.id.ToString(), B = oSession.url, C = oSession.hostname, D = oSession.state.ToString(), E = dateTimeString };
                 DataObjects.Add(newDataObject);
                 dataGrid1.Items.Add(newDataObject);
             }));
         }
 
+        //current not used
         public void FiddlerApplication_BeforeReturningError(Session oSession)
         {
             if (oSession.bHasResponse)
@@ -181,8 +369,8 @@ namespace SecureNet.Pages.Browser
             System.IO.Directory.CreateDirectory("Traffic Logs");
 
             string currentTime = DateTime.Now.ToLocalTime().ToString();
-            currentTime=currentTime.Replace('/', '-');
-            currentTime=currentTime.Replace(':', '-');
+            currentTime = currentTime.Replace('/', '-');
+            currentTime = currentTime.Replace(':', '-');
 
             string saveFile = System.AppDomain.CurrentDomain.BaseDirectory.ToString()+ "Traffic Logs\\" + currentTime + ".csv";
             
@@ -199,8 +387,8 @@ namespace SecureNet.Pages.Browser
             //reference https://kidaatlantis.wordpress.com/2013/11/04/data-export-from-datagrid-to-excel-in-wpf/
         }
 
-        #region VirusTotal
-        public async void VirusTotalURLScan(string shortUrl)
+        #region VirusTotal Checking -> Not completed as unable to check if it works due to public API constraints
+        public async void VirusTotalURLScan(string shortUrl, string hostname)
         {
             VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
             vt.UseTLS = true;
@@ -215,18 +403,32 @@ namespace SecureNet.Pages.Browser
             else
             {
                 UrlScanResult urlResult = await vt.ScanUrl(shortUrl);
-                NewScan(urlResult);
+                NewScan(urlResult, hostname);
             }
         }
 
-        private static void NewScan(UrlScanResult scanResult)
+        private static void NewScan(UrlScanResult scanResult, string hostname)
         {
-            if (scanResult.VerboseMsg.Contains("True"))
+            checkSafe(scanResult.VerboseMsg, hostname);
+        }
+
+        public static void checkSafe(string resultString, string hostname)
+        {
+            int numTrue = Regex.Matches(resultString, "True").Count;
+            if (numTrue > 2 && numTrue < 10)
             {
-                checkIsNotSafe = true;
+                checkSafeInt = 2;
+            }
+            else if (numTrue > 10)
+            {
+                checkSafeInt = 3;
             }
             else
-                checkIsNotSafe = false;
+                checkSafeInt = 1;
+
+            URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
+
+
         }
 
         public static void ReviewScan(UrlReport urlReport)
@@ -241,13 +443,6 @@ namespace SecureNet.Pages.Browser
                     allLines += currentLine + Environment.NewLine; // Adds to string, so it can be written to file later
                 }
             }
-
-            if (allLines.Contains("True"))
-            {
-                checkIsNotSafe = true;
-            }
-            else
-                checkIsNotSafe = false;
         }
 #endregion
         /*
