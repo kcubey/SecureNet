@@ -58,6 +58,10 @@ namespace SecureNet.Pages.Browser
             if (ListObjects == null)
             {
                 ListObjects = new List<ListObject>();
+                ListObject newListObject = new ListObject()
+                { website = "yahoo.com" };
+                ListObjects.Add(newListObject);
+                listBox1.Items.Add(newListObject.website.ToString());
             }
             foreach (ListObject listObject in ListObjects)
             {
@@ -115,9 +119,7 @@ namespace SecureNet.Pages.Browser
             Console.WriteLine("** Long Url: " + longUrl);
             Console.WriteLine("** Short url: " + shortUrl);
 
-            //EnterStanleyCode();
             bool malicious = false;
-            bool suspicious = false;
 
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
@@ -129,12 +131,15 @@ namespace SecureNet.Pages.Browser
 
             }));
 
-            if (oSession.HostnameIs("www.yahoo.com"))
+           int  test = checkBlacklist(oSession.hostname);
+            if(test == 1)
             {
                 malicious = true;
             }
             else
-                malicious = checkBlacklist();
+            {
+                malicious = false;
+            }
 
             if (malicious == true) //site is unsafe
             {
@@ -154,16 +159,17 @@ namespace SecureNet.Pages.Browser
             }
         }
 
-        private bool checkBlacklist()
+        private int checkBlacklist(string hostname)
         {
             foreach (ListObject listObject in ListObjects)
             {
-                return true;
+                if (hostname == listObject.website)
+                    return 1;
+                else
+                    return 0;
             }
-            return false;
+            return 0;
         }
-
-        
 
         private void AddWebsite(object sender, RoutedEventArgs e)
         {
@@ -172,11 +178,31 @@ namespace SecureNet.Pages.Browser
             {
                 string website = inputDialog.Answer;
                 Console.WriteLine("Input is: " + website);
-                    ListObject newListObject = new ListObject()
+                ListObject newListObject = new ListObject()
                     { website =  website};
                     ListObjects.Add(newListObject);
                     listBox1.Items.Add(newListObject.website.ToString());
             }
+
+            foreach (ListObject yui in ListObjects)
+            {
+                Console.WriteLine(yui.website);
+            }
+        }
+
+        
+        private void RemoveWebsite(object sender, RoutedEventArgs e)
+        {
+            int index = listBox1.SelectedIndex;
+            Console.WriteLine("**index is: " + index);
+            listBox1.Items.Remove(listBox1.SelectedItem);
+
+            ListObjects.RemoveAt(index);
+            foreach(ListObject yui in ListObjects)
+            {
+                Console.WriteLine(yui.website);
+            }
+
         }
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)

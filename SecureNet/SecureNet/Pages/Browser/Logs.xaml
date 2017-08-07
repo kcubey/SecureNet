@@ -92,13 +92,16 @@
                 <StackPanel Width="800">
                     <DockPanel>
                         <Label Style="{DynamicResource FAQLbl}" Margin="0">Blacklisted Websites</Label>
-                        <Button Click="AddWebsite" Style="{DynamicResource selectBtn}" Margin="0" HorizontalAlignment="Right">Add Website</Button>
+                        <WrapPanel HorizontalAlignment="Right">
+                            <Button Click="RemoveWebsite" Style="{DynamicResource selectBtn}" Margin="0,0,10,0">Remove Website</Button>
+                            <Button Click="AddWebsite" Style="{DynamicResource selectBtn}" Margin="0">Add Website</Button>
+                        </WrapPanel>
+                        
                     </DockPanel>
 
                     <Separator Height="20" Background="Transparent"/>
 
                     <ListBox Name="listBox1" Width="800">
-                        <ListBoxItem>yahoo.com</ListBoxItem>
                     </ListBox>
                 </StackPanel>
                 

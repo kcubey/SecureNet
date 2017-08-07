@@ -247,10 +247,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Settings\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Master\Footer.xaml.cs">
@@ -273,9 +269,6 @@
     </Compile>
     <Compile Include="Pages\Manager\PassHome.xaml.cs">
       <DependentUpon>PassHome.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Settings\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
