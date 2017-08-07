@@ -1,0 +1,31 @@
+﻿<Window x:Class="SecureNet.Pages.Browser.AddBlacklistWebsitePopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SecureNet.Pages.Browser"
+        mc:Ignorable="d"
+        Title="Add Website to Blacklist"
+        Width="300" Height="150"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        ContentRendered="Window_ContentRendered">
+    
+    <Grid>
+        <StackPanel>
+
+            <Label Foreground="Black">Enter website to blacklist: </Label>
+
+            <TextBox Name="txtAnswer" HorizontalAlignment="Left" Margin="20,0,0,0" Width="200"></TextBox>
+
+            <Separator Height="10" Background="Transparent"/>
+                
+            <WrapPanel Margin="10,0,0,0">
+                <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_OK</Button>
+                <Button IsCancel="True" Width="60">_Cancel</Button>
+            </WrapPanel>
+            
+        </StackPanel>
+    </Grid>
+    
+</Window>
