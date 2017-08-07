@@ -1,20 +1,12 @@
-﻿using SecureNet.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Fiddler;
 using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace SecureNet
 {
@@ -23,111 +15,24 @@ namespace SecureNet
     /// </summary>
     public partial class MainWindow : Window
     {
+        SecureNet.Pages.Browser.Logs logsPage = new SecureNet.Pages.Browser.Logs();
+
         public MainWindow()
         {
             InitializeComponent();
             EncryptConnString();
             Style = (Style)FindResource(typeof(Window));
 
-            /*
-            if (!string.IsNullOrEmpty(App.Configuration.UrlCapture.Cert))
-            {
-                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.key", App.Configuration.UrlCapture.Key);
-                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.cert", App.Configuration.UrlCapture.Cert);
-            }
-            */
             StartFiddler();
 
-            //         MainFrame.NavigationService.GoBack();
-            //       MainFrame.NavigationService.GoForward();
-            //     MainFrame.NavigationService.Refresh();
+            FiddlerApplication.BeforeRequest += logsPage.FiddlerApplication_BeforeRequest;
+            FiddlerApplication.AfterSessionComplete += logsPage.FiddlerApplication_AfterSessionComplete;
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = new Uri(((Button)sender).CommandParameter.ToString(), UriKind.Relative);
-            //this.MainFrame.Navigate(typeof(Page), ((Button)sender).CommandParameter.ToString());
         }
-
-        void StartFiddler()
-        {
-            //CONFIG.IgnoreServerCertErrors = false;
-
-            //FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
-            //FiddlerApplication.Startup(8877, true, true);
-
-            if (FiddlerApplication.IsStarted())
-                FiddlerApplication.Shutdown();
-
-            DoCertificate();
-
-            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
-            Console.WriteLine("Fiddler Start");
-
-            FiddlerApplication.OnNotification += delegate (object sender, NotificationEventArgs oNEA)
-            {
-                Console.WriteLine("** NotifyUser: " + oNEA.NotifyString);
-            };
-
-            FiddlerApplication.Log.OnLogString += delegate (object sender, LogEventArgs oLEA)
-            {
-                Console.WriteLine("** LogString: " + oLEA.LogString);
-            };
-
-        }
-
-        private void RequestDetails(Session oSession)
-        {
-            Console.WriteLine("Request URL {0}", oSession.fullUrl);// getting only http traffic details
-
-        }
-
-
-        public void DoCertificate()
-        {
-            var checkCert = CertMaker.GetRootCertificate();
-
-            if (checkCert == null)
-            {
-                Console.WriteLine("Cert does not exist");
-                CertMaker.createRootCert();
-                CertMaker.trustRootCert();
-                Console.WriteLine("Cert created & trusted");
-            }
-
-            else if (checkCert != null)
-            {
-                Console.WriteLine("Cert exists");
-                bool checktrust = CertMaker.rootCertIsMachineTrusted();
-                if (checktrust == true)
-                {
-                    Console.WriteLine("is trusted");
-                }
-                else if (checktrust == false)
-                {
-                    Console.WriteLine("not trusted");
-                }
-            }
-
-            /*
-            if (!CertMaker.rootCertExists())
-            {
-                Console.WriteLine("root cert does not exist");
-
-                if (!CertMaker.createRootCert())
-                    return false;
-
-                if (!CertMaker.trustRootCert())
-                    return false;
-                /*
-                App.Configuration.UrlCapture.Cert =
-                    FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.cert", null);
-                App.Configuration.UrlCapture.Key =
-                    FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.key", null);
-                    */
-        }
-
-
 
         private void EncryptConnString()
         {
@@ -147,45 +52,126 @@ namespace SecureNet
                     section.SectionInformation.ForceSave = true;
                     // Save the change.
                     config.Save(ConfigurationSaveMode.Modified);
-
                 }
             }
         }
 
-        private void FiddlerApplication_OnNotification(object sender, NotificationEventArgs e)
+        void StartFiddler()
         {
-            throw new NotImplementedException();
+            if (FiddlerApplication.IsStarted())
+            {
+                FiddlerApplication.Shutdown();
+                Console.WriteLine("** Closing previous instance of Fiddler");
+            }
+
+            //Retrieval of cert
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["FiddlerCert"]))
+            {
+                Console.WriteLine("** Retrieving certificate");
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.key", ConfigurationManager.AppSettings["FiddlerKey"]);
+                FiddlerApplication.Prefs.SetStringPref("fiddler.certmaker.bc.cert", ConfigurationManager.AppSettings["FiddlerCert"]);
+            }
+
+            //Creation of cert
+            InstallCertificate();
+            
+            FiddlerApplication.Startup(0, FiddlerCoreStartupFlags.Default);
+            Console.WriteLine("** Fiddler Start");
+
+            FiddlerApplication.OnNotification += delegate (object sender, NotificationEventArgs oNEA)
+            {
+                Console.WriteLine("** NotifyUser: " + oNEA.NotifyString);
+            };
+
+            FiddlerApplication.Log.OnLogString += delegate (object sender, LogEventArgs oLEA)
+            {
+                Console.WriteLine("** LogString: " + oLEA.LogString);
+            };
+
+        }
+
+        public static bool InstallCertificate()
+        {
+            if (!CertMaker.rootCertExists())
+            {
+                Console.WriteLine("** Rootcert does not exist");
+                if (!CertMaker.createRootCert())
+                {
+                    Console.WriteLine("** Creating root cert");
+                    return false;
+                }
+
+                if (!CertMaker.trustRootCert())
+                {
+                    Console.WriteLine("** Trusting root cert");
+                    return false;
+                }
+
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                config.AppSettings.Settings["FiddlerCert"].Value = FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.cert", null);
+                config.AppSettings.Settings["FiddlerKey"].Value = FiddlerApplication.Prefs.GetStringPref("fiddler.certmaker.bc.key", null);
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+
+            return true;
+            //reference https://weblog.west-wind.com/posts/2014/Jul/29/Using-FiddlerCore-to-capture-HTTP-Requests-with-NET
+            //reference: https://textslashplain.com/2015/08/25/fiddler-certificate-generators/
         }
 
         protected override void OnClosed(EventArgs e)
         {
-            FiddlerApplication.oProxy.Detach();
-            CheckCertificate();
-            Console.WriteLine("Detach proxy");
+            ShutdownFiddler();
+        }
 
-            CertMaker.removeFiddlerGeneratedCerts(false);
-            //FiddlerApplication.Prefs.SetBoolPref("fiddler.certmaker.CleanupServerCertsOnExit", true);
-            CheckCertificate();
-            Console.WriteLine("Remove gen cert");
+        private void ShutdownFiddler()
+        {
+            FiddlerApplication.oProxy.Detach();
+            Console.WriteLine("** Detached proxy");
 
             FiddlerApplication.Shutdown();
-            CheckCertificate();
-            Console.WriteLine("Fiddler Closed");
+            Console.WriteLine("** Fiddler closed");
+
+            logsPage.ExportToFile();
+            MessageBoxResult result = MessageBox.Show("Do you want to uninstall certificate?", "SecureNet", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    {
+                        UninstallCertificate();
+                    }
+                    break;
+                case MessageBoxResult.No:
+                    {
+                        break;
+                    }
+            }
         }
 
-
-        public void CheckCertificate()
+        public static bool UninstallCertificate()
         {
-            var checkCert = CertMaker.GetRootCertificate();
+            if (CertMaker.rootCertExists())
+            {
+                if (!CertMaker.removeFiddlerGeneratedCerts(true))
+                    return false;
+            }
 
-            if (checkCert == null)
-            {
-                Console.WriteLine("Cert does not exist");
-            }
-            else if (checkCert != null)
-            {
-                Console.WriteLine("Cert exists");
-            }
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings["FiddlerCert"].Value = null;
+            Console.WriteLine("Cert is: " + ConfigurationManager.AppSettings["FiddlerCert"]);
+
+            config.AppSettings.Settings["FiddlerKey"].Value = null;
+            Console.WriteLine("Key is: " + ConfigurationManager.AppSettings["FiddlerKey"]);
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            Console.WriteLine("uninstall cert");
+            return true;
         }
+
     }
 }

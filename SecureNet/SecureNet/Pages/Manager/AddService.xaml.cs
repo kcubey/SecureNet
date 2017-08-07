@@ -18,6 +18,12 @@ using SecureNet.Classes;
 using System.Data;
 using System.Data.SqlClient;
 using System.Timers;
+using System.Xml.Serialization;
+using System.Security.Cryptography;
+using System.Security.AccessControl;
+using System.Security.Permissions;
+using System.Security.Principal;
+
 
 namespace SecureNet.Pages.Manager
 {
@@ -46,7 +52,9 @@ namespace SecureNet.Pages.Manager
         //Retrieve Session userID
         private int getUserId()
         {
-            return 1;
+            int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
+           
+            return  mySession;
         }
 
 
@@ -191,23 +199,32 @@ namespace SecureNet.Pages.Manager
             }
             else
             {
-                int serviceId = Convert.ToInt32(TextBoxId.Text);
-                string serviceName = TextBoxName.Text;
-                Service.deleteService(serviceId);
-                Service.logCommand(serviceName, 5, null, getUserId());
+                bool otp = popup();
 
-                selection.SelectedIndex = -1;
-                populateSelection();
+                if (otp == true)
+                {
 
-                svcForm.Visibility = Visibility.Collapsed;
-                resetfields();
+                    int serviceId = Convert.ToInt32(TextBoxId.Text);
+                    string serviceName = TextBoxName.Text;
+                    Service.deleteService(serviceId);
+                    Service.logCommand(serviceName, 5, null, getUserId());
 
-                suButt.Visibility = Visibility.Collapsed;
+                    selection.SelectedIndex = -1;
+                    populateSelection();
 
-                dcButt.Visibility = Visibility.Collapsed;
+                    svcForm.Visibility = Visibility.Collapsed;
+                    resetfields();
 
-                errorMsg.Content = "Successfully deleted record";
-                
+                    suButt.Visibility = Visibility.Collapsed;
+
+                    dcButt.Visibility = Visibility.Collapsed;
+
+                    errorMsg.Content = "Successfully deleted record";
+                }
+                else
+                {
+                    errorMsg.Content = "Wrong OTP!";
+                }
             }
         }
 
@@ -249,6 +266,24 @@ namespace SecureNet.Pages.Manager
 
         }
 
+        private bool popup()
+        {
+            Mouse.OverrideCursor = null;
+            OTP hello = new OTP();
+            hello.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            hello.ShowDialog();
+
+            if(hello.DialogResult == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+          
+        }
 
         //Add/Update Service
         private void Add(int command)
@@ -297,10 +332,21 @@ namespace SecureNet.Pages.Manager
                         {
                             if (!sameName(name))
                             {
-                                Service.genKeyIv(service, getUserId(), -1);
-                                resetfields();
-                                Service.logCommand(service.name, 3, null, getUserId());
-                                errorMsg.Content = "Successfully added!";
+                                bool otp = popup();
+
+                                if(otp == true)
+                                {
+                                    Mouse.OverrideCursor = Cursors.Wait;
+                                    Service.genKeyIv(service, getUserId(), -1);
+                                    resetfields();
+                                    Service.logCommand(service.name, 3, null, getUserId());
+                                    errorMsg.Content = "Successfully added!";
+                                }
+                                else
+                                {
+                                    errorMsg.Content = "OTP not entered correctly!";
+                                }
+                               
                             }
                             else
                             {
@@ -309,10 +355,19 @@ namespace SecureNet.Pages.Manager
                         }
                         else
                         {
-                            int serviceId = Convert.ToInt32(TextBoxId.Text);
-                            Service.genKeyIv(service, getUserId(), serviceId);
-                            Service.logCommand(service.name, 4, null, getUserId());
-                            errorMsg.Content = "Successfully updated!";
+                            bool otp = popup();
+                            if (otp == true)
+                            {
+                                Mouse.OverrideCursor = Cursors.Wait;
+                                int serviceId = Convert.ToInt32(TextBoxId.Text);
+                                Service.genKeyIv(service, getUserId(), serviceId);
+                                Service.logCommand(service.name, 4, null, getUserId());
+                                errorMsg.Content = "Successfully updated!";
+                            }
+                            else
+                            {
+                                errorMsg.Content = "OTP not entered correctly!";
+                            }
 
                         }
                         populateSelection();
@@ -338,6 +393,7 @@ namespace SecureNet.Pages.Manager
             Mouse.OverrideCursor = null;
         }
 
+     
         //Populate ComboBox
         private void populateSelection()
         {
@@ -477,5 +533,8 @@ namespace SecureNet.Pages.Manager
             
             MessageBox.Show("Copied Successfully!");
         }
+
+     
+
     }
 }

@@ -32,7 +32,7 @@ namespace SecureNet.Pages
         {
             string redirectAdd = ((Button)sender).CommandParameter.ToString();
             this.NavigationService.Navigate(new Uri(redirectAdd, UriKind.Relative));
-            Console.WriteLine("Redirect to " +redirectAdd);
+            Console.WriteLine("** Redirect to " + redirectAdd);
         }
     }
 }

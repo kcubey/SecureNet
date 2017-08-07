@@ -70,7 +70,8 @@ namespace SecureNet.Pages.Manager
 
         private int getUserId()
         {
-            return 1;
+            int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
+            return mySession;
         }
 
         private void Report_Click(object sender, RoutedEventArgs e)
@@ -113,6 +114,7 @@ namespace SecureNet.Pages.Manager
                         Reporting.Visibility = Visibility.Collapsed;
                         ReportTable.Items.Clear();
                         Report.Content = "Report Suspicious Activity";
+                        MessageBox.Show("Our Tech Support will contact you shortly");
                       
                     }
 

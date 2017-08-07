@@ -23,7 +23,7 @@ namespace SecureNet.Pages.Manager
         //StartUp
         public PassHome()
         {
-            Console.WriteLine("navigate success");
+            Console.WriteLine("** Navigate success");
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
 

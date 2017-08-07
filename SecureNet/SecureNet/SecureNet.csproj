@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -122,10 +122,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="cGenerator\SetSerialNumber.cs" />
-    <Compile Include="Classes\CertificateGenerator.cs" />
+    <Compile Include="Classes\PrivateKey.cs" />
+    <Compile Include="Classes\WaitCursor.cs" />
+    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
+      <DependentUpon>BrowserHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Browser\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Browser\Scan.xaml.cs">
+      <DependentUpon>Scan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FAQ\FAQ.xaml.cs">
       <DependentUpon>FAQ.xaml</DependentUpon>
@@ -176,10 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Browser\Logs.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Contact\Contact.xaml">
+    <Page Include="Pages\Browser\Scan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,12 +245,6 @@
     <Compile Include="Master\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
-      <DependentUpon>BrowserHome.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Contact\Contact.xaml.cs">
-      <DependentUpon>Contact.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
@@ -300,16 +300,10 @@
     <Resource Include="Media\SecureNetLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="README.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\browser.png" />
-    <Resource Include="Media\contact.png" />
+    <Resource Include="Media\faq.png" />
     <Resource Include="Media\key.png" />
     <Resource Include="Media\settings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Media\PasswordManager\alog.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Media\PasswordManager\creden.png" />
@@ -338,6 +332,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pages\Manager\TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\scanwhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\logswhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\logs.png" />
+    <Resource Include="Media\scan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\PasswordManager\alog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
