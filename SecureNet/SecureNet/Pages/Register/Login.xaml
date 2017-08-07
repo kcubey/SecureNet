@@ -15,6 +15,7 @@
         <Label x:Name="lblMasterPass" Content="Master Password:" HorizontalAlignment="Left" Margin="35,196,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
         <PasswordBox x:Name="txtMasterLogin" PasswordChar="*" HorizontalAlignment="Left" Height="31" Margin="35,238,0,0"  VerticalAlignment="Top" Width="404" FontSize="22"/>
         <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Left" Margin="35,288,0,0" VerticalAlignment="Top" Width="85" Height="34" Background="#FFFCD736" FontSize="20" Click="btnLogin_Click"/>
+        <Button x:Name="btnRegisterLink" Content="Register" HorizontalAlignment="Left" Margin="139,288,0,0" VerticalAlignment="Top" Width="104" Height="34" Background="#FFFCD736" FontSize="20" Click="btnRegisterLink_Click"/>
 
     </Grid>
 </Page>

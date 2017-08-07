@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net.Mail;
 
 namespace SecureNet.Pages.Register
 {
@@ -58,15 +59,46 @@ namespace SecureNet.Pages.Register
                 else
                 {
                     bool result = Users.addUser(email, phone, masterPass);
+                    MessageBoxResult emailCheck = MessageBox.Show("Verification code sent. Please check your email including the spam/junk folder.", "Error");
+                    using (SqlCommand cmd2 = new SqlCommand
+                     ("SELECT codeGuid FROM [Users] WHERE [userEmail] = @userEmail", GetConnection()))
+                    {
+                        cmd2.Parameters.AddWithValue("@userEmail", email);
+                        SqlDataReader dr2 = cmd2.ExecuteReader();
+
+                        while (dr2.Read())
+                        {
+                            string uVerifyGuid = Convert.ToString(dr2["codeGuid"]);
+                            try
+                            {
+                                MailMessage mail = new MailMessage();
+                                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                                mail.From = new MailAddress("securenetnyp@gmail.com");
+                                mail.To.Add(email);
+                                mail.Subject = "Key in this verification code in the verification page. ";
+                                mail.Body = "Your verification code is: " + uVerifyGuid;
+                                SmtpServer.Port = 587;
+                                SmtpServer.Credentials = new System.Net.NetworkCredential("securenetnyp@gmail.com", "Securen3t");
+                                SmtpServer.EnableSsl = true;
+                                SmtpServer.Send(mail);
+                                Console.WriteLine("Email sent.");
+                                
+
+                            }
+                            catch
+                            {
+                                //
+                            }
+                        }
+                    }
                     this.NavigationService.Navigate(new Uri("/Pages/Register/Login.xaml", UriKind.Relative));
                     Console.WriteLine("Successfully registered.");
                 }
-              
             }
 
             else
             {
-                MessageBoxResult errorRegistering = MessageBox.Show("Register error", "Error");
+                MessageBoxResult errorRegistering = MessageBox.Show("Register error.", "Error");
             }
         }
     }

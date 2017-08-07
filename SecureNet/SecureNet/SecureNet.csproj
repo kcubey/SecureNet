@@ -100,6 +100,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -137,6 +138,9 @@
     </Compile>
     <Compile Include="Pages\Register\NotVerified.xaml.cs">
       <DependentUpon>NotVerified.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Register\PhoneOTP.xaml.cs">
+      <DependentUpon>PhoneOTP.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Register\Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
@@ -214,6 +218,10 @@
     <Page Include="Pages\Register\NotVerified.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Register\PhoneOTP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Register\Register.xaml">
       <Generator>MSBuild:Compile</Generator>

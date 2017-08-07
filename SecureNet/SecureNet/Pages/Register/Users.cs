@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SecureNet.Pages.Register
 {
@@ -81,8 +83,10 @@ namespace SecureNet.Pages.Register
 
             ICryptoTransform crypto = aes.CreateDecryptor(aes.Key, aes.IV);
             byte[] plaintext = crypto.TransformFinalBlock(encryptedtext, 0, encryptedtext.Length);
+
             return plaintext;
         }
+
         public static int GetUserIdByEmailAndPassword(string userEmail, string masterPass)
         {
             // this is the value we will return
@@ -162,16 +166,26 @@ namespace SecureNet.Pages.Register
 
            Guid userGuid = System.Guid.NewGuid();
            string hashedPassword = SecurityHash.HashSHA1(password + userGuid.ToString());
+           Guid emailGuid = System.Guid.NewGuid();
+           DateTime currentEmailTime = DateTime.Now;
+           
+
 
             SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SecureNetCon"].ConnectionString);
             using (SqlCommand cmd = new SqlCommand
-                ("INSERT INTO [Users](userEmail, userMaster, userPhone, userGuid) values (@userEmail, @userMaster, @userPhone, @userGuid)", Users.GetConnection()))
+                ("INSERT INTO [Users](userEmail, userMaster, userPhone, userGuid, codeGuid, timeSavedGuid, timeLockedOut) values (@userEmail, @userMaster, @userPhone, @userGuid, @codeGuid, @timeSavedGuid, @timeLockedOut)", Users.GetConnection()))
             {
+
                 cmd.Parameters.AddWithValue("@userEmail", email);
                 //cmd.Parameters.AddWithValue("@userMaster", encryptedpassword);
                 cmd.Parameters.AddWithValue("@userMaster", hashedPassword); //store hashed value
                 cmd.Parameters.AddWithValue("@userPhone", encryptedPhone);            
                 cmd.Parameters.AddWithValue("@userGuid", userGuid);
+                cmd.Parameters.AddWithValue("@codeGuid", emailGuid);
+                cmd.Parameters.AddWithValue("@timeSavedGuid", currentEmailTime);
+                cmd.Parameters.AddWithValue("@timeLockedOut", currentEmailTime);
+
+                
 
                 con.Open();
 
