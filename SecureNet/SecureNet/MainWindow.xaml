@@ -36,7 +36,7 @@
 
             </StackPanel>
             -->
-            <Frame x:Name="MainFrame" Source="/Pages/Home.xaml" 
+            <Frame x:Name="MainFrame" Source="/Pages/Register/Login.xaml" 
                    NavigationUIVisibility="Hidden"></Frame>
         
         </DockPanel>
