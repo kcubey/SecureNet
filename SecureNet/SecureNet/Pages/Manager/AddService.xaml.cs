@@ -30,10 +30,10 @@ namespace SecureNet.Pages.Manager
     /// <summary>
     /// Interaction logic for AddService.xaml
     /// </summary>
-    
+
     public partial class AddService : Page
     {
-     
+
         public AddService()
         {
             InitializeComponent();
@@ -53,8 +53,8 @@ namespace SecureNet.Pages.Manager
         private int getUserId()
         {
             int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
-           
-            return  mySession;
+
+            return mySession;
         }
 
 
@@ -72,7 +72,7 @@ namespace SecureNet.Pages.Manager
 
             Mouse.OverrideCursor = null;
 
-            
+
 
         }
 
@@ -91,21 +91,49 @@ namespace SecureNet.Pages.Manager
                 {
                     if (j.name == selectedService)
                     {
-                        TextBoxId.Text = j.serviceId.ToString();
-                        TextBoxName.Text = j.name;
-                        TextBoxUrl.Text = j.url;
-                        TextBoxUsername.Text = j.username;
-                        TextBoxPassword.Password = j.password;
-                        if (j.notes == null)
+                        if (j.otp == 1)
                         {
-                            TextBoxNotes.Text = null;
+                            bool otp = popup();
+
+                            if (otp == true)
+                            {
+                                TextBoxId.Text = j.serviceId.ToString();
+                                TextBoxName.Text = j.name;
+                                TextBoxUrl.Text = j.url;
+                                TextBoxUsername.Text = j.username;
+                                TextBoxPassword.Password = j.password;
+                                if (j.notes == null)
+                                {
+                                    TextBoxNotes.Text = null;
+                                }
+                                else
+                                {
+                                    TextBoxNotes.Text = j.notes;
+                                }
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("Wrong OTP!");
+                            }
                         }
                         else
                         {
-                            TextBoxNotes.Text = j.notes;
-                        }
+                            TextBoxId.Text = j.serviceId.ToString();
+                            TextBoxName.Text = j.name;
+                            TextBoxUrl.Text = j.url;
+                            TextBoxUsername.Text = j.username;
+                            TextBoxPassword.Password = j.password;
+                            if (j.notes == null)
+                            {
+                                TextBoxNotes.Text = null;
+                            }
+                            else
+                            {
+                                TextBoxNotes.Text = j.notes;
+                            }
 
-                     
+                        }
 
                     }
                 }
@@ -126,10 +154,12 @@ namespace SecureNet.Pages.Manager
                 Mouse.OverrideCursor = null;
 
 
-           
+
             }
 
         }
+
+
 
         //Add/Submit
         private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
@@ -140,7 +170,7 @@ namespace SecureNet.Pages.Manager
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 Add(1);
-                
+
 
             }
             else
@@ -164,7 +194,7 @@ namespace SecureNet.Pages.Manager
 
                 errorMsg.Content = null;
 
-              
+
 
             }
 
@@ -199,11 +229,7 @@ namespace SecureNet.Pages.Manager
             }
             else
             {
-                bool otp = popup();
-
-                if (otp == true)
-                {
-
+             
                     int serviceId = Convert.ToInt32(TextBoxId.Text);
                     string serviceName = TextBoxName.Text;
                     Service.deleteService(serviceId);
@@ -220,11 +246,7 @@ namespace SecureNet.Pages.Manager
                     dcButt.Visibility = Visibility.Collapsed;
 
                     errorMsg.Content = "Successfully deleted record";
-                }
-                else
-                {
-                    errorMsg.Content = "Wrong OTP!";
-                }
+               
             }
         }
 
@@ -236,7 +258,7 @@ namespace SecureNet.Pages.Manager
             if (command == "Update")
             {
 
-               
+
 
                 pgHeader.Content = "Update Service";
 
@@ -254,14 +276,14 @@ namespace SecureNet.Pages.Manager
 
                 Req.Visibility = Visibility.Visible;
 
-           
-               
+
+
             }
             else
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 Add(0);
-              
+
             }
 
         }
@@ -273,7 +295,7 @@ namespace SecureNet.Pages.Manager
             hello.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             hello.ShowDialog();
 
-            if(hello.DialogResult == true)
+            if (hello.DialogResult == true)
             {
                 return true;
             }
@@ -282,7 +304,7 @@ namespace SecureNet.Pages.Manager
                 return false;
             }
 
-          
+
         }
 
         //Add/Update Service
@@ -332,21 +354,13 @@ namespace SecureNet.Pages.Manager
                         {
                             if (!sameName(name))
                             {
-                                bool otp = popup();
-
-                                if(otp == true)
-                                {
+                                
                                     Mouse.OverrideCursor = Cursors.Wait;
                                     Service.genKeyIv(service, getUserId(), -1);
                                     resetfields();
                                     Service.logCommand(service.name, 3, null, getUserId());
                                     errorMsg.Content = "Successfully added!";
-                                }
-                                else
-                                {
-                                    errorMsg.Content = "OTP not entered correctly!";
-                                }
-                               
+                         
                             }
                             else
                             {
@@ -355,19 +369,13 @@ namespace SecureNet.Pages.Manager
                         }
                         else
                         {
-                            bool otp = popup();
-                            if (otp == true)
-                            {
+                           
                                 Mouse.OverrideCursor = Cursors.Wait;
                                 int serviceId = Convert.ToInt32(TextBoxId.Text);
                                 Service.genKeyIv(service, getUserId(), serviceId);
                                 Service.logCommand(service.name, 4, null, getUserId());
                                 errorMsg.Content = "Successfully updated!";
-                            }
-                            else
-                            {
-                                errorMsg.Content = "OTP not entered correctly!";
-                            }
+                        
 
                         }
                         populateSelection();
@@ -375,7 +383,7 @@ namespace SecureNet.Pages.Manager
                     catch (Exception ex)
                     {
                         errorMsg.Content = "Operation Error.Contact Tech Support.";
-                       
+
                     }
                 }
 
@@ -393,7 +401,7 @@ namespace SecureNet.Pages.Manager
             Mouse.OverrideCursor = null;
         }
 
-     
+
         //Populate ComboBox
         private void populateSelection()
         {
@@ -473,7 +481,7 @@ namespace SecureNet.Pages.Manager
         private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy ||
-                e.Command == ApplicationCommands.Cut )
+                e.Command == ApplicationCommands.Cut)
             {
                 e.Handled = true;
             }
@@ -483,11 +491,12 @@ namespace SecureNet.Pages.Manager
         private void ShowPass_Click(object sender, RoutedEventArgs e)
         {
             string header = pgHeader.Content.ToString();
-            if (header == "Update Service" || header == "Login Credentials") { 
-           
-            Service.logCommand(TextBoxName.Text, 6, null, getUserId());
+            if (header == "Update Service" || header == "Login Credentials")
+            {
+
+                Service.logCommand(TextBoxName.Text, 6, null, getUserId());
             }
-          
+
             MessageBox.Show(TextBoxPassword.Password);
         }
 
@@ -527,14 +536,16 @@ namespace SecureNet.Pages.Manager
                 }
 
                 Service.logCommand(serviceName, 1, type, getUserId());
-               
+
             }
-     
-            
+
+
             MessageBox.Show("Copied Successfully!");
         }
 
-     
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Pages/Manager/ManageOtp.xaml", UriKind.Relative));
+        }
     }
 }

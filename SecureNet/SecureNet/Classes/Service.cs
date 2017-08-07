@@ -24,6 +24,8 @@ namespace SecureNet.Classes
         public string password { get; set; }
         public string notes { get; set; }
         public int serviceId { get; set; }
+
+        public int otp { get; set; }
   
         //Retrieve Records
         public static List<Service> retrieveRecords(int userId)
@@ -54,9 +56,10 @@ namespace SecureNet.Classes
                         serviceData.url = saReader["serviceUrl"].ToString();
                         usernameBytes = (byte[])saReader["serviceUsername"];
                         passwordBytes = (byte[])saReader["servicePassword"];
+                        serviceData.otp = Convert.ToInt32(saReader["serviceOtp"].ToString());
 
 
-                       
+
                         byte[] aesKey = Convert.FromBase64String(saReader["aesKey"].ToString());
                         aesKey = deAesKey(aesKey);
                         serviceData.password = DecryptStringFromBytes_Aes(passwordBytes, aesKey);
@@ -511,6 +514,19 @@ namespace SecureNet.Classes
         }
 
        
+        public static void updateOtp(int serviceId, int updatevalue)
+        {
+          
+            
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "Update Service Set serviceOtp = @serviceOtp Where serviceId = @serviceId;";
+            cmd.Parameters.AddWithValue("@serviceOtp", updatevalue);
+            cmd.Parameters.AddWithValue("@serviceId", serviceId);
+            cmd.Connection = GetConnection();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+        }
 
       
 

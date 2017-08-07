@@ -23,11 +23,15 @@ namespace SecureNet.Classes
             get;set;
         }
 
+        public static string masterpass
+        {
+            get; set;
+        }
      
-        public void genPrivKey(string password, int userId)
+        public void genPrivKey(int userId)
         {
 
-            byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
+            byte[] passwordBytes = Encoding.ASCII.GetBytes(masterpass);
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
             byte[] saltBytes = getGuid(userId);
 

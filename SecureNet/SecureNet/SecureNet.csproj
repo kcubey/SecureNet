@@ -139,6 +139,9 @@
     <Compile Include="Pages\FAQ\FAQ.xaml.cs">
       <DependentUpon>FAQ.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Manager\ManageOtp.xaml.cs">
+      <DependentUpon>ManageOtp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Manager\OTP.xaml.cs">
       <DependentUpon>OTP.xaml</DependentUpon>
     </Compile>
@@ -209,6 +212,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Manager\AddService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Manager\ManageOtp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

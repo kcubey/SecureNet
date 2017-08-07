@@ -1,0 +1,44 @@
+﻿<Page x:Class="SecureNet.Pages.Manager.ManageOtp"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureNet.Pages.Manager"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1050"
+      ShowsNavigationUI="False"
+      Title="ManageOtp">
+
+    <Grid>
+        <StackPanel>
+
+
+            <WrapPanel>
+
+                <Button  Click="ButtonBack_Click" Style="{DynamicResource PassBackButton}" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="/Media/PasswordManager/back.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label Style="{DynamicResource PassTitleLabel}" >
+                    Manage OTP
+                </Label>
+            </WrapPanel>
+
+            <Separator Background="Gray" />
+
+            <Label Style="{DynamicResource AddServiceRequirement}" >Select any of your login credentials entry to update if hardware otp is required for viewing the information</Label>
+
+           
+
+            <!--DropDownlist selection-->
+            <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />
+
+            <CheckBox Visibility ="Collapsed" Style="{DynamicResource PassGenCB}"  Name="chkbox" Content="Require Hardware OTP"/>
+            
+            <Button Visibility="Collapsed" Content="Submit" Width="120" Height="30" Margin="30,5,5,5" FontSize="18" HorizontalAlignment="Left" Cursor="Hand" Click="Button_Click" Name="sbutt" />
+        </StackPanel>
+    </Grid>
+</Page>
