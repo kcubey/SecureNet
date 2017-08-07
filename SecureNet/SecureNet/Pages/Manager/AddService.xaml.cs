@@ -91,12 +91,12 @@ namespace SecureNet.Pages.Manager
                 {
                     if (j.name == selectedService)
                     {
-                        if (j.otp == 1)
+                       if (j.otp == 1)
                         {
                             bool otp = popup();
 
-                            if (otp == true)
-                            {
+                           if (otp == true)
+                           {
                                 TextBoxId.Text = j.serviceId.ToString();
                                 TextBoxName.Text = j.name;
                                 TextBoxUrl.Text = j.url;
@@ -117,8 +117,8 @@ namespace SecureNet.Pages.Manager
                                 MessageBox.Show("Wrong OTP!");
                             }
                         }
-                        else
-                        {
+                       else
+                       {
                             TextBoxId.Text = j.serviceId.ToString();
                             TextBoxName.Text = j.name;
                             TextBoxUrl.Text = j.url;

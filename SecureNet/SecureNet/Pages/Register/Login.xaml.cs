@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SecureNet.Classes;
 
 namespace SecureNet.Pages.Register
 {
@@ -68,6 +69,8 @@ namespace SecureNet.Pages.Register
             if (userId > 0)
             {
                 Console.WriteLine("Successfully login.");
+
+                PrivateKey.masterpass = masterPass;
 
                 using (
                    SqlCommand cmd =
@@ -131,12 +134,15 @@ namespace SecureNet.Pages.Register
                                 //changing session to string
                                 int mySession = int.Parse(Application.Current.Properties["SessionID"].ToString());
                                 Console.WriteLine(mySession);
+                                PrivateKey privKey = new PrivateKey();
+                                privKey.genPrivKey(mySession);
+                                TOTP.Totp.encryptSeed(mySession);
                                 using (System.Net.WebClient client = new System.Net.WebClient())
                                 {
                                     try
                                     {
-                                        string username = "nypsecurenet1@outlook.com";
-                                        string password = "xbhcs";
+                                        string username = "securenetnyp5@outlook.com";
+                                        string password = "12345";
                                         //string txtMessage = "hello";
 
                                         using (SqlCommand cmd3 = new SqlCommand

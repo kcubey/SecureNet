@@ -30,9 +30,9 @@
             <!--Separator-->
             <Separator Background="Gray" />
 
-            <Button Visibility="Visible" Width="120" Height="30" Margin="30,5,5,5" FontSize="18" Content="Manage OTP" HorizontalAlignment="Left" Cursor="Hand" Click="Button_Click"/>
+           <Button Visibility="Visible" Width="120" Height="30" Margin="30,5,5,5" FontSize="18" Content="Manage OTP" HorizontalAlignment="Left" Cursor="Hand" Click="Button_Click"/>
 
-            <Label Name="pgHeader" Visibility="Visible" Style="{DynamicResource PassGenInstruction}"/>
+                <Label Name="pgHeader" Visibility="Visible" Style="{DynamicResource PassGenInstruction}"/>
 
             <!--DropDownlist selection-->
             <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />

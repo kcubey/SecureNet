@@ -116,11 +116,11 @@ namespace SecureNet.Pages.Manager
                         Report.Content = "Report Suspicious Activity";
                         MessageBox.Show("Report Submitted. Our Tech Support will contact you shortly");
                       
-                    }
+                   }
 
                     else
                     {
-                        MessageBox.Show("OTP not entered correctly");
+                       MessageBox.Show("OTP not entered correctly");
                     }
                 }
                 else
