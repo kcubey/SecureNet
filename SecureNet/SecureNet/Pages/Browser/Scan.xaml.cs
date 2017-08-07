@@ -108,7 +108,7 @@ namespace SecureNet.Pages.Browser
 
             else
             {
-                MessageBox.Show("File has been uploaded");
+                MessageBox.Show("File has been uploaded", "SecureNet");
             }
         }
         private void btnClearFile_Click(object sender, RoutedEventArgs e)
@@ -126,36 +126,42 @@ namespace SecureNet.Pages.Browser
         /// <param name="urlText"></param>
         public async void startVTAsyncURL(string urlText)
         {
+            if (urlText.Contains("."))
+            {  
 
+                using (new WaitCursor())
+                {
 
-            using (new WaitCursor())
+                    //If textbox empty, won't scan
+                    if (string.IsNullOrEmpty((ScanTxtBox.Text))) return;
+
+                    VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+                    vt.UseTLS = true;
+                    UrlReport urlReport = await vt.GetUrlReport(urlText);
+
+                    bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
+
+                    Console.WriteLine(hasUrlBeenScannedBefore);
+                    Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
+                    MessageBox.Show(urlText + " has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
+
+                    //If the url has been scanned before, the results are embedded inside the report.
+                    if (hasUrlBeenScannedBefore)
+                    {
+                        PrintScan(urlReport, urlText);
+                    }
+                    else
+                    {
+                        UrlScanResult urlResult = await vt.ScanUrl(urlText);
+                        PrintScan(urlResult);
+                    }
+                }
+
+        }
+            else
             {
-
-                //If textbox empty, won't scan
-                if (string.IsNullOrEmpty((ScanTxtBox.Text))) return;
-
-                VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
-                vt.UseTLS = true;
-                UrlReport urlReport = await vt.GetUrlReport(urlText);
-
-                bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
-
-                Console.WriteLine(hasUrlBeenScannedBefore);
-                Console.WriteLine("URL has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-                MessageBox.Show(urlText + " has been scanned before: " + (hasUrlBeenScannedBefore ? "Yes" : "No"));
-
-                //If the url has been scanned before, the results are embedded inside the report.
-                if (hasUrlBeenScannedBefore)
-                {
-                    PrintScan(urlReport, urlText);
-                }
-                else
-                {
-                    UrlScanResult urlResult = await vt.ScanUrl(urlText);
-                    PrintScan(urlResult);
-                }
+                MessageBox.Show("Invalid link","SecureNet");
             }
-
         }
 
       
@@ -208,7 +214,7 @@ namespace SecureNet.Pages.Browser
                     return;
 
                 }
-                MessageBox.Show("A report of this scan has been created with Scan ID : " + urlReport.ScanId);
+                MessageBox.Show("A report of this scan has been created with Scan ID : " + urlReport.ScanId, "SecureNet");
                 //MessageBox.Show(allLines);
             }
         }
@@ -242,7 +248,7 @@ namespace SecureNet.Pages.Browser
                 bool hasFileBeenScannedBefore = fileReport.ResponseCode == ReportResponseCode.Present;
 
                 Console.WriteLine("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
-                MessageBox.Show("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No"));
+                MessageBox.Show("File has been scanned before: " + (hasFileBeenScannedBefore ? "Yes" : "No" ));
 
                 //If the file has been scanned before, the results are embedded inside the report.
                 if (hasFileBeenScannedBefore)
@@ -309,7 +315,7 @@ namespace SecureNet.Pages.Browser
                     return;
 
                 }
-                MessageBox.Show("A report of this scan has been created with Scan ID : " + fileReport.ScanId);
+                MessageBox.Show("A report of this scan has been created with Scan ID : " + fileReport.ScanId, "SecureNet");
             }
         }
     }
