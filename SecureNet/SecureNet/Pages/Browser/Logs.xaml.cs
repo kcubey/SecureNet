@@ -38,7 +38,6 @@ namespace SecureNet.Pages.Browser
         public static bool checkIsNotSafe;
         public static int checkSafeInt; // 1 = safe, 2 = suspicious, 3 = malicious
         public static List<CheckedHostList> URLHostList;
-        public static string dateTimeString = DateTime.Now.ToLocalTime().ToString();
 
         public Logs()
         {
@@ -46,10 +45,12 @@ namespace SecureNet.Pages.Browser
             InitializeComponent();
             Style = (Style)FindResource(typeof(Page));
 
+            #region extras
             if (URLHostList == null)
             {
                 URLHostList = new List<CheckedHostList>();
             }
+#endregion
 
             if (DataObjects == null)
             {
@@ -98,8 +99,10 @@ namespace SecureNet.Pages.Browser
             string longUrl = oSession.url; //Mostly url+port
             string shortUrl = null;
             string hostname = oSession.hostname;
+            string dateTimeString = DateTime.Now.ToLocalTime().ToString();
 
-            int delimiterColon = longUrl.IndexOf(':');
+
+        int delimiterColon = longUrl.IndexOf(':');
 
             //Gets URL only
             if (delimiterColon != -1)
@@ -317,7 +320,7 @@ namespace SecureNet.Pages.Browser
 
         }
 
-        //hardcoding of suspicious & malicious hosts
+            //hardcoding of suspicious & malicious hosts
         public void AddtoHostList(string hostname)
         {
             if (hostname=="learn.nyp.edu.sg") //suspicious host
@@ -337,6 +340,8 @@ namespace SecureNet.Pages.Browser
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
         {
+            string dateTimeString = DateTime.Now.ToLocalTime().ToString();
+
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
                 DataObject newDataObject = new DataObject()
@@ -346,11 +351,18 @@ namespace SecureNet.Pages.Browser
             }));
         }
 
-        //current not used
         public void FiddlerApplication_BeforeReturningError(Session oSession)
         {
-            if (oSession.bHasResponse)
+            if (oSession.state.ToString()=="Aborted")
             {
+                oSession.utilCreateResponseAndBypassServer();
+                oSession.oResponse.headers.SetStatus(200, "Ok");
+                oSession.oResponse["Content-Type"] = "text/html; charset=UTF-8";
+                oSession.oResponse["Cache-Control"] = "private, max-age=0";
+                oSession.utilSetResponseBody("<html><body>Request for httpS://" 
+                    + " received. Your request was:<br /><plaintext>" 
+                    + oSession.oRequest.headers.ToString());
+/*
                 string sTitle = "Unable to load page";
                 string sOriginalMessage = oSession.GetResponseBodyAsString().Trim().Replace("[Fiddler] ", String.Empty);
                 oSession.oResponse["Content-Type"] = "text/html; charset=utf-8";
@@ -360,7 +372,7 @@ namespace SecureNet.Pages.Browser
                   "body {{ background-color: #CCDDDD; font-family: sans-serif }}\r\npre {{ max-width:600px; white-space:pre-wrap;}}\r\n" +
                   "</style></head>\r\n<body><h1>MyProxy - Page Unavailable</h1>The specified resource could not be loaded.<br /><pre>{1}</pre></body></html>", sTitle, sOriginalMessage);
 
-                oSession.utilSetResponseBody(sEnhancedError);
+                oSession.utilSetResponseBody(sEnhancedError);*/
             }
         }
 

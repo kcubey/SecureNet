@@ -25,7 +25,7 @@
         <Label x:Name="lblMasterPass" Content="Master Password:" HorizontalAlignment="Left" Margin="49,159,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
         <TextBox x:Name="txtMasterPass" HorizontalAlignment="Left" Height="31" Margin="49,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22"/>
         <Label x:Name="lblPhone" Content="Phone:" HorizontalAlignment="Left" Margin="49,227,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Segoe UI Emoji" FontSize="20" Background="#FF202020" Foreground="#FFFCD736"/>
-        <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Height="31" Margin="49,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22" Text="+65"/>
+        <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Height="31" Margin="49,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" FontSize="22" Text="65"/>
         <Button x:Name="btnRegister" Content="Submit" HorizontalAlignment="Left" Margin="49,318,0,0" VerticalAlignment="Top" Width="85" Height="35" Background="#FFFCD736" FontSize="20" Click="btnRegister_Click"/>
         <Label x:Name="lblError" Content="" HorizontalAlignment="Left" Margin="73,389,0,0" VerticalAlignment="Top"/>
 

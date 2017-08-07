@@ -10,6 +10,12 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="NOT VERIFIED" VerticalAlignment="Top" Foreground="#FFFCD736" FontFamily="Myriad Pro" FontSize="36" RenderTransformOrigin="0.908,0.799" Width="325" FontWeight="Bold"/>
-        <TextBox x:Name="txtTest" HorizontalAlignment="Left" Height="23" Margin="185,225,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtDisplay" HorizontalAlignment="Left" Height="34" Margin="10,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1015" FontSize="18" IsReadOnly="True" FontFamily="Adobe Gothic Std B"/>
+        <TextBlock x:Name="txtResend" HorizontalAlignment="Left" Margin="10,118,0,0" Foreground="#FFFCD736" Text="Please key in your verification code that you've received in the email below." VerticalAlignment="Top" Height="29" Width="616" FontSize="18"/>
+        <TextBox x:Name="txtEmailSend" HorizontalAlignment="Left" Height="33" Margin="10,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" FontFamily="Adobe Gothic Std B" FontSize="18" IsReadOnly="True"/>
+        <Button x:Name="btnSendEmail" Content="Send" HorizontalAlignment="Left" Margin="351,264,0,0" VerticalAlignment="Top" Width="93" Height="33" FontSize="18" Background="#FFFCD736" Click="btnSendEmail_Click"/>
+        <TextBox x:Name="txtVerifyEnter" HorizontalAlignment="Left" Height="32" Margin="10,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="383" FontSize="18" FontFamily="Adobe Gothic Std B"/>
+        <TextBlock x:Name="txtKeyIn" HorizontalAlignment="Left" Margin="10,220,0,0" Foreground="#FFFCD736" Text="If your verification code has expired, please resend a new one." VerticalAlignment="Top" Height="29" Width="616" FontSize="18"/>
+        <Button x:Name="btnSubmit" Content="Verify" HorizontalAlignment="Left" Margin="409,160,0,0" VerticalAlignment="Top" Width="93" Height="33" FontSize="18" Background="#FFFCD736" Click="btnSubmit_Click"/>
     </Grid>
 </Page>
