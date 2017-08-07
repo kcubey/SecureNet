@@ -124,6 +124,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\PrivateKey.cs" />
     <Compile Include="Classes\WaitCursor.cs" />
+    <Compile Include="Pages\Browser\AddBlacklistWebsitePopup.xaml.cs">
+      <DependentUpon>AddBlacklistWebsitePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Browser\BrowserHome.xaml.cs">
       <DependentUpon>BrowserHome.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Master\Header.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Browser\AddBlacklistWebsitePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

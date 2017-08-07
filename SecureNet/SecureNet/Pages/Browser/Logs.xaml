@@ -26,9 +26,14 @@
                     </Label>
                 </WrapPanel>
                 <Separator Background="Gray"/>
-
-                <Separator Height="20" Background="Transparent"/>
-
+                
+                <Label Style="{DynamicResource FAQLbl}" Margin="0" Width="800">Traffic Logs</Label>
+                <TextBlock Style="{DynamicResource faqTB}" Width="800">
+                    View your traffic logs below.
+                    <LineBreak/><LineBreak/>
+                    When the application is closed, they will be saved to the application's base folder.
+                </TextBlock>
+                
                 <DataGrid AutoGenerateColumns="False" 
                       Height="300" 
                       HorizontalAlignment="Center" 
@@ -78,10 +83,25 @@
                         </DataGridTextColumn>
 
                     </DataGrid.Columns>
-
-                    
                 </DataGrid>
 
+                <Separator Height="20" Background="Transparent"/>
+                <Separator Background="Gray"/>
+                <Separator Height="20" Background="Transparent"/>
+
+                <StackPanel Width="800">
+                    <DockPanel>
+                        <Label Style="{DynamicResource FAQLbl}" Margin="0">Blacklisted Websites</Label>
+                        <Button Click="AddWebsite" Style="{DynamicResource selectBtn}" Margin="0" HorizontalAlignment="Right">Add Website</Button>
+                    </DockPanel>
+
+                    <Separator Height="20" Background="Transparent"/>
+
+                    <ListBox Name="listBox1" Width="800">
+                        <ListBoxItem>yahoo.com</ListBoxItem>
+                    </ListBox>
+                </StackPanel>
+                
                 <Separator Height="20" Background="Transparent"/>
 
             </StackPanel>
