@@ -45,7 +45,7 @@
 
                 <Label Style="{DynamicResource AddServiceRequirement}" >1. Name: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website. No duplicate records allowed. Cannot be edited upon submission.</Label>
 
-                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid and needs to be a login page for autofill.Autofill may not work always depending on the websites.
+                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. 
                     Max 150 characters allowed.</Label>
 
 
