@@ -59,7 +59,7 @@ namespace SecureNet.Pages.Register
                 else
                 {
                     bool result = Users.addUser(email, phone, masterPass);
-                    MessageBoxResult emailCheck = MessageBox.Show("Verification code sent. Please check your email including the spam/junk folder.", "Error");
+                    MessageBoxResult emailCheck = MessageBox.Show("Verification code sent. Please check your email including the spam/junk folder.", "Success");
                     using (SqlCommand cmd2 = new SqlCommand
                      ("SELECT codeGuid FROM [Users] WHERE [userEmail] = @userEmail", GetConnection()))
                     {

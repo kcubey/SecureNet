@@ -62,8 +62,8 @@ namespace SecureNet.Pages.Register
                         {
                             try
                             {
-                                string username = "securenetnyp6@outlook.com";
-                                string password = "7082v";
+                                string username = "securenetnyp7@outlook.com";
+                                string password = "qvc7";
                                 //string txtMessage = "hello";
                                 string updatedOTP = Convert.ToString(dr3["OTPCode"]);
 
@@ -89,7 +89,7 @@ namespace SecureNet.Pages.Register
 
                             {
 
-                            }
+                            }   
                         }
                     }
 
