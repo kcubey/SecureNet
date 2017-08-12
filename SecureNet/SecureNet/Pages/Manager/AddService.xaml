@@ -30,9 +30,9 @@
             <!--Separator-->
             <Separator Background="Gray" />
 
-            <Button Visibility="Visible" Width="120" Height="30" Margin="30,5,5,5" FontSize="18" Content="Manage OTP" HorizontalAlignment="Left" Cursor="Hand" Click="Button_Click"/>
+           <Button Visibility="Visible" Width="120" Height="30" Margin="30,5,5,5" FontSize="18" Content="Manage OTP" HorizontalAlignment="Left" Cursor="Hand" Click="Button_Click"/>
 
-            <Label Name="pgHeader" Visibility="Visible" Style="{DynamicResource PassGenInstruction}"/>
+                <Label Name="pgHeader" Visibility="Visible" Style="{DynamicResource PassGenInstruction}"/>
 
             <!--DropDownlist selection-->
             <ComboBox Visibility="Visible" Name="selection" SelectionChanged="selection_SelectionChanged" Width="200" Height="20" HorizontalAlignment="Left" Margin="30,5,5,5" />
@@ -45,7 +45,7 @@
 
                 <Label Style="{DynamicResource AddServiceRequirement}" >1. Name: Max 50 characters. Only allow alphabets, digits, spaces. It can be email, normal username or phone number, depending on the website. No duplicate records allowed. Cannot be edited upon submission.</Label>
 
-                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. Address must be valid and needs to be a login page for autofill.Autofill may not work always depending on the websites.
+                <Label Style="{DynamicResource AddServiceRequirement}" >2. URL: Input Must include http or https. 
                     Max 150 characters allowed.</Label>
 
 

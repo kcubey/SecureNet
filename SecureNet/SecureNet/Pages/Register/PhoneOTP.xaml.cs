@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using SecureNet.Classes;
 namespace SecureNet.Pages.Register
 {
     /// <summary>
@@ -62,8 +62,8 @@ namespace SecureNet.Pages.Register
                         {
                             try
                             {
-                                string username = "nypsecurenet1@outlook.com";
-                                string password = "xbhcs";
+                                string username = "securenetnyp7@outlook.com";
+                                string password = "qvc7";
                                 //string txtMessage = "hello";
                                 string updatedOTP = Convert.ToString(dr3["OTPCode"]);
 
@@ -89,7 +89,7 @@ namespace SecureNet.Pages.Register
 
                             {
 
-                            }
+                            }   
                         }
                     }
 
@@ -114,6 +114,7 @@ namespace SecureNet.Pages.Register
                     string timeSavedOTP = Convert.ToString(dr["otpTime"]);
 
                     Console.WriteLine(otpCode);
+                    otpCode = otpCode.Trim();
 
                     //get current time of computer and compare with time in database
                     DateTime currentTime = DateTime.Now;
@@ -121,12 +122,16 @@ namespace SecureNet.Pages.Register
                     DateTime codeTime = DateTime.Parse(timeSavedOTP);
 
                     TimeSpan span = currentTime.Subtract(codeTime);
+                    Console.WriteLine(span);
                     int minutes = span.Minutes;
                     int seconds = span.Seconds;
-                
-                    if (minutes < 15 && otpCode == verifyText)
+
+
+                    bool test = minutes < 2 && otpCode == verifyText;
+                    if (minutes < 2 && otpCode == verifyText)
                     {
                         MessageBoxResult verifiedSuccess = MessageBox.Show("Success!", "Success");
+                        
                         this.NavigationService.Navigate(new Uri("/Pages/Home.xaml", UriKind.Relative));
 
                         MessageBoxResult codeExpired = MessageBox.Show("Successful!", "Error");
@@ -144,9 +149,9 @@ namespace SecureNet.Pages.Register
                         }
 
                     }
-                    else if (minutes > 15)
+                    else if (minutes > 2)
                     {
-                        //code expired after 15 minute
+                        //code expired after 15 minutes
                         MessageBoxResult codeExpired = MessageBox.Show("Your verification code has expired or is wrong. Please re-send a new one.", "Error");
                         using (SqlCommand cmd2 = new SqlCommand
                         ("UPDATE [Users] SET [OTPCode] = @OTPCode where [userEmail] = @userEmail", GetConnection()))

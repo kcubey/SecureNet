@@ -91,12 +91,12 @@ namespace SecureNet.Pages.Manager
                 {
                     if (j.name == selectedService)
                     {
-                        if (j.otp == 1)
+                       if (j.otp == 1)
                         {
                             bool otp = popup();
 
-                            if (otp == true)
-                            {
+                           if (otp == true)
+                           {
                                 TextBoxId.Text = j.serviceId.ToString();
                                 TextBoxName.Text = j.name;
                                 TextBoxUrl.Text = j.url;
@@ -110,15 +110,16 @@ namespace SecureNet.Pages.Manager
                                 {
                                     TextBoxNotes.Text = j.notes;
                                 }
-
+                                changeDisplay();
                             }
                             else
                             {
                                 MessageBox.Show("Wrong OTP!");
+                                selection.SelectedIndex = -1;
                             }
                         }
-                        else
-                        {
+                       else
+                       {
                             TextBoxId.Text = j.serviceId.ToString();
                             TextBoxName.Text = j.name;
                             TextBoxUrl.Text = j.url;
@@ -132,7 +133,7 @@ namespace SecureNet.Pages.Manager
                             {
                                 TextBoxNotes.Text = j.notes;
                             }
-
+                            changeDisplay();
                         }
 
                     }
@@ -141,18 +142,6 @@ namespace SecureNet.Pages.Manager
                 Service.logCommand(TextBoxName.Text, 2, null, getUserId());
 
 
-                uneditable();
-                svcForm.Visibility = Visibility.Visible;
-
-                suButt.Visibility = Visibility.Visible;
-                suButt.Content = "Update";
-
-                dcButt.Visibility = Visibility.Visible;
-                dcButt.Content = "Delete";
-
-                errorMsg.Content = null;
-                Mouse.OverrideCursor = null;
-
 
 
             }
@@ -160,7 +149,22 @@ namespace SecureNet.Pages.Manager
         }
 
 
+        private void changeDisplay()
+        {
 
+            uneditable();
+            svcForm.Visibility = Visibility.Visible;
+
+            suButt.Visibility = Visibility.Visible;
+            suButt.Content = "Update";
+
+            dcButt.Visibility = Visibility.Visible;
+            dcButt.Content = "Delete";
+
+            errorMsg.Content = null;
+            Mouse.OverrideCursor = null;
+
+        }
         //Add/Submit
         private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
         {
@@ -545,7 +549,16 @@ namespace SecureNet.Pages.Manager
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/Pages/Manager/ManageOtp.xaml", UriKind.Relative));
+            bool otp = popup();
+
+            if (otp == true)
+            {
+                this.NavigationService.Navigate(new Uri("/Pages/Manager/ManageOtp.xaml", UriKind.Relative));
+            }
+            else
+            {
+                MessageBox.Show("Wrong OTP!");
+            }
         }
     }
 }
