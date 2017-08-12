@@ -69,8 +69,6 @@ namespace SecureNet.Pages.Browser
             }
             FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
             FiddlerApplication.AfterSessionComplete += FiddlerApplication_AfterSessionComplete;
-
-            //FiddlerApplication.BeforeReturningError += FiddlerApplication_BeforeReturningError;
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
@@ -94,8 +92,6 @@ namespace SecureNet.Pages.Browser
             public string website { get; set; }
         }
 
-        
-
         public void FiddlerApplication_BeforeRequest(Session oSession)
         {
             string longUrl = oSession.url; //Mostly url+port
@@ -116,11 +112,6 @@ namespace SecureNet.Pages.Browser
                 shortUrl = longUrl;
             }
 
-            Console.WriteLine("** Long Url: " + longUrl);
-            Console.WriteLine("** Short url: " + shortUrl);
-
-            bool malicious = false;
-
             dataGrid1.Dispatcher.Invoke(new UpdateUI(() =>
             {
                 DataObject newDataObject = new DataObject()
@@ -130,16 +121,8 @@ namespace SecureNet.Pages.Browser
                 Console.WriteLine("Add to DataObject");
 
             }));
-
-           int  test = checkBlacklist(oSession.hostname);
-            if(test == 1)
-            {
-                malicious = true;
-            }
-            else
-            {
-                malicious = false;
-            }
+            
+            bool malicious = checkBlacklist(oSession.hostname);
 
             if (malicious == true) //site is unsafe
             {
@@ -159,16 +142,14 @@ namespace SecureNet.Pages.Browser
             }
         }
 
-        private int checkBlacklist(string hostname)
+        private bool checkBlacklist(string hostname)
         {
-            foreach (ListObject listObject in ListObjects)
+            foreach (ListObject yo in ListObjects)
             {
-                if (hostname == listObject.website)
-                    return 1;
-                else
-                    return 0;
+                if (hostname == yo.website)
+                    return true;
             }
-            return 0;
+            return false;
         }
 
         private void AddWebsite(object sender, RoutedEventArgs e)
@@ -177,16 +158,11 @@ namespace SecureNet.Pages.Browser
             if (inputDialog.ShowDialog() == true)
             {
                 string website = inputDialog.Answer;
-                Console.WriteLine("Input is: " + website);
+
                 ListObject newListObject = new ListObject()
                     { website =  website};
                     ListObjects.Add(newListObject);
                     listBox1.Items.Add(newListObject.website.ToString());
-            }
-
-            foreach (ListObject yui in ListObjects)
-            {
-                Console.WriteLine(yui.website);
             }
         }
 
@@ -194,15 +170,9 @@ namespace SecureNet.Pages.Browser
         private void RemoveWebsite(object sender, RoutedEventArgs e)
         {
             int index = listBox1.SelectedIndex;
-            Console.WriteLine("**index is: " + index);
             listBox1.Items.Remove(listBox1.SelectedItem);
 
             ListObjects.RemoveAt(index);
-            foreach(ListObject yui in ListObjects)
-            {
-                Console.WriteLine(yui.website);
-            }
-
         }
 
         public void FiddlerApplication_AfterSessionComplete(Session oSession)
@@ -238,14 +208,13 @@ namespace SecureNet.Pages.Browser
             file.Close();
             Console.WriteLine("File exported");
 
-            //reference https://kidaatlantis.wordpress.com/2013/11/04/data-export-from-datagrid-to-excel-in-wpf/
         }
 
-//==================== UNUSED CODE====================
+        //==================== UNUSED CODE====================
 
         #region Unused code
 
-        #region malicious/suspicious checking; add to beforeRequest
+        #region malicious/suspicious checking; add to beforeRequest before/after checkBlackList
         /*
         AddtoHostList(hostname); //hardcoding of suspicious & malicious hosts
 
@@ -337,6 +306,63 @@ namespace SecureNet.Pages.Browser
         }*/
         #endregion
 
+        #region VirusTotal Scanning -> Not completed as unable to check if it works due to public API constraints
+        public async void VirusTotalURLScan(string shortUrl, string hostname)
+        {
+            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
+            vt.UseTLS = true;
+            UrlReport urlReport = await vt.GetUrlReport(shortUrl);
+
+            bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
+
+            if (hasUrlBeenScannedBefore)
+            {
+                ReviewScan(urlReport);
+            }
+            else
+            {
+                UrlScanResult urlResult = await vt.ScanUrl(shortUrl);
+                NewScan(urlResult, hostname);
+            }
+        }
+
+        private static void NewScan(UrlScanResult scanResult, string hostname)
+        {
+            checkSafe(scanResult.VerboseMsg, hostname);
+        }
+
+        public static void checkSafe(string resultString, string hostname)
+        {
+            int numTrue = Regex.Matches(resultString, "True").Count;
+            if (numTrue > 2 && numTrue < 10)
+            {
+                checkSafeInt = 2;
+            }
+            else if (numTrue > 10)
+            {
+                checkSafeInt = 3;
+            }
+            else
+                checkSafeInt = 1;
+
+            URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
+        }
+
+        public static void ReviewScan(UrlReport urlReport)
+        {
+            string allLines = null;
+
+            if (urlReport.ResponseCode == ReportResponseCode.Present)
+            {
+                foreach (KeyValuePair<string, ScanEngine> scan in urlReport.Scans)
+                {
+                    string currentLine = string.Format("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
+                    allLines += currentLine + Environment.NewLine; // Adds to string, so it can be written to file later
+                }
+            }
+        }
+        #endregion
+
         #region VirusTotal URL check logic; not completed as unable to check if it works due to public API constraints; added to beforeRequest
         /*
         if (URLHostList.ToString().Contains(hostname))
@@ -409,65 +435,6 @@ namespace SecureNet.Pages.Browser
         */
         #endregion
 
-        #region VirusTotal Checking -> Not completed as unable to check if it works due to public API constraints
-        public async void VirusTotalURLScan(string shortUrl, string hostname)
-        {
-            VirusTotal vt = new VirusTotal(ConfigurationManager.AppSettings["virusTotalAPIKey"].ToString());
-            vt.UseTLS = true;
-            UrlReport urlReport = await vt.GetUrlReport(shortUrl);
-
-            bool hasUrlBeenScannedBefore = urlReport.ResponseCode == ReportResponseCode.Present;
-
-            if (hasUrlBeenScannedBefore)
-            {
-                ReviewScan(urlReport);
-            }
-            else
-            {
-                UrlScanResult urlResult = await vt.ScanUrl(shortUrl);
-                NewScan(urlResult, hostname);
-            }
-        }
-
-        private static void NewScan(UrlScanResult scanResult, string hostname)
-        {
-            checkSafe(scanResult.VerboseMsg, hostname);
-        }
-
-        public static void checkSafe(string resultString, string hostname)
-        {
-            int numTrue = Regex.Matches(resultString, "True").Count;
-            if (numTrue > 2 && numTrue < 10)
-            {
-                checkSafeInt = 2;
-            }
-            else if (numTrue > 10)
-            {
-                checkSafeInt = 3;
-            }
-            else
-                checkSafeInt = 1;
-
-            URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
-
-
-        }
-
-        public static void ReviewScan(UrlReport urlReport)
-        {
-            string allLines = null;
-
-            if (urlReport.ResponseCode == ReportResponseCode.Present)
-            {
-                foreach (KeyValuePair<string, ScanEngine> scan in urlReport.Scans)
-                {
-                    string currentLine = string.Format("{0,-25} Detected: {1}", scan.Key, scan.Value.Detected);
-                    allLines += currentLine + Environment.NewLine; // Adds to string, so it can be written to file later
-                }
-            }
-        }
-        #endregion
-
         //hardcoding of suspicious & malicious hosts
         public void AddtoHostList(string hostname)
         {
@@ -486,31 +453,6 @@ namespace SecureNet.Pages.Browser
             URLHostList.Add(new CheckedHostList(hostname, checkSafeInt));
         }
 
-        public void FiddlerApplication_BeforeReturningError(Session oSession)
-        {
-            if (oSession.state.ToString() == "Aborted")
-            {
-                oSession.utilCreateResponseAndBypassServer();
-                oSession.oResponse.headers.SetStatus(200, "Ok");
-                oSession.oResponse["Content-Type"] = "text/html; charset=UTF-8";
-                oSession.oResponse["Cache-Control"] = "private, max-age=0";
-                oSession.utilSetResponseBody("<html><body>Request for httpS://"
-                    + " received. Your request was:<br /><plaintext>"
-                    + oSession.oRequest.headers.ToString());
-                /*
-                                string sTitle = "Unable to load page";
-                                string sOriginalMessage = oSession.GetResponseBodyAsString().Trim().Replace("[Fiddler] ", String.Empty);
-                                oSession.oResponse["Content-Type"] = "text/html; charset=utf-8";
-                                oSession.oResponse["Cache-Control"] = "max-age=0, must-revalidate";
-                                string sEnhancedError =
-                                  String.Format("<!doctype html><html><head><title>{0}</title>\r\n<style>" +
-                                  "body {{ background-color: #CCDDDD; font-family: sans-serif }}\r\npre {{ max-width:600px; white-space:pre-wrap;}}\r\n" +
-                                  "</style></head>\r\n<body><h1>MyProxy - Page Unavailable</h1>The specified resource could not be loaded.<br /><pre>{1}</pre></body></html>", sTitle, sOriginalMessage);
-
-                                oSession.utilSetResponseBody(sEnhancedError);*/
-            }
-        }
-
         public class CheckedHostList
         {
             private string hostname;
@@ -522,22 +464,6 @@ namespace SecureNet.Pages.Browser
                 this.checkSafeInt = checkSafeInt;
             }
         }
-
-        /* Reference
-        private void FillDataGrid()
-        {
-            string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            string CmdString = string.Empty;
-            using (SqlConnection con = new SqlConnection(ConString))
-            {
-                CmdString = "SELECT emp_id, fname, lname, hire_date FROM Employee";
-                SqlCommand cmd = new SqlCommand(CmdString, con);
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Employee");
-                sda.Fill(dt);
-                gridLogs.ItemsSource = dt.DefaultView;
-            }
-        }*/
 
         #endregion
 

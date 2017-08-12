@@ -21,21 +21,6 @@
                 Source="/Master/Footer.xaml" Height="50">
             </Frame>
 
-            <!--
-            <StackPanel Name="spnlNavigator" DockPanel.Dock="Left"
-                Width="150" Background="Orange">
-
-                <Label>navigationpage</Label>
-                <Button Name="bntContentPage1" Margin="10,10,10,10"
-                    Content="Content Page 1" Click="OnClick"
-                    CommandParameter="Page1.xaml" />
-
-                <Button Name="bntContentPage2" Margin="10,10,10,10"
-                    Content="Content Page 2" Click="OnClick"
-                    CommandParameter="Page2.xaml" />
-
-            </StackPanel>
-            -->
             <Frame x:Name="MainFrame" Source="/Pages/Home.xaml" 
                    NavigationUIVisibility="Hidden"></Frame>
         
