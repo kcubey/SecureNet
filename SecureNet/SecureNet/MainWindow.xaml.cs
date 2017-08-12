@@ -117,8 +117,7 @@ namespace SecureNet
             }
 
             return true;
-            //reference https://weblog.west-wind.com/posts/2014/Jul/29/Using-FiddlerCore-to-capture-HTTP-Requests-with-NET
-            //reference: https://textslashplain.com/2015/08/25/fiddler-certificate-generators/
+            
         }
 
         protected override void OnClosed(EventArgs e)

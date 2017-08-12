@@ -328,9 +328,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pages\Manager\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Media\scanwhite.png" />
   </ItemGroup>
   <ItemGroup>
